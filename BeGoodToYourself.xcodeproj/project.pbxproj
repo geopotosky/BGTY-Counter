@@ -8,11 +8,19 @@
 
 /* Begin PBXBuildFile section */
 		E5D00EDC1BADFF4300971CC6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D00EDB1BADFF4300971CC6 /* AppDelegate.swift */; };
-		E5D00EDE1BADFF4300971CC6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D00EDD1BADFF4300971CC6 /* ViewController.swift */; };
+		E5D00EDE1BADFF4300971CC6 /* BeGoodAddEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D00EDD1BADFF4300971CC6 /* BeGoodAddEventViewController.swift */; };
 		E5D00EE11BADFF4300971CC6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5D00EDF1BADFF4300971CC6 /* Main.storyboard */; };
 		E5D00EE31BADFF4300971CC6 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E5D00EE21BADFF4300971CC6 /* Images.xcassets */; };
 		E5D00EE61BADFF4300971CC6 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5D00EE41BADFF4300971CC6 /* LaunchScreen.xib */; };
 		E5D00EF21BADFF4300971CC6 /* BeGoodToYourselfTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D00EF11BADFF4300971CC6 /* BeGoodToYourselfTests.swift */; };
+		E5D00EFE1BADFFF100971CC6 /* CoreDataStackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D00EFD1BADFFF100971CC6 /* CoreDataStackManager.swift */; };
+		E5D00F031BAE056B00971CC6 /* BeGoodTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D00F021BAE056B00971CC6 /* BeGoodTableViewController.swift */; };
+		E5D00F051BAE062900971CC6 /* BeGoodCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D00F041BAE062900971CC6 /* BeGoodCollectionViewController.swift */; };
+		E5D00F071BAE06E700971CC6 /* BeGoodCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D00F061BAE06E700971CC6 /* BeGoodCollectionViewCell.swift */; };
+		E5D00F091BAE08F400971CC6 /* BeGoodShowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D00F081BAE08F400971CC6 /* BeGoodShowViewController.swift */; };
+		E5D00F0B1BAE0BF000971CC6 /* Events.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D00F0A1BAE0BF000971CC6 /* Events.swift */; };
+		E5D00F0D1BAE0C8300971CC6 /* EventTextDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D00F0C1BAE0C8300971CC6 /* EventTextDelegate.swift */; };
+		E5D00F101BAE184E00971CC6 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E5D00F0E1BAE184E00971CC6 /* Model.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,13 +37,21 @@
 		E5D00ED61BADFF4300971CC6 /* BeGoodToYourself.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BeGoodToYourself.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5D00EDA1BADFF4300971CC6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E5D00EDB1BADFF4300971CC6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		E5D00EDD1BADFF4300971CC6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		E5D00EDD1BADFF4300971CC6 /* BeGoodAddEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeGoodAddEventViewController.swift; sourceTree = "<group>"; };
 		E5D00EE01BADFF4300971CC6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E5D00EE21BADFF4300971CC6 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		E5D00EE51BADFF4300971CC6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		E5D00EEB1BADFF4300971CC6 /* BeGoodToYourselfTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BeGoodToYourselfTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5D00EF01BADFF4300971CC6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E5D00EF11BADFF4300971CC6 /* BeGoodToYourselfTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeGoodToYourselfTests.swift; sourceTree = "<group>"; };
+		E5D00EFD1BADFFF100971CC6 /* CoreDataStackManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStackManager.swift; sourceTree = "<group>"; };
+		E5D00F021BAE056B00971CC6 /* BeGoodTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeGoodTableViewController.swift; sourceTree = "<group>"; };
+		E5D00F041BAE062900971CC6 /* BeGoodCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeGoodCollectionViewController.swift; sourceTree = "<group>"; };
+		E5D00F061BAE06E700971CC6 /* BeGoodCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeGoodCollectionViewCell.swift; sourceTree = "<group>"; };
+		E5D00F081BAE08F400971CC6 /* BeGoodShowViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeGoodShowViewController.swift; sourceTree = "<group>"; };
+		E5D00F0A1BAE0BF000971CC6 /* Events.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Events.swift; sourceTree = "<group>"; };
+		E5D00F0C1BAE0C8300971CC6 /* EventTextDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTextDelegate.swift; sourceTree = "<group>"; };
+		E5D00F0F1BAE184E00971CC6 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,11 +93,11 @@
 		E5D00ED81BADFF4300971CC6 /* BeGoodToYourself */ = {
 			isa = PBXGroup;
 			children = (
-				E5D00EDB1BADFF4300971CC6 /* AppDelegate.swift */,
-				E5D00EDD1BADFF4300971CC6 /* ViewController.swift */,
-				E5D00EDF1BADFF4300971CC6 /* Main.storyboard */,
-				E5D00EE21BADFF4300971CC6 /* Images.xcassets */,
-				E5D00EE41BADFF4300971CC6 /* LaunchScreen.xib */,
+				E5D00EFD1BADFFF100971CC6 /* CoreDataStackManager.swift */,
+				E5D00F0E1BAE184E00971CC6 /* Model.xcdatamodeld */,
+				E5D00F011BAE013400971CC6 /* Views */,
+				E5D00F001BAE011400971CC6 /* Objects */,
+				E5D00EFF1BAE00FE00971CC6 /* Delegate Files */,
 				E5D00ED91BADFF4300971CC6 /* Supporting Files */,
 			);
 			path = BeGoodToYourself;
@@ -110,6 +126,38 @@
 				E5D00EF01BADFF4300971CC6 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		E5D00EFF1BAE00FE00971CC6 /* Delegate Files */ = {
+			isa = PBXGroup;
+			children = (
+				E5D00EDB1BADFF4300971CC6 /* AppDelegate.swift */,
+				E5D00F0C1BAE0C8300971CC6 /* EventTextDelegate.swift */,
+			);
+			name = "Delegate Files";
+			sourceTree = "<group>";
+		};
+		E5D00F001BAE011400971CC6 /* Objects */ = {
+			isa = PBXGroup;
+			children = (
+				E5D00F0A1BAE0BF000971CC6 /* Events.swift */,
+			);
+			name = Objects;
+			sourceTree = "<group>";
+		};
+		E5D00F011BAE013400971CC6 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E5D00EDD1BADFF4300971CC6 /* BeGoodAddEventViewController.swift */,
+				E5D00F021BAE056B00971CC6 /* BeGoodTableViewController.swift */,
+				E5D00F041BAE062900971CC6 /* BeGoodCollectionViewController.swift */,
+				E5D00F061BAE06E700971CC6 /* BeGoodCollectionViewCell.swift */,
+				E5D00F081BAE08F400971CC6 /* BeGoodShowViewController.swift */,
+				E5D00EDF1BADFF4300971CC6 /* Main.storyboard */,
+				E5D00EE21BADFF4300971CC6 /* Images.xcassets */,
+				E5D00EE41BADFF4300971CC6 /* LaunchScreen.xib */,
+			);
+			name = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -212,8 +260,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E5D00EDE1BADFF4300971CC6 /* ViewController.swift in Sources */,
+				E5D00EDE1BADFF4300971CC6 /* BeGoodAddEventViewController.swift in Sources */,
+				E5D00F071BAE06E700971CC6 /* BeGoodCollectionViewCell.swift in Sources */,
+				E5D00F0D1BAE0C8300971CC6 /* EventTextDelegate.swift in Sources */,
+				E5D00F031BAE056B00971CC6 /* BeGoodTableViewController.swift in Sources */,
 				E5D00EDC1BADFF4300971CC6 /* AppDelegate.swift in Sources */,
+				E5D00F0B1BAE0BF000971CC6 /* Events.swift in Sources */,
+				E5D00EFE1BADFFF100971CC6 /* CoreDataStackManager.swift in Sources */,
+				E5D00F101BAE184E00971CC6 /* Model.xcdatamodeld in Sources */,
+				E5D00F091BAE08F400971CC6 /* BeGoodShowViewController.swift in Sources */,
+				E5D00F051BAE062900971CC6 /* BeGoodCollectionViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -419,6 +475,19 @@
 			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		E5D00F0E1BAE184E00971CC6 /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				E5D00F0F1BAE184E00971CC6 /* Model.xcdatamodel */,
+			);
+			currentVersion = E5D00F0F1BAE184E00971CC6 /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = E5D00ECE1BADFF4300971CC6 /* Project object */;
 }
