@@ -45,10 +45,10 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
     
     //Event Font Attributes
     let eventTextAttributes = [
-        NSStrokeColorAttributeName : UIColor.blueColor(),
+        NSStrokeColorAttributeName : UIColor.redColor(),
         NSForegroundColorAttributeName : UIColor.blackColor(),
-        NSFontAttributeName : UIFont(name: "HelveticaNeue-CondensedBlack", size: 16)!,
-        NSStrokeWidthAttributeName : -2.0
+        NSFontAttributeName : UIFont(name: "HelveticaNeue-CondensedBlack", size: 26)!,
+        NSStrokeWidthAttributeName : -1.5
     ]
     
     //setup the Meme Editor text fields
@@ -62,13 +62,27 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
         
         //-----------------------------------------------------
         var dateFormatter = NSDateFormatter()
-        //let pickerDate = myDatePicker.date
-        self.todaysDate = NSDate()
-        println("todaysDate: \(todaysDate)")
         
-        let localDate = dateFormatter.stringFromDate(todaysDate)
+        self.todaysDate = NSDate()
+        let date = NSDate()
+        let timeZone = NSTimeZone(name: "Local")
+        
+        dateFormatter.timeZone = timeZone
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let dateNew = dateFormatter.stringFromDate(date)
+        
+        println("-------------------")
+        println("TEST", dateNew)
+
+        dateFormatter.timeStyle = NSDateFormatterStyle.MediumStyle //Set time style
+        dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle //Set date style
+        dateFormatter.timeZone = NSTimeZone()
+        println(dateFormatter.timeZone)
+        
+        let localDate = dateFormatter.stringFromDate(date)
         //let strDate = dateFormatter.stringFromDate(myDatePicker.date)
         self.currentDate.text = localDate
+        
         //-----------------------------------------------------
         
         //Add font attributes to top and bottom text fields

@@ -21,6 +21,7 @@
 		E5D00F0B1BAE0BF000971CC6 /* Events.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D00F0A1BAE0BF000971CC6 /* Events.swift */; };
 		E5D00F0D1BAE0C8300971CC6 /* EventTextDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D00F0C1BAE0C8300971CC6 /* EventTextDelegate.swift */; };
 		E5D00F101BAE184E00971CC6 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E5D00F0E1BAE184E00971CC6 /* Model.xcdatamodeld */; };
+		E5D00F121BAF8DCF00971CC6 /* BeGoodPickDateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D00F111BAF8DCF00971CC6 /* BeGoodPickDateViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +53,7 @@
 		E5D00F0A1BAE0BF000971CC6 /* Events.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Events.swift; sourceTree = "<group>"; };
 		E5D00F0C1BAE0C8300971CC6 /* EventTextDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTextDelegate.swift; sourceTree = "<group>"; };
 		E5D00F0F1BAE184E00971CC6 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		E5D00F111BAF8DCF00971CC6 /* BeGoodPickDateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeGoodPickDateViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,6 +151,7 @@
 			isa = PBXGroup;
 			children = (
 				E5D00EDD1BADFF4300971CC6 /* BeGoodAddEventViewController.swift */,
+				E5D00F111BAF8DCF00971CC6 /* BeGoodPickDateViewController.swift */,
 				E5D00F021BAE056B00971CC6 /* BeGoodTableViewController.swift */,
 				E5D00F041BAE062900971CC6 /* BeGoodCollectionViewController.swift */,
 				E5D00F061BAE06E700971CC6 /* BeGoodCollectionViewCell.swift */,
@@ -265,6 +268,7 @@
 				E5D00F0D1BAE0C8300971CC6 /* EventTextDelegate.swift in Sources */,
 				E5D00F031BAE056B00971CC6 /* BeGoodTableViewController.swift in Sources */,
 				E5D00EDC1BADFF4300971CC6 /* AppDelegate.swift in Sources */,
+				E5D00F121BAF8DCF00971CC6 /* BeGoodPickDateViewController.swift in Sources */,
 				E5D00F0B1BAE0BF000971CC6 /* Events.swift in Sources */,
 				E5D00EFE1BADFFF100971CC6 /* CoreDataStackManager.swift in Sources */,
 				E5D00F101BAE184E00971CC6 /* Model.xcdatamodeld in Sources */,

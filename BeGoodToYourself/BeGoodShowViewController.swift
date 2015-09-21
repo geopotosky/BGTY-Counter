@@ -14,10 +14,12 @@ import CoreData
 class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDelegate {
     
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var eventDate: UILabel!
+    @IBOutlet weak var textFieldEvent: UILabel!
     
     //var memedImage : UIImage!
     var events: [Events]!
-    //    var memes: Memes!
+    //    var events: Events!
     var eventIndex:Int!
     var eventIndexPath: NSIndexPath!
     //var memedImage: NSData!
@@ -59,7 +61,8 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        println("MemeDetailVC viewWillAppear")
+        println("BeGoodShowVC viewWillAppear")
+        
         
         //println("memes.count: \(memes.count)")
 //        println("memeIndex: \(memeIndex)")
@@ -75,8 +78,29 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         
         println(event.textEvent)
         
+        var dateFormatter = NSDateFormatter()
+        
+        //let date = NSDate()
+        let date = event.eventDate
+        let timeZone = NSTimeZone(name: "Local")
+        
+        dateFormatter.timeZone = timeZone
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let dateNew = dateFormatter.stringFromDate(date!)
+        
+        dateFormatter.timeStyle = NSDateFormatterStyle.MediumStyle //Set time style
+        dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle //Set date style
+        dateFormatter.timeZone = NSTimeZone()
+        println(dateFormatter.timeZone)
+        
+        let localDate = dateFormatter.stringFromDate(date!)
+        //let strDate = dateFormatter.stringFromDate(myDatePicker.date)
+        self.eventDate.text = localDate
+        
+        
         let finalImage = UIImage(data: event.eventImage!)
         self.imageView!.image = finalImage
+        self.textFieldEvent.text = event.textEvent
         
     }
     
