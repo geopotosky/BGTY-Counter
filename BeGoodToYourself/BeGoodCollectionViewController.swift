@@ -53,6 +53,7 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
         //self.navigationItem.leftBarButtonItem = self.editButtonItem()
         
         bottomButton.hidden = true
+        //self.tabBarController?.tabBar.hidden = false
         
         // Start the fetched results controller
         var error: NSError?
@@ -97,6 +98,7 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
         super.viewWillAppear(animated)
         
         println("collection view viewWillAppear")
+        self.tabBarController?.tabBar.hidden = false
         
         editButtonFlag = true
         
@@ -401,7 +403,7 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
         let storyboard = self.storyboard
         let controller = self.storyboard?.instantiateViewControllerWithIdentifier("BeGoodAddEventViewController") as! BeGoodAddEventViewController
         controller.editMemeFlag = false
-        self.presentViewController(controller, animated: true, completion: nil)
+        self.navigationController!.pushViewController(controller, animated: true)
         
     }
     

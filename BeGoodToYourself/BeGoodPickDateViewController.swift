@@ -1,5 +1,5 @@
 //
-//  BeGoodPickDateViewController.swift
+//  BeGoodPickdateViewController.swift
 //  BeGoodToYourself
 //
 //  Created by George Potosky on 9/20/15.
@@ -8,19 +8,31 @@
 
 import UIKit
 
+protocol SecondVCDelegate {
+    func didFinishSecondVC(controller: BeGoodPickdateViewController)
+}
+
 class BeGoodPickdateViewController: UIViewController {
     
     @IBOutlet weak var myDatePicker: UIDatePicker!
     @IBOutlet weak var selectedDate: UILabel!
     @IBOutlet weak var countDownLabel: UILabel!
     @IBOutlet weak var CountDownDescription: UILabel!
+    @IBOutlet weak var pickDateButton: UIButton!
+    
+    //var delegate: SecondVCDelegate! = tempEventDate
     
     var timeAtPress = NSDate()
     var currentDateWithOffset = NSDate()
     
-    var count = 60
+    var count = 15
+    
     var eventText: String!
     
+    var pickEventDate: NSDate!
+    var tempEventDate: NSDate!
+    
+    var delegate: SecondVCDelegate! = nil
     
     //    var offset: Float
     //    var systemTimeZone = NSTimeZone()
@@ -36,6 +48,8 @@ class BeGoodPickdateViewController: UIViewController {
         var timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("update"), userInfo: nil, repeats: true)
         
         eventText = "until our NEXT WDW Vaction!"
+        
+        println("Pickdate viewDidLoad")
         
     }
     
@@ -82,6 +96,7 @@ class BeGoodPickdateViewController: UIViewController {
         let localDate = dateFormatter.stringFromDate(date)
         let strDate = dateFormatter.stringFromDate(myDatePicker.date)
         self.selectedDate.text = strDate
+        self.tempEventDate = myDatePicker.date
         
         println("UTC Time")
         println(date)
@@ -142,11 +157,40 @@ class BeGoodPickdateViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func pickEventDate(sender: UIButton) {
+        println("pickEventDate Button selected")
+        //self.dismissViewControllerAnimated(true, completion: nil)
+//        if let navigationController = self.navigationController {
+//            navigationController.popViewControllerAnimated(true)
+//        }
+        
+        let controller = self.navigationController!.viewControllers[1] as! BeGoodAddEventViewController
+        //let controller = self.storyboard?.instantiateViewControllerWithIdentifier("BeGoodAddEventViewController") as! BeGoodAddEventViewController
+        controller.tempEventDate2 = myDatePicker.date
+        println("controller.tempEventDate2: \(controller.tempEventDate2)")
+        self.navigationController?.popViewControllerAnimated(true)
+        
+    }
+
+    
     func update() {
         
-        if(count > -1)
+        if(count > 0)
         {
-            countDownLabel.text = String(count--) + " Seconds"
+            count = count - 1
+            println(count)
+            let minutes:Int = (count / 60)
+            let hours:Int = ((count / 60) / 60) % 24
+            let days:Int = ((count / 60) / 60) / 24
+            let seconds:Int = count - (minutes * 60)
+            let minutes2:Int = (count / 60) % 60
+
+            
+            let timerOutput = String(format: "%4d:%2d:%2d:%02d", days, hours, minutes2, seconds) as String
+            countDownLabel.text = timerOutput as String
+            //countDownLabel.text = ("\(minutes) Minutes \(seconds) Seconds")
+            
+            //countDownLabel.text = String(count--) + " Seconds"
             CountDownDescription.text = eventText
         }
         

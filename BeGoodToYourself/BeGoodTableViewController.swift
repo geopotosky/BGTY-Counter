@@ -27,6 +27,9 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
         
         self.navigationItem.leftBarButtonItem = self.editButtonItem()
         
+        //self.tabBarController?.tabBar.hidden = false
+        
+        
         fetchedResultsController.performFetch(nil)
         
         // Set the view controller as the delegate
@@ -38,6 +41,8 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
     //Perform when view appears
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        
+        self.tabBarController?.tabBar.hidden = false
         
         //Get shared model info
                 let object = UIApplication.sharedApplication().delegate
@@ -231,19 +236,13 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
     }
     
     
-    
-    
-    //Button Function - Create a New Meme
+    //Button Function - Create a New EVent
     @IBAction func memeEditButton(sender: UIBarButtonItem) {
         
         let storyboard = self.storyboard
         let controller = self.storyboard?.instantiateViewControllerWithIdentifier("BeGoodAddEventViewController") as! BeGoodAddEventViewController
-        
-        //controller.memedImage = self.memeImage
         controller.editMemeFlag = false
-        
-        self.presentViewController(controller, animated: true, completion: nil)
-        
+        self.navigationController!.pushViewController(controller, animated: true)
     }
     
 }

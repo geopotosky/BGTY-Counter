@@ -14,6 +14,7 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
     
     //Edit Screen outlets
     @IBOutlet weak var currentDate: UILabel!
+    @IBOutlet weak var datePickerButton: UIButton!
     @IBOutlet weak var imageViewPicker: UIImageView!
     @IBOutlet weak var cameraButton: UIBarButtonItem!
     @IBOutlet weak var textFieldEvent: UITextField!
@@ -41,6 +42,8 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
     var todaysDate: NSDate!
     
     var editMemeFlag: Bool!
+    
+    var tempEventDate2: NSDate!
 
     
     //Event Font Attributes
@@ -51,14 +54,28 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
         NSStrokeWidthAttributeName : -1.5
     ]
     
+    
     //setup the Meme Editor text fields
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Save, target: self, action: "saveEvent")
+        
+        self.navigationItem.rightBarButtonItem?.enabled = false
+        
+//        let datePickButton = UIButton.buttonWithType(.System) as! UIButton
+//        datePickerButton.setTitle(title, forState: .Normal)
+//        datePickerButton.titleLabel?.lineBreakMode = NSLineBreakMode.ByWordWrapping
+//        datePickerButton.titleLabel?.textAlignment = NSTextAlignment.Center
+//        datePickerButton.setTranslatesAutoresizingMaskIntoConstraints(false)
         
         //Get shared model info
         let object = UIApplication.sharedApplication().delegate
         let appDelegate = object as! AppDelegate
         events = appDelegate.events
+        
+        self.tabBarController?.tabBar.hidden = true
+        println("New Date1: \(tempEventDate2)")
         
         //-----------------------------------------------------
         var dateFormatter = NSDateFormatter()
@@ -115,6 +132,30 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
+        //var tempEventDate2: NSDate!
+        var dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        dateFormatter.timeStyle = NSDateFormatterStyle.MediumStyle //Set time style
+        dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle //Set date style
+        dateFormatter.timeZone = NSTimeZone()
+        if tempEventDate2 != nil {
+            println("New Date2: \(tempEventDate2)")
+            let strDate = dateFormatter.stringFromDate(tempEventDate2)
+            println("New Date2 String: \(strDate)")
+            //datePickerButton.sizeToFit()
+            datePickerButton.titleLabel?.text = strDate
+            //datePickerButton.titleLabel?.adjustsFontSizeToFitWidth = true
+
+            
+//            let button = UIButton.buttonWithType(.System) as! UIButton
+//            button.setTitle(title, forState: .Normal)
+//            button.titleLabel?.lineBreakMode = NSLineBreakMode.ByWordWrapping
+//            button.titleLabel?.textAlignment = NSTextAlignment.Center
+//            button.setTranslatesAutoresizingMaskIntoConstraints(false)
+            
+        }
+        
+        
         //Disable the CAMERA if you are using a simulator without a camera
         cameraButton.enabled = UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)
         
@@ -156,6 +197,31 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
         }()
     
     
+//    func didFinishSecondVC(controller: BeGoodPickdateViewController) {
+//        tempEventDate2 = controller.tempEventDate
+//        println("New Date: \(tempEventDate2)")
+//        controller.navigationController?.popViewControllerAnimated(true)
+//    }
+    
+    
+    @IBAction func pickEventDate(sender: UIButton) {
+        println("pickEventDate")
+        
+        datePickerButton.titleLabel?.adjustsFontSizeToFitWidth = true
+        datePickerButton.titleLabel?.textAlignment = NSTextAlignment.Center
+        
+//        let secondVC = BeGoodPickdateViewController()
+//        secondVC.delegate = self
+//        self.navigationController?.pushViewController(secondVC, animated: true)
+        
+//        let storyboard = self.storyboard
+//        let controller = self.storyboard?.instantiateViewControllerWithIdentifier("BeGoodPickdateViewController") as! BeGoodPickdateViewController
+//        controller.pickEventDate = self.todaysDate
+//        println("controller.pickEventDate: \(controller.pickEventDate)")
+//        
+//        self.navigationController!.pushViewController(controller, animated: true)
+        
+    }
     
     //Button to Pick an image from the library
     @IBAction func PickAnImage(sender: AnyObject) {
@@ -175,6 +241,8 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
             }
             //Enable the Sharing Button
             //shareMemeButton.enabled = true
+            self.navigationItem.rightBarButtonItem?.enabled = true
+            
             self.dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -250,17 +318,18 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
 //    }
     
     //Save the Meme
-    @IBAction func saveEvent(sender: UIBarButtonItem) {
+    //@IBAction func saveEvent(sender: UIBarButtonItem) {
+    func saveEvent() {
         
         //Create the Meme
         let eventImage = UIImageJPEGRepresentation(imageViewPicker.image, 100)
         //let memedImage2 = UIImageJPEGRepresentation(memedImage, 100)
         
-        println("eventDate: \(self.todaysDate)")
+        println("eventDate: \(self.tempEventDate2)")
         println("textEvent: \(textFieldEvent.text!)")
         //println("eventImage: \(eventImage)")
         
-        let eventToBeAdded = Events(eventDate: self.todaysDate, textEvent: textFieldEvent.text!, eventImage: eventImage, context: sharedContext)
+        let eventToBeAdded = Events(eventDate: self.tempEventDate2, textEvent: textFieldEvent.text!, eventImage: eventImage, context: sharedContext)
         
         // Add it to the shared Memes array in the Application Delegate
 //        let object = UIApplication.sharedApplication().delegate
@@ -269,14 +338,15 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
         // And add append the actor to the array as well
         println("Save Event")
         //appDelegate.memes.append(memeToBeAdded)
-//        events.append(eventToBeAdded)
+        //events.append(eventToBeAdded)
         
         // Finally we save the shared context, using the convenience method in
         // The CoreDataStackManager
-        println("Saving Memes")
         CoreDataStackManager.sharedInstance().saveContext()
             
-        self.dismissViewControllerAnimated(true, completion: nil)
+        //self.dismissViewControllerAnimated(true, completion: nil)
+        //self.navigationController!.viewControllers[0] as! BeGoodTableViewController
+        self.navigationController?.popViewControllerAnimated(true)
 
     }
     
