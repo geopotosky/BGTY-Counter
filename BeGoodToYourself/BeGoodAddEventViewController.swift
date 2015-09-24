@@ -14,6 +14,7 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
     
     //Edit Screen outlets
     @IBOutlet weak var currentDate: UILabel!
+    @IBOutlet weak var datePickerLable: UILabel!
     @IBOutlet weak var datePickerButton: UIButton!
     @IBOutlet weak var imageViewPicker: UIImageView!
     @IBOutlet weak var cameraButton: UIBarButtonItem!
@@ -41,7 +42,7 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
     
     var todaysDate: NSDate!
     
-    var editMemeFlag: Bool!
+    var editEventFlag: Bool!
     
     var tempEventDate2: NSDate!
 
@@ -62,6 +63,8 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Save, target: self, action: "saveEvent")
         
         self.navigationItem.rightBarButtonItem?.enabled = false
+        //* - Hide the Tab Bar
+        self.tabBarController?.tabBar.hidden = true
         
 //        let datePickButton = UIButton.buttonWithType(.System) as! UIButton
 //        datePickerButton.setTitle(title, forState: .Normal)
@@ -74,7 +77,6 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
         let appDelegate = object as! AppDelegate
         events = appDelegate.events
         
-        self.tabBarController?.tabBar.hidden = true
         println("New Date1: \(tempEventDate2)")
         
         //-----------------------------------------------------
@@ -112,25 +114,59 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
         //textfield delegate values
         self.textFieldEvent.delegate = eventTextDelegate
         
+        
         fetchedResultsController.performFetch(nil)
         
         // Set the view controller as the delegate
         fetchedResultsController.delegate = self
         
-//        println("editMemeFlag: \(self.editMemeFlag)")
-//        
+        if editEventFlag == false {
+            datePickerLable.text = "Enter a New Date and Time"
 //            if events.count == 0 {
 //                
 //                cancelEventButton.enabled = false
 //            } else {
 //                cancelEventButton.enabled = true
 //            }
+        } else {
+            //cancelEventButton.enabled = true
+            //Enable the Sharing Button
+            //shareMemeButton.enabled = true
+            let event = fetchedResultsController.objectAtIndexPath(eventIndexPath2) as! Events
+            
+            //* - Add Selected Meme attributes and populate Editor fields
+            self.textFieldEvent.text = event.textEvent
+            imageViewPicker.image = UIImage(data: event.eventImage!)
+            tempEventDate2 = event.eventDate
+            
+            var dateFormatter = NSDateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            dateFormatter.timeStyle = NSDateFormatterStyle.MediumStyle //Set time style
+            dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle //Set date style
+            dateFormatter.timeZone = NSTimeZone()
+            println("New Date1: \(tempEventDate2)")
+            let strDate = dateFormatter.stringFromDate(tempEventDate2)
+            println("New Date1 String: \(strDate)")
+            datePickerButton.titleLabel?.text = strDate
+            datePickerLable.text = strDate
+            
+        }
+
         
     }
     
     //Perform when view appears
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        
+//        if editEventFlag == true {
+//            let event = fetchedResultsController.objectAtIndexPath(eventIndexPath2) as! Events
+//            
+//            //* - Add Selected Meme attributes and populate Editor fields
+//            self.textFieldEvent.text = event.textEvent
+//            imageViewPicker.image = UIImage(data: event.eventImage!)
+//            tempEventDate2 = event.eventDate
+//        }
         
         //var tempEventDate2: NSDate!
         var dateFormatter = NSDateFormatter()
@@ -154,7 +190,7 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
 //            button.setTranslatesAutoresizingMaskIntoConstraints(false)
             
         }
-        
+    
         
         //Disable the CAMERA if you are using a simulator without a camera
         cameraButton.enabled = UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)
@@ -210,18 +246,8 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
         datePickerButton.titleLabel?.adjustsFontSizeToFitWidth = true
         datePickerButton.titleLabel?.textAlignment = NSTextAlignment.Center
         
-//        let secondVC = BeGoodPickdateViewController()
-//        secondVC.delegate = self
-//        self.navigationController?.pushViewController(secondVC, animated: true)
-        
-//        let storyboard = self.storyboard
-//        let controller = self.storyboard?.instantiateViewControllerWithIdentifier("BeGoodPickdateViewController") as! BeGoodPickdateViewController
-//        controller.pickEventDate = self.todaysDate
-//        println("controller.pickEventDate: \(controller.pickEventDate)")
-//        
-//        self.navigationController!.pushViewController(controller, animated: true)
-        
     }
+    
     
     //Button to Pick an image from the library
     @IBAction func PickAnImage(sender: AnyObject) {
@@ -371,7 +397,7 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
 //                //                let controller = self.storyboard?.instantiateViewControllerWithIdentifier("MemeDetailViewController") as! MemeDetailViewController
 //                //
 //                //                //let meme = self.fetchedResultsController.objectAtIndexPath(self.memeIndexPath2) as! Memes
-//                //                controller.editMemeFlag = true
+//                //                controller.editEventFlag = true
 //                //                //controller.memes = self.memes
 //                //                controller.memeIndexPath = self.memeIndexPath2
 //                //                controller.memeIndex = self.memeIndex2

@@ -19,13 +19,14 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
     //    var memes: Memes!
     var eventIndex: Int!
     var eventIndexPath: NSIndexPath!
-    var editMemeFlag: Bool!
+    var editEventFlag: Bool!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.navigationItem.leftBarButtonItem = self.editButtonItem()
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "addEvent")
         
         //self.tabBarController?.tabBar.hidden = false
         
@@ -115,7 +116,7 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
 //                
 //                let storyboard = self.storyboard
 //                let controller = self.storyboard?.instantiateViewControllerWithIdentifier("BeGoodAddEventViewController") as! BeGoodAddEventViewController
-//                controller.editMemeFlag = false
+//                controller.editEventFlag = false
 //                self.presentViewController(controller, animated: true, completion: nil)
 //            }
 //            actionSheetController.addAction(okAction)
@@ -237,11 +238,11 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
     
     
     //Button Function - Create a New EVent
-    @IBAction func memeEditButton(sender: UIBarButtonItem) {
-        
+    //@IBAction func memeEditButton(sender: UIBarButtonItem) {
+    func addEvent(){
         let storyboard = self.storyboard
         let controller = self.storyboard?.instantiateViewControllerWithIdentifier("BeGoodAddEventViewController") as! BeGoodAddEventViewController
-        controller.editMemeFlag = false
+        controller.editEventFlag = false
         self.navigationController!.pushViewController(controller, animated: true)
     }
     

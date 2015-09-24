@@ -16,6 +16,7 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var eventDate: UILabel!
     @IBOutlet weak var textFieldEvent: UILabel!
+    @IBOutlet weak var deleteEventButton: UIBarButtonItem!
     
     //var memedImage : UIImage!
     var events: [Events]!
@@ -26,7 +27,7 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
     //    var memedImage2: NSData!
     //    var memedImage3: NSData!
     
-    var editMemeFlag: Bool!
+    var editEventFlag: Bool!
     
     
     override func viewDidLoad() {
@@ -37,7 +38,10 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         let appDelegate = object as! AppDelegate
         events = appDelegate.events
         
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Trash, target: self, action: "deleteEvent")
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Edit, target: self, action: "editEvent")
+        
+        //* - Hide the Tab Bar
+        self.tabBarController?.tabBar.hidden = true
         
 //        let b1 = UIBarButtonItem(barButtonSystemItem: .Trash, target: self,  action: "deleteMeme")
 //        let b2 = UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action: "editMeme")
@@ -52,7 +56,7 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         //        //println("memes.count: \(memes.count)")
         //        println("memeIndex: \(memeIndex)")
         //        println("memeIndexPath: \(memeIndexPath)")
-        //        println("editMemeFlag: \(editMemeFlag)")
+        //        println("editEventFlag: \(editEventFlag)")
         
         
     }
@@ -67,7 +71,7 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         //println("memes.count: \(memes.count)")
 //        println("memeIndex: \(memeIndex)")
 //        println("memeIndexPath: \(memeIndexPath)")
-//        println("editMemeFlag: \(editMemeFlag)")
+//        println("editEventFlag: \(editEventFlag)")
         
         //Get shared model info
         //        let object = UIApplication.sharedApplication().delegate
@@ -129,35 +133,36 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         }()
     
     
-//    func editMeme(){
-//        println("Getting ready to edit the Event")
-//        let storyboard = self.storyboard
-//        let controller = self.storyboard?.instantiateViewControllerWithIdentifier("BeGoodAddEventViewController") as! BeGoodAddEventViewController
-//        
+    func editEvent(){
+        println("Getting ready to edit the Event")
+        let storyboard = self.storyboard
+        let controller = self.storyboard?.instantiateViewControllerWithIdentifier("BeGoodAddEventViewController") as! BeGoodAddEventViewController
+//
 //        //controller.memes = memes[index]
 //        //controller.memes = self.memes
 //        
-//        controller.memeIndexPath2 = memeIndexPath
-//        controller.memeIndex2 = memeIndex
-//        controller.editMemeFlag = true
-//        
+        controller.eventIndexPath2 = eventIndexPath
+        controller.eventIndex2 = eventIndex
+        controller.editEventFlag = true
+//
 //        //controller.memedImage2 = meme.memedImage
 //        
 //        self.presentViewController(controller, animated: true, completion: nil)
 //        //self.navigationController!.pushViewController(controller, animated: true)
 //        
-//        //        let controller = self.storyboard!.instantiateViewControllerWithIdentifier("MemeEditorViewController") as! MemeEditorViewController
+//        //        let controller =
 //        //        controller.memeIndexPath2 = memeIndexPath
 //        //        controller.memeIndex2 = memeIndex
-//        //        controller.editMemeFlag = true
-//        //        self.navigationController!.pushViewController(controller, animated: true)
-//        
-//    }
+//        //        controller.editEventFlag = true
+        self.navigationController!.pushViewController(controller, animated: true)
+//
+    }
     
     
     //function - Delete the selected meme
-    //@IBAction func deleteMemeButton(sender: UIButton) {
-    func deleteEvent(){
+
+    @IBAction func deleteEvent(sender: UIBarButtonItem) {
+    //func deleteEvent(){
         println("delete button pushed.")
         
         //Create the AlertController

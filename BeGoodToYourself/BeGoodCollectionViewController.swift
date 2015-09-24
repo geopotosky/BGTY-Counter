@@ -23,7 +23,7 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
     //    var memes: Memes!
     var eventIndex: Int!
     
-    var editMemeFlag: Bool!
+    var editEventFlag: Bool!
     var editButtonFlag: Bool!
     
     // The selected indexes array keeps all of the indexPaths for cells that are "selected". The array is
@@ -50,6 +50,7 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
         println("Hello Cellection View Controller")
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Edit, target: self, action: "editButton")
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "addEvent")
         //self.navigationItem.leftBarButtonItem = self.editButtonItem()
         
         bottomButton.hidden = true
@@ -398,11 +399,12 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
     
     
     //Button Function - Create a New Event
-    @IBAction func addEventButton(sender: UIBarButtonItem) {
+    //@IBAction func addEventButton(sender: UIBarButtonItem) {
+    func addEvent() {
         
         let storyboard = self.storyboard
         let controller = self.storyboard?.instantiateViewControllerWithIdentifier("BeGoodAddEventViewController") as! BeGoodAddEventViewController
-        controller.editMemeFlag = false
+        controller.editEventFlag = false
         self.navigationController!.pushViewController(controller, animated: true)
         
     }

@@ -172,25 +172,20 @@ class BeGoodPickdateViewController: UIViewController {
         
     }
 
-    
+    //* - Countdown Time Viewer
     func update() {
         
         if(count > 0)
         {
             count = count - 1
-            println(count)
             let minutes:Int = (count / 60)
             let hours:Int = ((count / 60) / 60) % 24
             let days:Int = ((count / 60) / 60) / 24
             let seconds:Int = count - (minutes * 60)
             let minutes2:Int = (count / 60) % 60
-
             
-            let timerOutput = String(format: "%4d:%2d:%2d:%02d", days, hours, minutes2, seconds) as String
+            let timerOutput = String(format: "%5d Days %2d:%2d:%02d", days, hours, minutes2, seconds) as String
             countDownLabel.text = timerOutput as String
-            //countDownLabel.text = ("\(minutes) Minutes \(seconds) Seconds")
-            
-            //countDownLabel.text = String(count--) + " Seconds"
             CountDownDescription.text = eventText
         }
         
