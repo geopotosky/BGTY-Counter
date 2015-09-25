@@ -18,11 +18,11 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
     @IBOutlet weak var bottomButton: UIButton!
     
     
-    //Meme variables
+    //Event variables
     var events: [Events]!
-    //    var memes: Memes!
     var eventIndex: Int!
     
+    //* - Flag passed to determine editing function (add or edit). This flag allows reuse of the AddEvent view
     var editEventFlag: Bool!
     var editButtonFlag: Bool!
     
@@ -98,7 +98,7 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        println("collection view viewWillAppear")
+        //Hide the tab bar
         self.tabBarController?.tabBar.hidden = false
         
         editButtonFlag = true

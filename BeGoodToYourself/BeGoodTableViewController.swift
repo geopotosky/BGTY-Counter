@@ -19,6 +19,8 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
     //    var memes: Memes!
     var eventIndex: Int!
     var eventIndexPath: NSIndexPath!
+    
+    //* - Flag passed to determine editing function (add or edit). This flag allows reuse of the AddEvent view
     var editEventFlag: Bool!
     
     

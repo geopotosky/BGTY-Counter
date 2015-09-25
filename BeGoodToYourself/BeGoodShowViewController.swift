@@ -13,21 +13,36 @@ import CoreData
 
 class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDelegate {
     
+    @IBOutlet weak var currentDateLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var eventDate: UILabel!
     @IBOutlet weak var textFieldEvent: UILabel!
     @IBOutlet weak var deleteEventButton: UIBarButtonItem!
+    @IBOutlet weak var editEventButton: UIBarButtonItem!
+    @IBOutlet weak var countDownLabel: UILabel!
+    @IBOutlet weak var untilEventText: UILabel!
+    @IBOutlet weak var untilEventSelector: UISegmentedControl!
     
-    //var memedImage : UIImage!
     var events: [Events]!
     //    var events: Events!
     var eventIndex:Int!
     var eventIndexPath: NSIndexPath!
-    //var memedImage: NSData!
-    //    var memedImage2: NSData!
-    //    var memedImage3: NSData!
-    
     var editEventFlag: Bool!
+    
+    var timeAtPress = NSDate()
+    var currentDateWithOffset = NSDate()
+    var count: Int!
+    //var count = 180
+    //var eventText: String!
+    var pickEventDate: NSDate!
+    var tempEventDate: NSDate!
+    
+    var durationSeconds: Int!
+    var durationMinutes: Int!
+    var durationHours: Int!
+    var durationDays: Int!
+    var durationWeeks: Int!
+    var durationMonths: Int!
     
     
     override func viewDidLoad() {
@@ -38,7 +53,7 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         let appDelegate = object as! AppDelegate
         events = appDelegate.events
         
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Edit, target: self, action: "editEvent")
+//        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Edit, target: self, action: "editEvent")
         
         //* - Hide the Tab Bar
         self.tabBarController?.tabBar.hidden = true
@@ -58,6 +73,12 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         //        println("memeIndexPath: \(memeIndexPath)")
         //        println("editEventFlag: \(editEventFlag)")
         
+        //-Countdown Timer routine
+        var timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("update"), userInfo: nil, repeats: true)
+        
+        
+        //-Call the "Until Date" selector method
+        segmentPicked(untilEventSelector)
         
     }
     
@@ -67,11 +88,10 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         
         println("BeGoodShowVC viewWillAppear")
         
-        
         //println("memes.count: \(memes.count)")
-//        println("memeIndex: \(memeIndex)")
-//        println("memeIndexPath: \(memeIndexPath)")
-//        println("editEventFlag: \(editEventFlag)")
+        println("eventIndex: \(eventIndex)")
+        println("eventIndexPath: \(eventIndexPath)")
+        println("editEventFlag: \(editEventFlag)")
         
         //Get shared model info
         //        let object = UIApplication.sharedApplication().delegate
@@ -84,10 +104,9 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         
         var dateFormatter = NSDateFormatter()
         
-        //let date = NSDate()
+        let currentDate = NSDate()
         let date = event.eventDate
         let timeZone = NSTimeZone(name: "Local")
-        
         dateFormatter.timeZone = timeZone
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         let dateNew = dateFormatter.stringFromDate(date!)
@@ -97,26 +116,53 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         dateFormatter.timeZone = NSTimeZone()
         println(dateFormatter.timeZone)
         
+        self.currentDateLabel.text = dateFormatter.stringFromDate(currentDate)
         let localDate = dateFormatter.stringFromDate(date!)
-        //let strDate = dateFormatter.stringFromDate(myDatePicker.date)
         self.eventDate.text = localDate
-        
         
         let finalImage = UIImage(data: event.eventImage!)
         self.imageView!.image = finalImage
         self.textFieldEvent.text = event.textEvent
+
+        //-Setup Countdown Ticker values
+        let pickerDate = event.eventDate
+        let elapsedTime = pickerDate!.timeIntervalSinceDate(timeAtPress)  //* Event Date in seconds raw
+        durationSeconds = Int(elapsedTime)
+        durationMinutes = durationSeconds / 60
+        durationHours = (durationSeconds / 60) / 60
+        durationDays = ((durationSeconds / 60) / 60) / 24
+        durationWeeks = (((durationSeconds / 60) / 60) / 24) / 7
         
+        //-Disable Segment button if value = 0
+        if durationWeeks == 0 {
+            untilEventSelector.setEnabled(false, forSegmentAtIndex: 0)
+            untilEventSelector.setEnabled(false, forSegmentAtIndex: 1)
+        }
+        if durationDays == 0 {
+            untilEventSelector.setEnabled(false, forSegmentAtIndex: 2)
+        }
+        if durationHours == 0 {
+            untilEventSelector.setEnabled(false, forSegmentAtIndex: 3)
+        }
+        if durationMinutes == 0 {
+            untilEventSelector.setEnabled(false, forSegmentAtIndex: 4)
+        }
+        //-Set the default segment value (days)
+        let tempText1 = String(stringInterpolationSegment: self.durationDays)
+        untilEventText.text = ("Only \(tempText1) Days")
+        
+        //-Set the duration count in seconds which will be used in the countdown calculation
+        count = durationSeconds
     }
     
     
-    //* - GEO: Add the "sharedContext" convenience property
+    //-Add the "sharedContext" convenience property
     lazy var sharedContext: NSManagedObjectContext = {
         return CoreDataStackManager.sharedInstance().managedObjectContext!
         }()
     
     
-    // Mark: - Fetched Results Controller
-    
+    //-Fetched Results Controller
     lazy var fetchedResultsController: NSFetchedResultsController = {
         
         let fetchRequest = NSFetchRequest(entityName: "Events")
@@ -131,68 +177,108 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         return fetchedResultsController
         
         }()
+    @IBAction func segmentPicked(sender: UISegmentedControl) {
+        
+        switch untilEventSelector.selectedSegmentIndex {
+
+        case 0:
+            println("Zero")
+            let tempText1 = String(stringInterpolationSegment: self.durationWeeks)
+            untilEventText.text = ("Only \(tempText1) Months")
+        case 1:
+            println("One")
+            let tempText1 = String(stringInterpolationSegment: self.durationWeeks)
+            untilEventText.text = ("Only \(tempText1) Weeks")
+        case 2:
+            println("Two")
+            let tempText1 = String(stringInterpolationSegment: self.durationDays)
+            untilEventText.text = ("Only \(tempText1) Days")
+        case 3:
+            println("Three")
+            let tempText1 = String(stringInterpolationSegment: self.durationHours)
+            untilEventText.text = ("Only \(tempText1) Hours")
+        case 4:
+            println("Four")
+            let tempText1 = String(stringInterpolationSegment: self.durationMinutes)
+            untilEventText.text = ("Only \(tempText1) Minutes")
+        case 5:
+            println("Five")
+            let tempText1 = String(stringInterpolationSegment: self.durationSeconds)
+            untilEventText.text = ("Only \(tempText1) Seconds")
+        default:
+            println("Error")
+            
+        }
+
+    }
     
     
-    func editEvent(){
+    //-Edit the selected event
+    @IBAction func editEvent(sender: AnyObject) {
         println("Getting ready to edit the Event")
         let storyboard = self.storyboard
         let controller = self.storyboard?.instantiateViewControllerWithIdentifier("BeGoodAddEventViewController") as! BeGoodAddEventViewController
-//
-//        //controller.memes = memes[index]
-//        //controller.memes = self.memes
-//        
+
         controller.eventIndexPath2 = eventIndexPath
         controller.eventIndex2 = eventIndex
         controller.editEventFlag = true
-//
-//        //controller.memedImage2 = meme.memedImage
-//        
-//        self.presentViewController(controller, animated: true, completion: nil)
-//        //self.navigationController!.pushViewController(controller, animated: true)
-//        
-//        //        let controller =
-//        //        controller.memeIndexPath2 = memeIndexPath
-//        //        controller.memeIndex2 = memeIndex
-//        //        controller.editEventFlag = true
+
         self.navigationController!.pushViewController(controller, animated: true)
 //
     }
     
     
-    //function - Delete the selected meme
-
+    //-Delete the selected event
     @IBAction func deleteEvent(sender: UIBarButtonItem) {
-    //func deleteEvent(){
+        
         println("delete button pushed.")
         
-        //Create the AlertController
+        //-Create the AlertController
         let actionSheetController: UIAlertController = UIAlertController(title: "Warning!", message: "Do you really want to Delete the Event and it's ToDo List?", preferredStyle: .Alert)
         
-        //Create and add the Cancel action
+        //-Create and add the Cancel action
         let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .Cancel) { action -> Void in
             self.dismissViewControllerAnimated(true, completion: nil)
         }
         actionSheetController.addAction(cancelAction)
         
-        //Create and add the Delete Meme action
+        //-Create and add the Delete Event action
         let deleteAction: UIAlertAction = UIAlertAction(title: "Delete Meme", style: .Default) { action -> Void in
             let object = UIApplication.sharedApplication().delegate
             let appDelegate = object as! AppDelegate
             println(self.eventIndex)
-            //appDelegate.memes.removeAtIndex(self.memeIndex)
             
             let event = self.fetchedResultsController.objectAtIndexPath(self.eventIndexPath) as! Events
             self.sharedContext.deleteObject(event)
             
             CoreDataStackManager.sharedInstance().saveContext()
-            
-            //appDelegate.memes.removeAtIndex(self.memeIndex)
+
             self.navigationController!.popViewControllerAnimated(true)
         }
         actionSheetController.addAction(deleteAction)
         
-        //Present the AlertController
+        //-Present the AlertController
         self.presentViewController(actionSheetController, animated: true, completion: nil)
+    }
+    
+    
+    //-Countdown Time Viewer
+    func update() {
+        
+        if(count > 0)
+        {
+            count = count - 1
+            let minutes:Int = (count / 60)
+            let hours:Int = ((count / 60) / 60) % 24
+            let days:Int = ((count / 60) / 60) / 24
+            let seconds:Int = count - (minutes * 60)
+            let minutes2:Int = (count / 60) % 60
+            
+            let timerOutput = String(format: "%5d Days %2d:%2d:%02d", days, hours, minutes2, seconds) as String
+            countDownLabel.text = timerOutput as String
+            //CountDownDescription.text = eventText
+        }
+        
     }
     
 }

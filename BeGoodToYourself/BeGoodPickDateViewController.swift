@@ -8,9 +8,9 @@
 
 import UIKit
 
-protocol SecondVCDelegate {
-    func didFinishSecondVC(controller: BeGoodPickdateViewController)
-}
+//protocol SecondVCDelegate {
+//    func didFinishSecondVC(controller: BeGoodPickdateViewController)
+//}
 
 class BeGoodPickdateViewController: UIViewController {
     
@@ -29,10 +29,13 @@ class BeGoodPickdateViewController: UIViewController {
     
     var eventText: String!
     
+    //* - Flag passed to determine editing function (add or edit). This flag allows reuse of the AddEvent view
+    var editEventFlag2: Bool!
+    
     var pickEventDate: NSDate!
     var tempEventDate: NSDate!
     
-    var delegate: SecondVCDelegate! = nil
+    //var delegate: SecondVCDelegate! = nil
     
     //    var offset: Float
     //    var systemTimeZone = NSTimeZone()
@@ -159,17 +162,22 @@ class BeGoodPickdateViewController: UIViewController {
     
     @IBAction func pickEventDate(sender: UIButton) {
         println("pickEventDate Button selected")
-        //self.dismissViewControllerAnimated(true, completion: nil)
-//        if let navigationController = self.navigationController {
-//            navigationController.popViewControllerAnimated(true)
-//        }
         
-        let controller = self.navigationController!.viewControllers[1] as! BeGoodAddEventViewController
-        //let controller = self.storyboard?.instantiateViewControllerWithIdentifier("BeGoodAddEventViewController") as! BeGoodAddEventViewController
-        controller.tempEventDate2 = myDatePicker.date
-        println("controller.tempEventDate2: \(controller.tempEventDate2)")
-        self.navigationController?.popViewControllerAnimated(true)
-        
+        if editEventFlag2 == true {
+            let controller = self.navigationController!.viewControllers[2] as! BeGoodAddEventViewController
+            //* - Forward selected event date to previous view
+            controller.tempEventDate2 = myDatePicker.date
+            println("controller.tempEventDate2: \(controller.tempEventDate2)")
+            self.navigationController?.popViewControllerAnimated(true)
+            
+        } else {
+            let controller = self.navigationController!.viewControllers[1] as! BeGoodAddEventViewController
+            //* - Forward selected event date to previous view
+            controller.tempEventDate2 = myDatePicker.date
+            println("controller.tempEventDate2: \(controller.tempEventDate2)")
+            self.navigationController?.popViewControllerAnimated(true)
+        }
+    
     }
 
     //* - Countdown Time Viewer
