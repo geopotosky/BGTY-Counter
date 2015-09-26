@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E5C961AB1BB7032C006D20C8 /* BGClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C961AA1BB7032C006D20C8 /* BGClient.swift */; };
+		E5C961AD1BB70390006D20C8 /* BGConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C961AC1BB70390006D20C8 /* BGConstants.swift */; };
+		E5C961AF1BB70A54006D20C8 /* BeGoodFlickrViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C961AE1BB70A54006D20C8 /* BeGoodFlickrViewController.swift */; };
 		E5D00EDC1BADFF4300971CC6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D00EDB1BADFF4300971CC6 /* AppDelegate.swift */; };
 		E5D00EDE1BADFF4300971CC6 /* BeGoodAddEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D00EDD1BADFF4300971CC6 /* BeGoodAddEventViewController.swift */; };
 		E5D00EE11BADFF4300971CC6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5D00EDF1BADFF4300971CC6 /* Main.storyboard */; };
@@ -35,6 +38,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E5C961AA1BB7032C006D20C8 /* BGClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BGClient.swift; sourceTree = "<group>"; };
+		E5C961AC1BB70390006D20C8 /* BGConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BGConstants.swift; sourceTree = "<group>"; };
+		E5C961AE1BB70A54006D20C8 /* BeGoodFlickrViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeGoodFlickrViewController.swift; sourceTree = "<group>"; };
 		E5D00ED61BADFF4300971CC6 /* BeGoodToYourself.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BeGoodToYourself.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5D00EDA1BADFF4300971CC6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E5D00EDB1BADFF4300971CC6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -74,6 +80,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E5C961A91BB70307006D20C8 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				E5C961AA1BB7032C006D20C8 /* BGClient.swift */,
+				E5C961AC1BB70390006D20C8 /* BGConstants.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 		E5D00ECD1BADFF4300971CC6 = {
 			isa = PBXGroup;
 			children = (
@@ -97,6 +112,7 @@
 			children = (
 				E5D00EFD1BADFFF100971CC6 /* CoreDataStackManager.swift */,
 				E5D00F0E1BAE184E00971CC6 /* Model.xcdatamodeld */,
+				E5C961A91BB70307006D20C8 /* Models */,
 				E5D00F011BAE013400971CC6 /* Views */,
 				E5D00F001BAE011400971CC6 /* Objects */,
 				E5D00EFF1BAE00FE00971CC6 /* Delegate Files */,
@@ -156,6 +172,7 @@
 				E5D00F041BAE062900971CC6 /* BeGoodCollectionViewController.swift */,
 				E5D00F061BAE06E700971CC6 /* BeGoodCollectionViewCell.swift */,
 				E5D00F081BAE08F400971CC6 /* BeGoodShowViewController.swift */,
+				E5C961AE1BB70A54006D20C8 /* BeGoodFlickrViewController.swift */,
 				E5D00EDF1BADFF4300971CC6 /* Main.storyboard */,
 				E5D00EE21BADFF4300971CC6 /* Images.xcassets */,
 				E5D00EE41BADFF4300971CC6 /* LaunchScreen.xib */,
@@ -268,9 +285,12 @@
 				E5D00F0D1BAE0C8300971CC6 /* EventTextDelegate.swift in Sources */,
 				E5D00F031BAE056B00971CC6 /* BeGoodTableViewController.swift in Sources */,
 				E5D00EDC1BADFF4300971CC6 /* AppDelegate.swift in Sources */,
+				E5C961AB1BB7032C006D20C8 /* BGClient.swift in Sources */,
 				E5D00F121BAF8DCF00971CC6 /* BeGoodPickdateViewController.swift in Sources */,
 				E5D00F0B1BAE0BF000971CC6 /* Events.swift in Sources */,
+				E5C961AD1BB70390006D20C8 /* BGConstants.swift in Sources */,
 				E5D00EFE1BADFFF100971CC6 /* CoreDataStackManager.swift in Sources */,
+				E5C961AF1BB70A54006D20C8 /* BeGoodFlickrViewController.swift in Sources */,
 				E5D00F101BAE184E00971CC6 /* Model.xcdatamodeld in Sources */,
 				E5D00F091BAE08F400971CC6 /* BeGoodShowViewController.swift in Sources */,
 				E5D00F051BAE062900971CC6 /* BeGoodCollectionViewController.swift in Sources */,
@@ -403,6 +423,7 @@
 				INFOPLIST_FILE = BeGoodToYourself/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -413,6 +434,7 @@
 				INFOPLIST_FILE = BeGoodToYourself/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -469,6 +491,7 @@
 				E5D00EF71BADFF4300971CC6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		E5D00EF81BADFF4300971CC6 /* Build configuration list for PBXNativeTarget "BeGoodToYourselfTests" */ = {
 			isa = XCConfigurationList;
@@ -477,6 +500,7 @@
 				E5D00EFA1BADFF4300971CC6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

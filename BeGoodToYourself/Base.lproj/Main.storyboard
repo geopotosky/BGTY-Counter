@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="TFT-YH-Gl0">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="ZmE-op-jQe">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
@@ -286,6 +286,26 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" alpha="0.69999998807907104" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Enter Event Description" textAlignment="center" minimumFontSize="14" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="wDs-eL-sei">
+                                <rect key="frame" x="0.0" y="46" width="600" height="50"/>
+                                <color key="backgroundColor" red="0.69019609689999994" green="0.88627451660000001" blue="0.94509804249999996" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="ZLU-gi-SXQ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="ZLU-gi-SXQ"/>
+                                    </mask>
+                                </variation>
+                                <variation key="widthClass=compact" ambiguous="YES" misplaced="YES">
+                                    <rect key="frame" x="0.0" y="39" width="400" height="50"/>
+                                    <mask key="constraints">
+                                        <include reference="ZLU-gi-SXQ"/>
+                                    </mask>
+                                </variation>
+                            </textField>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="JpZ-Lq-gCl"/>
                             <textField opaque="NO" clipsSubviews="YES" alpha="0.69999999999999996" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Enter Event Description" textAlignment="center" minimumFontSize="14" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="BRi-mk-BTB">
                                 <rect key="frame" x="0.0" y="-30" width="97" height="30"/>
@@ -396,6 +416,34 @@
                                     </mask>
                                 </variation>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.69999998807907104" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ihm-dw-7A7">
+                                <rect key="frame" x="0.0" y="99" width="600" height="48"/>
+                                <color key="backgroundColor" red="0.69019609689999994" green="0.88627451660000001" blue="0.94509804249999996" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="48" id="6rg-eT-jXe"/>
+                                </constraints>
+                                <attributedString key="attributedText">
+                                    <fragment content="Today's Date">
+                                        <attributes>
+                                            <color key="NSColor" red="0.0" green="0.47409017609999998" blue="0.81467177830000004" alpha="1" colorSpace="calibratedRGB"/>
+                                            <font key="NSFont" size="17" name="HelveticaNeue"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <nil key="highlightedColor"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="6rg-eT-jXe"/>
+                                    </mask>
+                                </variation>
+                                <variation key="widthClass=compact" ambiguous="YES" misplaced="YES">
+                                    <rect key="frame" x="0.0" y="91" width="400" height="48"/>
+                                    <mask key="constraints">
+                                        <include reference="6rg-eT-jXe"/>
+                                    </mask>
+                                </variation>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -498,7 +546,145 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="S7F-68-j3j" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="238.5" y="-286"/>
+            <point key="canvasLocation" x="238" y="-286"/>
+        </scene>
+        <!--Be Good Flickr View Controller-->
+        <scene sceneID="pgU-Eq-vji">
+            <objects>
+                <viewController storyboardIdentifier="BeGoodFlickrViewController" id="ZmE-op-jQe" customClass="BeGoodFlickrViewController" customModule="BeGoodToYourself" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="P84-aH-48J"/>
+                        <viewControllerLayoutGuide type="bottom" id="T6P-i9-QSS"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="2Fk-us-SFS">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" alpha="0.79999999999999982" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Enter Text Phrase" textAlignment="center" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="bAG-vk-hpE">
+                                <rect key="frame" x="0.0" y="-30" width="97" height="30"/>
+                                <color key="backgroundColor" red="0.69019609689999994" green="0.88627451660000001" blue="0.94509804249999996" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="VNh-Nw-R9U"/>
+                                </constraints>
+                                <color key="textColor" red="0.0" green="0.43921568989999998" blue="0.75294119120000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="VNh-Nw-R9U"/>
+                                    </mask>
+                                </variation>
+                                <variation key="widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="VNh-Nw-R9U"/>
+                                    </mask>
+                                </variation>
+                            </textField>
+                            <button opaque="NO" alpha="0.79999999999999982" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mCh-Ha-9Iv">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <color key="backgroundColor" red="0.69019609689999994" green="0.88627451660000001" blue="0.94509804249999996" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Search">
+                                    <color key="titleColor" red="0.0" green="0.43921568989999998" blue="0.75294119120000003" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="searchFlicker:" destination="ZmE-op-jQe" eventType="touchUpInside" id="2Pb-Zq-GEB"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" alpha="0.79999999999999982" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Xb-iV-kKJ">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <color key="backgroundColor" red="0.69019609689999994" green="0.88627451660000001" blue="0.94509804249999996" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Use This Picture">
+                                    <color key="titleColor" red="0.0" green="0.43921568989999998" blue="0.75294119120000003" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="pickFlickrImage:" destination="ZmE-op-jQe" eventType="touchUpInside" id="r9T-gy-k5k"/>
+                                </connections>
+                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="LOE-un-foY">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="LOE-un-foY" firstAttribute="top" secondItem="P84-aH-48J" secondAttribute="bottom" constant="149" id="0Iq-UF-cHc">
+                                <variation key="widthClass=compact" constant="134"/>
+                            </constraint>
+                            <constraint firstAttribute="trailing" secondItem="9Xb-iV-kKJ" secondAttribute="trailing" id="8Ev-RG-4eF"/>
+                            <constraint firstItem="T6P-i9-QSS" firstAttribute="top" secondItem="LOE-un-foY" secondAttribute="bottom" constant="15" id="BHe-8h-ZCi">
+                                <variation key="widthClass=compact" constant="0.0"/>
+                            </constraint>
+                            <constraint firstItem="9Xb-iV-kKJ" firstAttribute="trailing" secondItem="mCh-Ha-9Iv" secondAttribute="trailing" id="Fbe-b8-uK0"/>
+                            <constraint firstItem="9Xb-iV-kKJ" firstAttribute="leading" secondItem="2Fk-us-SFS" secondAttribute="leading" id="I3m-39-GAl"/>
+                            <constraint firstItem="9Xb-iV-kKJ" firstAttribute="top" secondItem="mCh-Ha-9Iv" secondAttribute="bottom" constant="3" id="KTt-OF-Pfb"/>
+                            <constraint firstItem="bAG-vk-hpE" firstAttribute="leading" secondItem="mCh-Ha-9Iv" secondAttribute="leading" id="N14-tR-5MV"/>
+                            <constraint firstItem="LOE-un-foY" firstAttribute="leading" secondItem="2Fk-us-SFS" secondAttribute="leadingMargin" id="QHW-lv-PS2">
+                                <variation key="widthClass=compact" constant="-16"/>
+                            </constraint>
+                            <constraint firstItem="9Xb-iV-kKJ" firstAttribute="leading" secondItem="mCh-Ha-9Iv" secondAttribute="leading" id="V6J-HF-Ym6"/>
+                            <constraint firstItem="mCh-Ha-9Iv" firstAttribute="top" secondItem="bAG-vk-hpE" secondAttribute="bottom" constant="3" id="Vy6-Ve-kmj"/>
+                            <constraint firstItem="9Xb-iV-kKJ" firstAttribute="centerX" secondItem="LOE-un-foY" secondAttribute="centerX" id="hId-CQ-pPg"/>
+                            <constraint firstItem="bAG-vk-hpE" firstAttribute="top" secondItem="P84-aH-48J" secondAttribute="bottom" constant="39" id="tVQ-SE-DXj"/>
+                            <constraint firstItem="mCh-Ha-9Iv" firstAttribute="trailing" secondItem="bAG-vk-hpE" secondAttribute="trailing" id="wqc-OO-epJ"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="bAG-vk-hpE"/>
+                                <exclude reference="mCh-Ha-9Iv"/>
+                                <exclude reference="9Xb-iV-kKJ"/>
+                                <exclude reference="LOE-un-foY"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="N14-tR-5MV"/>
+                                <exclude reference="tVQ-SE-DXj"/>
+                                <exclude reference="Vy6-Ve-kmj"/>
+                                <exclude reference="wqc-OO-epJ"/>
+                                <exclude reference="8Ev-RG-4eF"/>
+                                <exclude reference="Fbe-b8-uK0"/>
+                                <exclude reference="I3m-39-GAl"/>
+                                <exclude reference="KTt-OF-Pfb"/>
+                                <exclude reference="V6J-HF-Ym6"/>
+                                <exclude reference="hId-CQ-pPg"/>
+                                <exclude reference="0Iq-UF-cHc"/>
+                                <exclude reference="QHW-lv-PS2"/>
+                                <exclude reference="BHe-8h-ZCi"/>
+                            </mask>
+                        </variation>
+                        <variation key="widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="bAG-vk-hpE"/>
+                                <include reference="mCh-Ha-9Iv"/>
+                                <include reference="9Xb-iV-kKJ"/>
+                                <include reference="LOE-un-foY"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="N14-tR-5MV"/>
+                                <include reference="tVQ-SE-DXj"/>
+                                <include reference="Vy6-Ve-kmj"/>
+                                <include reference="wqc-OO-epJ"/>
+                                <include reference="8Ev-RG-4eF"/>
+                                <include reference="Fbe-b8-uK0"/>
+                                <include reference="I3m-39-GAl"/>
+                                <include reference="KTt-OF-Pfb"/>
+                                <include reference="V6J-HF-Ym6"/>
+                                <include reference="hId-CQ-pPg"/>
+                                <include reference="0Iq-UF-cHc"/>
+                                <include reference="QHW-lv-PS2"/>
+                                <include reference="BHe-8h-ZCi"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <connections>
+                        <outlet property="photoImageView" destination="LOE-un-foY" id="RRh-7d-xxw"/>
+                        <outlet property="phraseTextField" destination="bAG-vk-hpE" id="7XC-5B-FXI"/>
+                        <outlet property="pickImageButton" destination="9Xb-iV-kKJ" id="t5b-br-kx3"/>
+                        <outlet property="searchButton" destination="mCh-Ha-9Iv" id="cWM-He-gin"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Uh7-84-Dpm" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="987" y="-286"/>
         </scene>
         <!--BeGood Show View Controller-->
         <scene sceneID="X4X-qc-lrE">
@@ -799,7 +985,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="e4g-p0-cnd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="903" y="-286"/>
+            <point key="canvasLocation" x="987" y="438"/>
         </scene>
         <!--BeGood Pickdate View Controller-->
         <scene sceneID="K4J-pR-6sn">
