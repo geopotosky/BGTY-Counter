@@ -23,6 +23,8 @@ class BeGoodFlickrViewController: UIViewController {
     //* - Alert variable
     var alertMessage: String!
     
+    var editEventFlag2: Bool!
+    var flickrImageURL: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,7 +70,9 @@ class BeGoodFlickrViewController: UIViewController {
             
             //* - Call the Get Flickr Images function
             BGClient.sharedInstance().getFlickrData(self) { (success, pictureURL, errorString) in
+                
                 if success {
+                    self.flickrImageURL = pictureURL
                     
                     println("Success! Found Image")
                     let imageURL = NSURL(string: pictureURL!)
@@ -114,6 +118,28 @@ class BeGoodFlickrViewController: UIViewController {
     @IBAction func pickFlickrImage(sender: UIButton) {
         
         println("Flickr Image Picked.")
+        
+        if editEventFlag2 == true {
+            let controller = self.navigationController!.viewControllers[2] as! BeGoodAddEventViewController
+            //* - Forward selected event date to previous view
+            controller.flickrImageURL = self.flickrImageURL
+            println(self.flickrImageURL)
+            
+//            controller.tempEventDate2 = myDatePicker.date
+//            controller.imageViewPicker.image = imageData
+//            println("controller.tempEventDate2: \(controller.tempEventDate2)")
+            self.navigationController?.popViewControllerAnimated(true)
+            
+        } else {
+            let controller = self.navigationController!.viewControllers[1] as! BeGoodAddEventViewController
+            //* - Forward selected event date to previous view
+            controller.flickrImageURL = self.flickrImageURL
+            println(self.flickrImageURL)
+            
+//            controller.imageViewPicker.image = myDatePicker.date
+//            println("controller.tempEventDate2: \(controller.tempEventDate2)")
+            self.navigationController?.popViewControllerAnimated(true)
+        }
         
     }
     

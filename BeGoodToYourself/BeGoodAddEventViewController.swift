@@ -18,6 +18,7 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
     @IBOutlet weak var datePickerButton: UIButton!
     @IBOutlet weak var imageViewPicker: UIImageView!
     @IBOutlet weak var cameraButton: UIBarButtonItem!
+    @IBOutlet weak var flickrButton: UIBarButtonItem!
     @IBOutlet weak var textFieldEvent: UITextField!
 //    @IBOutlet weak var textFieldBottom: UITextField!
     @IBOutlet weak var toolbarObject: UIToolbar!
@@ -43,8 +44,8 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
     var todaysDate: NSDate!
     
     var editEventFlag: Bool!
-    
     var tempEventDate2: NSDate!
+    var flickrImageURL: String!
 
     
     //-Event Description Font Attributes
@@ -159,9 +160,22 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
+        println(self.flickrImageURL)
+        if self.flickrImageURL != nil {
+
+        let imageURL = NSURL(string: self.flickrImageURL)
+        if let imageData = NSData(contentsOfURL: imageURL!) {
+            self.imageViewPicker.image = UIImage(data: imageData)
+            
+        } else {
+            self.imageViewPicker.image = nil
+        }
+        }
+        
+        
 //        if editEventFlag == true {
 //            let event = fetchedResultsController.objectAtIndexPath(eventIndexPath2) as! Events
-//            
+//
 //            //* - Add Selected Meme attributes and populate Editor fields
 //            self.textFieldEvent.text = event.textEvent
 //            imageViewPicker.image = UIImage(data: event.eventImage!)
@@ -263,7 +277,7 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
         self.presentViewController(imagePicker, animated: true, completion: nil)
     }
     
-    //Select an image for the Meme
+    //Select an image for the Event from your Camera Roll
     func imagePickerController(imagePicker: UIImagePickerController,
         didFinishPickingMediaWithInfo info: [NSObject : AnyObject]){
             
@@ -283,13 +297,26 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
-    //Button to Take a Picture with Camera
+    //Select an image by taking a Picture
     @IBAction func pickAnImageFromCamera (sender: AnyObject) {
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         imagePicker.sourceType = UIImagePickerControllerSourceType.Camera
         self.presentViewController(imagePicker, animated: true, completion: nil)
     }
+    
+    
+    //Select a Flickr Image
+    @IBAction func getFlickrImage(sender: UIBarButtonItem) {
+        
+        println("Get Flickr Image")
+        let storyboard = self.storyboard
+        let controller = self.storyboard?.instantiateViewControllerWithIdentifier("BeGoodFlickrViewController") as! BeGoodFlickrViewController
+        controller.editEventFlag2 = editEventFlag
+        self.navigationController!.pushViewController(controller, animated: true)
+        
+    }
+    
     
     //Subscribe to Keyboard appearing and hiding notifications
     func subscribeToKeyboardNotifications() {
