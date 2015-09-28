@@ -46,6 +46,7 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
     var editEventFlag: Bool!
     var tempEventDate2: NSDate!
     var flickrImageURL: String!
+    var flickrImage: UIImage!
 
     
     //-Event Description Font Attributes
@@ -160,16 +161,27 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        println(self.flickrImageURL)
-        if self.flickrImageURL != nil {
-
-        let imageURL = NSURL(string: self.flickrImageURL)
-        if let imageData = NSData(contentsOfURL: imageURL!) {
-            self.imageViewPicker.image = UIImage(data: imageData)
-            
-        } else {
-            self.imageViewPicker.image = nil
-        }
+        
+//        println(self.flickrImageURL)
+//        if self.flickrImageURL != nil {
+//
+//            let imageURL = NSURL(string: self.flickrImageURL)
+//            if let imageData = NSData(contentsOfURL: imageURL!) {
+//                self.imageViewPicker.image = UIImage(data: imageData)
+//            
+//            } else {
+//                self.imageViewPicker.image = nil
+//            }
+//        }
+        
+        
+//        if self.imageViewPicker.image != nil {
+//            
+//        }
+        if self.flickrImage != nil && self.imageViewPicker.image == nil {
+            println("Flickr Image is present")
+            self.imageViewPicker.image = flickrImage
+                
         }
         
         
@@ -313,6 +325,7 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
         let storyboard = self.storyboard
         let controller = self.storyboard?.instantiateViewControllerWithIdentifier("BeGoodFlickrViewController") as! BeGoodFlickrViewController
         controller.editEventFlag2 = editEventFlag
+        controller.eventIndexPath2 = self.eventIndexPath2
         self.navigationController!.pushViewController(controller, animated: true)
         
     }

@@ -98,7 +98,7 @@ class BeGoodPickdateViewController: UIViewController {
         
         let localDate = dateFormatter.stringFromDate(date)
         let strDate = dateFormatter.stringFromDate(myDatePicker.date)
-        self.selectedDate.text = strDate
+        //self.selectedDate.text = strDate
         self.tempEventDate = myDatePicker.date
         
         println("UTC Time")

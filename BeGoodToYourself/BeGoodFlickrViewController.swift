@@ -13,6 +13,7 @@ class BeGoodFlickrViewController: UIViewController {
     @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var phraseTextField: UITextField!
     @IBOutlet weak var searchButton: UIButton!
+    @IBOutlet weak var searchButtonLabel: UILabel!
     @IBOutlet weak var pickImageButton: UIButton!
     
     var tapRecognizer: UITapGestureRecognizer? = nil
@@ -20,11 +21,17 @@ class BeGoodFlickrViewController: UIViewController {
     //* - Get the app delegate
     var appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
+    var events: [Events]!
+    
     //* - Alert variable
     var alertMessage: String!
     
     var editEventFlag2: Bool!
+    var searchFlag: Bool!
     var flickrImageURL: String!
+    var eventIndexPath2: NSIndexPath!
+    var eventImage2: NSData!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +39,10 @@ class BeGoodFlickrViewController: UIViewController {
         /* Initialize the tapRecognizer in viewDidLoad */
         tapRecognizer = UITapGestureRecognizer(target: self, action: "handleSingleTap:")
         tapRecognizer?.numberOfTapsRequired = 1
+        
+        searchFlag = false
+        searchButtonLabel.text = "Search"
+        
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -53,11 +64,13 @@ class BeGoodFlickrViewController: UIViewController {
         /* Unsubscribe to all keyboard events */
         self.unsubscribeToKeyboardNotifications()
     }
-   
+
+    
     
     @IBAction func searchFlicker(sender: UIButton) {
         
         println("search button pushed")
+        searchFlag = true
         appDelegate.phraseText = self.phraseTextField.text
         println(appDelegate.phraseText)
         
@@ -68,10 +81,14 @@ class BeGoodFlickrViewController: UIViewController {
         if !self.phraseTextField.text.isEmpty {
             //self.photoTitleLabel.text = "Searching..."
             
+            //-Update Search button text
+            self.updateSearchButton()
+            
             //* - Call the Get Flickr Images function
             BGClient.sharedInstance().getFlickrData(self) { (success, pictureURL, errorString) in
                 
                 if success {
+                    
                     self.flickrImageURL = pictureURL
                     
                     println("Success! Found Image")
@@ -80,6 +97,8 @@ class BeGoodFlickrViewController: UIViewController {
                     /* If an image exists at the url, set the image and title */
                     if let imageData = NSData(contentsOfURL: imageURL!) {
                         //let finalImage = UIImage(data: imageData)
+                        self.eventImage2 = imageData
+                        
                         dispatch_async(dispatch_get_main_queue(), {
                             //self.defaultLabel.alpha = 0.0
                             self.photoImageView.image = UIImage(data: imageData)
@@ -95,7 +114,7 @@ class BeGoodFlickrViewController: UIViewController {
                             self.photoImageView.image = nil
                         })
                     }
-
+                    
                 } else {
                     //* - Call Alert message
                     self.alertMessage = "Flickr Error Message! \(errorString)"
@@ -123,6 +142,7 @@ class BeGoodFlickrViewController: UIViewController {
             let controller = self.navigationController!.viewControllers[2] as! BeGoodAddEventViewController
             //* - Forward selected event date to previous view
             controller.flickrImageURL = self.flickrImageURL
+            controller.flickrImage = self.photoImageView.image
             println(self.flickrImageURL)
             
 //            controller.tempEventDate2 = myDatePicker.date
@@ -134,6 +154,7 @@ class BeGoodFlickrViewController: UIViewController {
             let controller = self.navigationController!.viewControllers[1] as! BeGoodAddEventViewController
             //* - Forward selected event date to previous view
             controller.flickrImageURL = self.flickrImageURL
+            controller.flickrImage = self.photoImageView.image
             println(self.flickrImageURL)
             
 //            controller.imageViewPicker.image = myDatePicker.date
@@ -217,9 +238,19 @@ class BeGoodFlickrViewController: UIViewController {
         }
     }
     
+    
+    //-Update the button label based on selection criteria
+    func updateSearchButton() {
+        if searchFlag == true {
+            searchButtonLabel.text = "Search Again"
+        } else {
+            searchButtonLabel.text = "Search"
+        }
+    }
+    
 }
 
-/* This extension was added as a fix based on student comments */
+//-This extension was added as a fix based on student comments */
 extension BeGoodFlickrViewController {
     func dismissAnyVisibleKeyboards() {
         if phraseTextField.isFirstResponder() {
