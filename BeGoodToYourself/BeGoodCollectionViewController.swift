@@ -182,6 +182,8 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
         
         if editButtonFlag == false {
             
+            println("editButtonFlag: \(editButtonFlag)")
+            
             let cell = collectionView.cellForItemAtIndexPath(indexPath) as! BeGoodCollectionViewCell
             
             //let meme = fetchedResultsController.objectAtIndexPath(indexPath) as! Memes
@@ -189,7 +191,8 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
             // Whenever a cell is tapped we will toggle its presence in the selectedIndexes array
             if let index = find(selectedIndexes, indexPath) {
                 selectedIndexes.removeAtIndex(index)
-            } else {
+            }
+            else {
                 //cell.cellOverlay.backgroundColor = UIColor.purpleColor()
                 selectedIndexes.append(indexPath)
             }
@@ -204,6 +207,8 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
             //updateBottomButton()
             
         } else {
+            
+            println("editButtonFlag: \(editButtonFlag)")
             
             let controller =
             storyboard!.instantiateViewControllerWithIdentifier("BeGoodShowViewController") as! BeGoodShowViewController

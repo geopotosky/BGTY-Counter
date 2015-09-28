@@ -14,6 +14,7 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
     
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var eventImageView: UIImageView!
     
     var events: [Events]!
     //    var memes: Memes!
@@ -97,9 +98,17 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
         let eventImage2 = event.eventImage
         let finalImage = UIImage(data: eventImage2!)
         
+        var dateFormatter = NSDateFormatter()
+        dateFormatter.timeStyle = NSDateFormatterStyle.MediumStyle //Set time style
+        dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle //Set date style
+        dateFormatter.timeZone = NSTimeZone()
+        let event2 = dateFormatter.stringFromDate(event.eventDate!)
+
         cell.textLabel!.text = event.textEvent
+        cell.detailTextLabel!.text = event2
         cell.imageView!.image = finalImage
-        println("show table event")
+        //eventImageView.image = finalImage
+        
         
     }
     
@@ -159,8 +168,6 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
         controller.events = self.events
         controller.eventIndexPath = indexPath
         controller.eventIndex = indexPath.row
-        //controller.memedImage = meme.memedImage
-        //controller.memedImage3 = meme.memedImage
         
         self.navigationController!.pushViewController(controller, animated: true)
         //self.presentViewController(controller, animated: true, completion: nil)

@@ -144,6 +144,7 @@ class BeGoodFlickrViewController: UIViewController {
             controller.flickrImageURL = self.flickrImageURL
             controller.flickrImage = self.photoImageView.image
             println(self.flickrImageURL)
+            controller.imageFlag = 3
             
 //            controller.tempEventDate2 = myDatePicker.date
 //            controller.imageViewPicker.image = imageData
@@ -156,6 +157,7 @@ class BeGoodFlickrViewController: UIViewController {
             controller.flickrImageURL = self.flickrImageURL
             controller.flickrImage = self.photoImageView.image
             println(self.flickrImageURL)
+            controller.imageFlag = 3
             
 //            controller.imageViewPicker.image = myDatePicker.date
 //            println("controller.tempEventDate2: \(controller.tempEventDate2)")

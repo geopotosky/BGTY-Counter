@@ -68,11 +68,6 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         // Set the view controller as the delegate
         fetchedResultsController.delegate = self
         
-        //        //println("memes.count: \(memes.count)")
-        //        println("memeIndex: \(memeIndex)")
-        //        println("memeIndexPath: \(memeIndexPath)")
-        //        println("editEventFlag: \(editEventFlag)")
-        
         //-Countdown Timer routine
         var timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("update"), userInfo: nil, repeats: true)
         
@@ -122,7 +117,7 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         
         let finalImage = UIImage(data: event.eventImage!)
         self.imageView!.image = finalImage
-        self.textFieldEvent.text = event.textEvent
+        self.textFieldEvent.text = "until " + event.textEvent!
 
         //-Setup Countdown Ticker values
         let pickerDate = event.eventDate
@@ -136,16 +131,15 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         //-Disable Segment button if value = 0
         if durationWeeks == 0 {
             untilEventSelector.setEnabled(false, forSegmentAtIndex: 0)
-            untilEventSelector.setEnabled(false, forSegmentAtIndex: 1)
         }
         if durationDays == 0 {
-            untilEventSelector.setEnabled(false, forSegmentAtIndex: 2)
+            untilEventSelector.setEnabled(false, forSegmentAtIndex: 1)
         }
         if durationHours == 0 {
-            untilEventSelector.setEnabled(false, forSegmentAtIndex: 3)
+            untilEventSelector.setEnabled(false, forSegmentAtIndex: 2)
         }
         if durationMinutes == 0 {
-            untilEventSelector.setEnabled(false, forSegmentAtIndex: 4)
+            untilEventSelector.setEnabled(false, forSegmentAtIndex: 3)
         }
         //-Set the default segment value (days)
         let tempText1 = String(stringInterpolationSegment: self.durationDays)
@@ -182,27 +176,18 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         switch untilEventSelector.selectedSegmentIndex {
 
         case 0:
-            println("Zero")
-            let tempText1 = String(stringInterpolationSegment: self.durationWeeks)
-            untilEventText.text = ("Only \(tempText1) Months")
-        case 1:
-            println("One")
             let tempText1 = String(stringInterpolationSegment: self.durationWeeks)
             untilEventText.text = ("Only \(tempText1) Weeks")
-        case 2:
-            println("Two")
+        case 1:
             let tempText1 = String(stringInterpolationSegment: self.durationDays)
             untilEventText.text = ("Only \(tempText1) Days")
-        case 3:
-            println("Three")
+        case 2:
             let tempText1 = String(stringInterpolationSegment: self.durationHours)
             untilEventText.text = ("Only \(tempText1) Hours")
-        case 4:
-            println("Four")
+        case 3:
             let tempText1 = String(stringInterpolationSegment: self.durationMinutes)
             untilEventText.text = ("Only \(tempText1) Minutes")
-        case 5:
-            println("Five")
+        case 4:
             let tempText1 = String(stringInterpolationSegment: self.durationSeconds)
             untilEventText.text = ("Only \(tempText1) Seconds")
         default:

@@ -47,14 +47,17 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
     var tempEventDate2: NSDate!
     var flickrImageURL: String!
     var flickrImage: UIImage!
+    
+    //-Disney image based on flag (0-no pic, 1-library, 2-camera, 3-Flickr)
+    var imageFlag: Int! = 0
 
     
     //-Event Description Font Attributes
     let eventTextAttributes = [
-        NSStrokeColorAttributeName : UIColor.redColor(),
-        NSForegroundColorAttributeName : UIColor.blackColor(),
+        NSStrokeColorAttributeName : UIColor.blueColor(),
+        NSForegroundColorAttributeName : UIColor.whiteColor(),
         NSFontAttributeName : UIFont(name: "HelveticaNeue-CondensedBlack", size: 26)!,
-        NSStrokeWidthAttributeName : -1.5
+        NSStrokeWidthAttributeName : -1.0
     ]
     
     
@@ -178,10 +181,18 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
 //        if self.imageViewPicker.image != nil {
 //            
 //        }
-        if self.flickrImage != nil && self.imageViewPicker.image == nil {
-            println("Flickr Image is present")
+        
+        
+//        if self.flickrImage != nil && self.imageViewPicker.image == nil {
+//            println("Flickr Image is present")
+//            self.imageViewPicker.image = flickrImage
+//                
+//        }
+        
+        if imageFlag == 3 {
+
+            self.navigationItem.rightBarButtonItem?.enabled = true
             self.imageViewPicker.image = flickrImage
-                
         }
         
         
@@ -295,6 +306,7 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
             
             if let eventImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
                 self.imageViewPicker.image = eventImage
+                imageFlag = 1
             }
             //Enable the Sharing Button
             //shareMemeButton.enabled = true
@@ -314,6 +326,7 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         imagePicker.sourceType = UIImagePickerControllerSourceType.Camera
+        imageFlag = 2
         self.presentViewController(imagePicker, animated: true, completion: nil)
     }
     
