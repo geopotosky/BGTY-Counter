@@ -22,6 +22,9 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
     @IBOutlet weak var countDownLabel: UILabel!
     @IBOutlet weak var untilEventText: UILabel!
     @IBOutlet weak var untilEventSelector: UISegmentedControl!
+    @IBOutlet weak var mgFactorButon: UIButton!
+    @IBOutlet weak var mgFactorLabel: UILabel!
+    
     
     var events: [Events]!
     //var events: Events!
@@ -30,6 +33,7 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
     var eventIndex:Int!
     var eventIndexPath: NSIndexPath!
     var editEventFlag: Bool!
+    var mgFactorValue: Int! = 0
     
     var timeAtPress = NSDate()
     var currentDateWithOffset = NSDate()
@@ -93,11 +97,6 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         println("eventIndexPath: \(eventIndexPath)")
         println("editEventFlag: \(editEventFlag)")
         
-        //Get shared model info
-        //        let object = UIApplication.sharedApplication().delegate
-        //        let appDelegate = object as! AppDelegate
-        //        memes = appDelegate.memes
-        
         let event = fetchedResultsController.objectAtIndexPath(eventIndexPath) as! Events
         
         println(event.textEvent)
@@ -108,18 +107,20 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         let date = event.eventDate
         let timeZone = NSTimeZone(name: "Local")
         dateFormatter.timeZone = timeZone
+        //dateFormatter.dateFormat = "yyyy-MM-dd"
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         let dateNew = dateFormatter.stringFromDate(date!)
         
-        dateFormatter.timeStyle = NSDateFormatterStyle.MediumStyle //Set time style
-        dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle //Set date style
+        //dateFormatter.timeStyle = NSDateFormatterStyle.MediumStyle //Set time style
+        dateFormatter.timeStyle = NSDateFormatterStyle.NoStyle
+        dateFormatter.dateStyle = NSDateFormatterStyle.LongStyle //Set date style
         dateFormatter.timeZone = NSTimeZone()
         println(dateFormatter.timeZone)
         
         self.currentDateLabel.text = dateFormatter.stringFromDate(currentDate)
         let localDate = dateFormatter.stringFromDate(date!)
-        self.eventDate.text = localDate
-        
+        self.eventDate.text = "Event Date: " + localDate
+    
         let finalImage = UIImage(data: event.eventImage!)
         self.imageView!.image = finalImage
         self.textFieldEvent.text = "until " + event.textEvent!
@@ -184,6 +185,8 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         return fetchedResultsController
         
         }()
+    
+    
     @IBAction func segmentPicked(sender: UISegmentedControl) {
         
         switch untilEventSelector.selectedSegmentIndex {
@@ -301,6 +304,87 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         println(durationMinutes)
         
     }
+    
+    
+    @IBAction func mgFactor(sender: UIButton) {
+        println("MG Factor Button pushed.")
+        
+        println("MG: \(mgFactorValue)")
+        if mgFactorValue == 0 {
+            mgFactorValue = 172800
+            //untilEventSelector.selectedSegmentIndex = 1
+            mgFactorLabel.text = "MG ON"
+        }
+        else {
+            mgFactorValue = 0
+            //untilEventSelector.selectedSegmentIndex = 1
+            mgFactorLabel.text = "MG OFF"
+            
+        }
+        
+        let event = fetchedResultsController.objectAtIndexPath(eventIndexPath) as! Events
+        //-Setup Countdown Ticker values
+        let pickerDate = event.eventDate
+        let elapsedTime = pickerDate!.timeIntervalSinceDate(timeAtPress)  //* Event Date in seconds raw
+        durationSeconds = Int(elapsedTime) - mgFactorValue
+        
+        durationMinutes = durationSeconds / 60
+        durationHours = (durationSeconds / 60) / 60
+        durationDays = ((durationSeconds / 60) / 60) / 24
+        durationWeeks = (((durationSeconds / 60) / 60) / 24) / 7
+        
+        //-Disable Segment button if value = 0
+        if durationWeeks == 0 {
+            untilEventSelector.setEnabled(false, forSegmentAtIndex: 0)
+        }
+        if durationDays == 0 {
+            untilEventSelector.setEnabled(false, forSegmentAtIndex: 1)
+        }
+        if durationHours == 0 {
+            untilEventSelector.setEnabled(false, forSegmentAtIndex: 2)
+        }
+        if durationMinutes == 0 {
+            untilEventSelector.setEnabled(false, forSegmentAtIndex: 3)
+        }
+        
+        //-Set the default segment value (days)
+        //let tempText1 = String(stringInterpolationSegment: self.durationDays)
+        
+        //-Check for end of event
+        //if tempText1 == "-1" {
+        if self.durationDays <= 0 {
+            untilEventSelector.selectedSegmentIndex = 1
+            untilEventText.text = "ZERO Days"
+        } else {
+        
+            switch untilEventSelector.selectedSegmentIndex {
+            
+            case 0:
+                let tempText1 = String(stringInterpolationSegment: self.durationWeeks)
+                untilEventText.text = ("Only \(tempText1) Weeks")
+            case 1:
+                let tempText1 = String(stringInterpolationSegment: self.durationDays)
+                untilEventText.text = ("Only \(tempText1) Days")
+            case 2:
+                let tempText1 = String(stringInterpolationSegment: self.durationHours)
+                untilEventText.text = ("Only \(tempText1) Hours")
+            case 3:
+                let tempText1 = String(stringInterpolationSegment: self.durationMinutes)
+                untilEventText.text = ("Only \(tempText1) Minutes")
+            case 4:
+                let tempText1 = String(stringInterpolationSegment: self.durationSeconds)
+                untilEventText.text = ("Only \(tempText1) Seconds")
+            default:
+                println("Error")
+            
+            }
+        }
+    
+        //-Set the duration count in seconds which will be used in the countdown calculation
+        count = durationSeconds
+
+    }
+    
     
     
     func addTodoList(){

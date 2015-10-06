@@ -312,6 +312,7 @@ class TodoTableViewController: UITableViewController, NSFetchedResultsController
         let todos = fetchedResultsController.objectAtIndexPath(eventIndexPath2) as! TodoList
         todos.todoListText = detailViewController.editedModel!
         self.sharedContext.refreshObject(todos, mergeChanges: true)
+        CoreDataStackManager.sharedInstance().saveContext()
         
         //let listText = detailViewController.editedModel
         //events.todos = listText

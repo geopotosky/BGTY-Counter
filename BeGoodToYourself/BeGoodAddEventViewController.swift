@@ -18,7 +18,7 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
     @IBOutlet weak var datePickerButton: UIButton!
     @IBOutlet weak var imageViewPicker: UIImageView!
     @IBOutlet weak var cameraButton: UIBarButtonItem!
-    @IBOutlet weak var flickrButton: UIBarButtonItem!
+    @IBOutlet weak var flickrButton: UIButton!
     @IBOutlet weak var textFieldEvent: UITextField!
 //    @IBOutlet weak var textFieldBottom: UITextField!
     @IBOutlet weak var toolbarObject: UIToolbar!
@@ -335,9 +335,8 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
     }
     
     
-    //Select a Flickr Image
-    @IBAction func getFlickrImage(sender: UIBarButtonItem) {
-        
+    @IBAction func getFlickrImage(sender: UIButton) {
+    
         println("Get Flickr Image")
         let storyboard = self.storyboard
         let controller = self.storyboard?.instantiateViewControllerWithIdentifier("BeGoodFlickrViewController") as! BeGoodFlickrViewController
