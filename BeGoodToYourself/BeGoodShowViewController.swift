@@ -76,7 +76,6 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         fetchedResultsController.delegate = self
         
         
-        
         //-Countdown Timer routine
         var timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("update"), userInfo: nil, repeats: true)
         
@@ -99,19 +98,16 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         
         let event = fetchedResultsController.objectAtIndexPath(eventIndexPath) as! Events
         
-        println(event.textEvent)
-        
         var dateFormatter = NSDateFormatter()
         
         let currentDate = NSDate()
         let date = event.eventDate
         let timeZone = NSTimeZone(name: "Local")
         dateFormatter.timeZone = timeZone
-        //dateFormatter.dateFormat = "yyyy-MM-dd"
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         let dateNew = dateFormatter.stringFromDate(date!)
         
-        //dateFormatter.timeStyle = NSDateFormatterStyle.MediumStyle //Set time style
+        
         dateFormatter.timeStyle = NSDateFormatterStyle.NoStyle
         dateFormatter.dateStyle = NSDateFormatterStyle.LongStyle //Set date style
         dateFormatter.timeZone = NSTimeZone()
@@ -125,42 +121,9 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         self.imageView!.image = finalImage
         self.textFieldEvent.text = "until " + event.textEvent!
 
-        //-Setup Countdown Ticker values
-        let pickerDate = event.eventDate
-        let elapsedTime = pickerDate!.timeIntervalSinceDate(timeAtPress)  //* Event Date in seconds raw
-        durationSeconds = Int(elapsedTime)
-        durationMinutes = durationSeconds / 60
-        durationHours = (durationSeconds / 60) / 60
-        durationDays = ((durationSeconds / 60) / 60) / 24
-        durationWeeks = (((durationSeconds / 60) / 60) / 24) / 7
-        
-        //-Disable Segment button if value = 0
-        if durationWeeks == 0 {
-            untilEventSelector.setEnabled(false, forSegmentAtIndex: 0)
-        }
-        if durationDays == 0 {
-            untilEventSelector.setEnabled(false, forSegmentAtIndex: 1)
-        }
-        if durationHours == 0 {
-            untilEventSelector.setEnabled(false, forSegmentAtIndex: 2)
-        }
-        if durationMinutes == 0 {
-            untilEventSelector.setEnabled(false, forSegmentAtIndex: 3)
-        }
-        
-        //-Set the default segment value (days)
-        let tempText1 = String(stringInterpolationSegment: self.durationDays)
-        
-        //-Check for end of event
-        if tempText1 == "-1" {
-            untilEventText.text = "ZERO Days"
-        } else {
-            
-            untilEventText.text = ("Only \(tempText1) Days")
-        }
-        
-        //-Set the duration count in seconds which will be used in the countdown calculation
-        count = durationSeconds
+        //-Call the main "until" setup routine
+        untilCounterStart()
+
     }
     
     
@@ -189,22 +152,30 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
     
     @IBAction func segmentPicked(sender: UISegmentedControl) {
         
+        var numberFormatter = NSNumberFormatter()
+        numberFormatter.numberStyle = NSNumberFormatterStyle.DecimalStyle
+        
         switch untilEventSelector.selectedSegmentIndex {
 
         case 0:
-            let tempText1 = String(stringInterpolationSegment: self.durationWeeks)
+            let tempText1 = numberFormatter.stringFromNumber(self.durationWeeks)!
+            //let tempText1 = String(stringInterpolationSegment: self.durationWeeks)
             untilEventText.text = ("Only \(tempText1) Weeks")
         case 1:
+            //let tempText1 = numberFormatter.stringFromNumber(self.durationDays)!
             let tempText1 = String(stringInterpolationSegment: self.durationDays)
             untilEventText.text = ("Only \(tempText1) Days")
         case 2:
-            let tempText1 = String(stringInterpolationSegment: self.durationHours)
+            let tempText1 = numberFormatter.stringFromNumber(self.durationHours)!
+            //let tempText1 = String(stringInterpolationSegment: self.durationHours)
             untilEventText.text = ("Only \(tempText1) Hours")
         case 3:
-            let tempText1 = String(stringInterpolationSegment: self.durationMinutes)
+            let tempText1 = numberFormatter.stringFromNumber(self.durationMinutes)!
+            //let tempText1 = String(stringInterpolationSegment: self.durationMinutes)
             untilEventText.text = ("Only \(tempText1) Minutes")
         case 4:
-            let tempText1 = String(stringInterpolationSegment: self.durationSeconds)
+            let tempText1 = numberFormatter.stringFromNumber(self.durationSeconds)!
+            //let tempText1 = String(stringInterpolationSegment: self.durationSeconds)
             untilEventText.text = ("Only \(tempText1) Seconds")
         default:
             println("Error")
@@ -268,7 +239,7 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         
         if(count > 0)
         {
-            untilCounter()
+            untilCounterUpdate()
             count = count - 1
             
             let minutes:Int = (count / 60)
@@ -287,7 +258,8 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         
     }
     
-    func untilCounter(){
+    //-Update the "untils" as the countdown advances
+    func untilCounterUpdate(){
         
         let event = fetchedResultsController.objectAtIndexPath(eventIndexPath) as! Events
         
@@ -300,34 +272,71 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         durationDays = ((count / 60) / 60) / 24
         durationWeeks = (((count / 60) / 60) / 24) / 7
         
-        println(durationSeconds)
-        println(durationMinutes)
+    }
+    
+    //-Setup the "untils" based on the current date and event date for the first time
+    func untilCounterStart(){
+
+        let event = fetchedResultsController.objectAtIndexPath(eventIndexPath) as! Events
+        let pickerDate = event.eventDate
+        let elapsedTime = pickerDate!.timeIntervalSinceDate(timeAtPress)  //* Event Date in seconds raw
+        durationSeconds = Int(elapsedTime)
+        durationMinutes = durationSeconds / 60
+        durationHours = (durationSeconds / 60) / 60
+        durationDays = ((durationSeconds / 60) / 60) / 24
+        durationWeeks = (((durationSeconds / 60) / 60) / 24) / 7
+        
+        //-Disable Segment button if value = 0
+        if durationWeeks == 0 {
+            untilEventSelector.setEnabled(false, forSegmentAtIndex: 0)
+        }
+        if durationDays == 0 {
+            untilEventSelector.setEnabled(false, forSegmentAtIndex: 1)
+        }
+        if durationHours == 0 {
+            untilEventSelector.setEnabled(false, forSegmentAtIndex: 2)
+        }
+        if durationMinutes == 0 {
+            untilEventSelector.setEnabled(false, forSegmentAtIndex: 3)
+        }
+        
+        //-Set the default segment value (days)
+        let tempText1 = String(stringInterpolationSegment: self.durationDays)
+        
+        //-Check for end of event
+        if tempText1 == "-1" {
+            untilEventText.text = "ZERO Days"
+        } else {
+            
+            untilEventText.text = ("Only \(tempText1) Days")
+        }
+        
+        //-Set the duration count in seconds which will be used in the countdown calculation
+        count = durationSeconds
+        
         
     }
     
     
+    //-MG Factor is a special function which removes 1 days from the front of the vacation
+    //-and 1 day from the back. After all, does anybody really count those days when your planning? :-)
     @IBAction func mgFactor(sender: UIButton) {
-        println("MG Factor Button pushed.")
         
-        println("MG: \(mgFactorValue)")
+        //-Set the MG Factor (172800 = 2 days in seconds) and update the button label
         if mgFactorValue == 0 {
             mgFactorValue = 172800
-            //untilEventSelector.selectedSegmentIndex = 1
             mgFactorLabel.text = "MG ON"
         }
         else {
             mgFactorValue = 0
-            //untilEventSelector.selectedSegmentIndex = 1
             mgFactorLabel.text = "MG OFF"
             
         }
         
         let event = fetchedResultsController.objectAtIndexPath(eventIndexPath) as! Events
-        //-Setup Countdown Ticker values
         let pickerDate = event.eventDate
         let elapsedTime = pickerDate!.timeIntervalSinceDate(timeAtPress)  //* Event Date in seconds raw
         durationSeconds = Int(elapsedTime) - mgFactorValue
-        
         durationMinutes = durationSeconds / 60
         durationHours = (durationSeconds / 60) / 60
         durationDays = ((durationSeconds / 60) / 60) / 24
@@ -357,26 +366,34 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
             untilEventText.text = "ZERO Days"
         } else {
         
-            switch untilEventSelector.selectedSegmentIndex {
+            var numberFormatter = NSNumberFormatter()
+            numberFormatter.numberStyle = NSNumberFormatterStyle.DecimalStyle
             
+            switch untilEventSelector.selectedSegmentIndex {
+                
             case 0:
-                let tempText1 = String(stringInterpolationSegment: self.durationWeeks)
+                let tempText1 = numberFormatter.stringFromNumber(self.durationWeeks)!
+                //let tempText1 = String(stringInterpolationSegment: self.durationWeeks)
                 untilEventText.text = ("Only \(tempText1) Weeks")
             case 1:
-                let tempText1 = String(stringInterpolationSegment: self.durationDays)
+                let tempText1 = numberFormatter.stringFromNumber(self.durationDays)!
+                //let tempText1 = String(stringInterpolationSegment: self.durationDays)
                 untilEventText.text = ("Only \(tempText1) Days")
             case 2:
-                let tempText1 = String(stringInterpolationSegment: self.durationHours)
+                let tempText1 = numberFormatter.stringFromNumber(self.durationHours)!
+                //let tempText1 = String(stringInterpolationSegment: self.durationHours)
                 untilEventText.text = ("Only \(tempText1) Hours")
             case 3:
-                let tempText1 = String(stringInterpolationSegment: self.durationMinutes)
+                let tempText1 = numberFormatter.stringFromNumber(self.durationMinutes)!
+                //let tempText1 = String(stringInterpolationSegment: self.durationMinutes)
                 untilEventText.text = ("Only \(tempText1) Minutes")
             case 4:
-                let tempText1 = String(stringInterpolationSegment: self.durationSeconds)
+                let tempText1 = numberFormatter.stringFromNumber(self.durationSeconds)!
+                //let tempText1 = String(stringInterpolationSegment: self.durationSeconds)
                 untilEventText.text = ("Only \(tempText1) Seconds")
             default:
                 println("Error")
-            
+                
             }
         }
     
@@ -386,9 +403,8 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
     }
     
     
-    
+    //-Function to call the To Do List routine for each event
     func addTodoList(){
-        println("Show: Add To Do List button pushed")
         
         let storyboard = self.storyboard
         let controller = self.storyboard?.instantiateViewControllerWithIdentifier("TodoTableViewController") as! TodoTableViewController
@@ -396,14 +412,8 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         let event = fetchedResultsController.objectAtIndexPath(eventIndexPath) as! Events
         
         controller.eventIndexPath2 = eventIndexPath
-        //controller.events = events[eventIndex]
-        println(controller.eventIndexPath2)
-        
         controller.events = event
-        
-            
-        //controller.events = self.events
-        println("self.event1: \(self.events)")
+
         self.navigationController!.pushViewController(controller, animated: true)
         
     }
