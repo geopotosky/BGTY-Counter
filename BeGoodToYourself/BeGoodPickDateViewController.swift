@@ -19,6 +19,7 @@ class BeGoodPickdateViewController: UIViewController {
     @IBOutlet weak var countDownLabel: UILabel!
     @IBOutlet weak var CountDownDescription: UILabel!
     @IBOutlet weak var pickDateButton: UIButton!
+    @IBOutlet weak var eventDateLabel: UILabel!
     
     //var delegate: SecondVCDelegate! = tempEventDate
     
@@ -98,7 +99,7 @@ class BeGoodPickdateViewController: UIViewController {
         
         let localDate = dateFormatter.stringFromDate(date)
         let strDate = dateFormatter.stringFromDate(myDatePicker.date)
-        //self.selectedDate.text = strDate
+        self.eventDateLabel.text = strDate
         self.tempEventDate = myDatePicker.date
         
         println("UTC Time")
@@ -194,7 +195,6 @@ class BeGoodPickdateViewController: UIViewController {
             
             let timerOutput = String(format: "%5d Days %2d:%2d:%02d", days, hours, minutes2, seconds) as String
             countDownLabel.text = timerOutput as String
-            CountDownDescription.text = eventText
         }
         
     }

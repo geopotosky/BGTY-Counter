@@ -16,8 +16,10 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var eventImageView: UIImageView!
     
-    var events: [Events]!
-    //    var memes: Memes!
+    //var events: [Events]!
+    //var events: Events!
+    var events = [Events]()
+    
     var eventIndex: Int!
     var eventIndexPath: NSIndexPath!
     
@@ -39,6 +41,11 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
         // Set the view controller as the delegate
         fetchedResultsController.delegate = self
         
+        
+        // Unarchive the event when the list is first shown
+        self.events = NSKeyedUnarchiver.unarchiveObjectWithFile(eventsFilePath) as? [Events] ?? [Events]()
+        println("self.events: \(self.events)")
+        
     }
     
     
@@ -48,10 +55,14 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
         
         self.tabBarController?.tabBar.hidden = false
         
+        //-Archive the graph any time this list of events is displayed.
+        NSKeyedArchiver.archiveRootObject(self.events, toFile: eventsFilePath)
+        
+        
         //Get shared model info
-                let object = UIApplication.sharedApplication().delegate
-                let appDelegate = object as! AppDelegate
-                events = appDelegate.events
+//                let object = UIApplication.sharedApplication().delegate
+//                let appDelegate = object as! AppDelegate
+//                events = appDelegate.events
         
         //Brute Force Reload the scene to view table updates
         self.tableView.reloadData()
@@ -145,7 +156,6 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
         
         let CellIdentifier = "BeGoodTableCell"
         
-        // Here is how to replace the actors array using objectAtIndexPath
         let event = fetchedResultsController.objectAtIndexPath(indexPath) as! Events
         
         let cell = tableView.dequeueReusableCellWithIdentifier(CellIdentifier) as! UITableViewCell
@@ -165,7 +175,8 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
         // Similar to the method above
         let event = fetchedResultsController.objectAtIndexPath(indexPath) as! Events
         
-        controller.events = self.events
+        //controller.events = self.events
+        println("First event: \(controller.events)")
         controller.eventIndexPath = indexPath
         controller.eventIndex = indexPath.row
         
@@ -185,6 +196,10 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
                 let event = fetchedResultsController.objectAtIndexPath(indexPath) as! Events
                 sharedContext.deleteObject(event)
                 CoreDataStackManager.sharedInstance().saveContext()
+                
+                //events.removeAtIndex(indexPath.row)
+                //tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
+                NSKeyedArchiver.archiveRootObject(self.events, toFile: eventsFilePath)
                 
             default:
                 break
@@ -253,6 +268,16 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
         let controller = self.storyboard?.instantiateViewControllerWithIdentifier("BeGoodAddEventViewController") as! BeGoodAddEventViewController
         controller.editEventFlag = false
         self.navigationController!.pushViewController(controller, animated: true)
+    }
+    
+    
+    //-Saving the array. Helper.
+    
+    var eventsFilePath : String {
+        let manager = NSFileManager.defaultManager()
+        let url = manager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first as! NSURL
+        println(url.URLByAppendingPathComponent("events").path!)
+        return url.URLByAppendingPathComponent("events").path!
     }
     
 }

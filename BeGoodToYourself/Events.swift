@@ -17,6 +17,7 @@ class Events : NSManagedObject {
     @NSManaged var eventDate: NSDate?
     @NSManaged var textEvent: String?
     @NSManaged var eventImage: NSData?
+    @NSManaged var todoList: [TodoList]
     
     override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
         super.init(entity: entity, insertIntoManagedObjectContext: context)

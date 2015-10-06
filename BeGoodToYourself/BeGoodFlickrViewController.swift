@@ -205,7 +205,7 @@ class BeGoodFlickrViewController: UIViewController {
             //self.defaultLabel.alpha = 0.0
             println("No Photo found")
         }
-        self.view.frame.origin.y -= self.getKeyboardHeight(notification) / 2
+//        self.view.frame.origin.y -= self.getKeyboardHeight(notification) / 2
     }
     
     func keyboardWillHide(notification: NSNotification) {
@@ -214,7 +214,7 @@ class BeGoodFlickrViewController: UIViewController {
             //self.defaultLabel.alpha = 1.0
             println("No Photo Found")
         }
-        self.view.frame.origin.y += self.getKeyboardHeight(notification) / 2
+//        self.view.frame.origin.y += self.getKeyboardHeight(notification) / 2
     }
     
     func getKeyboardHeight(notification: NSNotification) -> CGFloat {

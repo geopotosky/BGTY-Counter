@@ -13,25 +13,32 @@ import CoreData
 
 class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSource, NSFetchedResultsControllerDelegate {
     
-    //Scene outlets
+    //-Scene outlets
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var bottomButton: UIButton!
     
     
-    //Event variables
-    var events: [Events]!
+    //-Event variables
+    //var events: [Events]!
+    //var events: Events!
+    var events = [Events]()
     var eventIndex: Int!
     
-    //* - Flag passed to determine editing function (add or edit). This flag allows reuse of the AddEvent view
+    //-Flag passed to determine editing function (add or edit). This flag allows reuse of the AddEvent view
     var editEventFlag: Bool!
     var editButtonFlag: Bool!
+    
+    //-Tab Bar variables
+    var tabBarItemONE: UITabBarItem = UITabBarItem()
+    var tabBarItemTWO: UITabBarItem = UITabBarItem()
+    
     
     // The selected indexes array keeps all of the indexPaths for cells that are "selected". The array is
     // used inside cellForItemAtIndexPath to lower the alpha of selected cells.  You can see how the array
     // works by searchign through the code for 'selectedIndexes'
     var selectedIndexes = [NSIndexPath]()
     
-    // Keep the changes. We will keep track of insertions, deletions, and updates.
+    //-Keep the changes. We will keep track of insertions, deletions, and updates.
     var insertedIndexPaths: [NSIndexPath]!
     var deletedIndexPaths: [NSIndexPath]!
     var updatedIndexPaths: [NSIndexPath]!
@@ -45,9 +52,7 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //        memes = fetchAllMemes()
-        
-        println("Hello Cellection View Controller")
+        println("Hello Collection View Controller")
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Edit, target: self, action: "editButton")
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "addEvent")
@@ -56,7 +61,7 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
         bottomButton.hidden = true
         //self.tabBarController?.tabBar.hidden = false
         
-        // Start the fetched results controller
+        //-Start the fetched results controller
         var error: NSError?
         fetchedResultsController.performFetch(&error)
         
@@ -69,10 +74,15 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
         //        //* - Bottom Button updater
         //        updateBottomButton()
         
+        // Unarchive the event when the list is first shown
+        self.events = NSKeyedUnarchiver.unarchiveObjectWithFile(eventsFilePath) as? [Events] ?? [Events]()
+        println("self.events: \(self.events)")
+        
+        
     }
     
     
-    // Layout the collection view cells
+    //-Layout the collection view cells
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -94,23 +104,35 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
     }
     
     
-    //Perform when view appears
+    //-Perform when view appears
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        //Hide the tab bar
+        //-Archive the graph any time this list of events is displayed.
+        NSKeyedArchiver.archiveRootObject(self.events, toFile: eventsFilePath)
+        
+        //-Hide the tab bar
         self.tabBarController?.tabBar.hidden = false
         
         editButtonFlag = true
         
-        //Get shared model info
-                let object = UIApplication.sharedApplication().delegate
-                let appDelegate = object as! AppDelegate
-                events = appDelegate.events
+        //-Get shared model info
+//                let object = UIApplication.sharedApplication().delegate
+//                let appDelegate = object as! AppDelegate
+//                events = appDelegate.events
         
-        //Brute Force Reload the scene to view collection updates
+        //-Brute Force Reload the scene to view collection updates
         self.collectionView.reloadData()
         
+        
+    }
+    
+    
+    //-Enable all TabBar Item when the view disappears
+    override func viewWillDisappear(animated: Bool) {
+        
+        tabBarItemONE.enabled = true
+        tabBarItemTWO.enabled = true
         
     }
     
@@ -126,7 +148,11 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
         
         if self.navigationItem.leftBarButtonItem?.title == "Done" {
             
-            //* - Recreate navigation Back button and change name to OK
+            //-Enable the TabBar Item
+            tabBarItemONE.enabled = true
+            
+            //-Recreate navigation Back button and change name to "Edit"
+            
             self.navigationItem.hidesBackButton = true
             let newBackButton = UIBarButtonItem(title: "Edit", style: UIBarButtonItemStyle.Plain, target: self, action: "editButton")
             self.navigationItem.leftBarButtonItem = newBackButton
@@ -135,10 +161,22 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
             
         } else {
             
-            //* - Recreate navigation Back button and change name to OK
+            //-Recreate navigation Back button and change name to "Done"
             self.navigationItem.hidesBackButton = true
             let newBackButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: "editButton")
             self.navigationItem.leftBarButtonItem = newBackButton
+            
+            //-Disable the Tab Bar Item
+            let tabBarControllerItems = self.tabBarController?.tabBar.items
+            if let arrayOfTabBarItems = tabBarControllerItems as! AnyObject as? NSArray{
+                
+                tabBarItemONE = arrayOfTabBarItems[0] as! UITabBarItem
+                tabBarItemONE.enabled = false
+                
+                //tabBarItemTWO = arrayOfTabBarItems[1] as! UITabBarItem
+                //tabBarItemTWO.enabled = false
+                
+            }
             
             bottomButton.hidden = false
             editButtonFlag = false
@@ -215,7 +253,7 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
             // Similar to the method above
             let event = fetchedResultsController.objectAtIndexPath(indexPath) as! Events
             
-            controller.events = self.events
+            //controller.events = self.events
             controller.eventIndexPath = indexPath
             controller.eventIndex = indexPath.row
             
@@ -225,7 +263,7 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
         
     }
     
-    //* - Configure Cell
+    //-Configure Cell
     
     //func configureCell(cell: MemeCollectionViewCell, withEvent event: Events) {
     func configureCell(cell: BeGoodCollectionViewCell, atIndexPath indexPath: NSIndexPath) {
@@ -235,9 +273,7 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
         let eventImage2 = event.eventImage
         let finalImage = UIImage(data: eventImage2!)
         
-        //cell.textLabel!.text = meme.textTop
         cell.eventImageView!.image = finalImage
-        println("show collection event")
         
         if let index = find(self.selectedIndexes, indexPath) {
             cell.eventImageView!.alpha = 0.5
@@ -247,7 +283,7 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
     }
     
     
-    //* - NSFetchedResultsController
+    //-NSFetchedResultsController
     
     lazy var fetchedResultsController: NSFetchedResultsController = {
         
@@ -383,6 +419,9 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
         
         selectedIndexes = [NSIndexPath]()
         CoreDataStackManager.sharedInstance().saveContext()
+        
+        //-Archive the graph any time this list of events changes
+        NSKeyedArchiver.archiveRootObject(self.events, toFile: eventsFilePath)
     }
     
     
@@ -414,6 +453,15 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
         
     }
     
+    
+    //-Saving the array. Helper.
+    
+    var eventsFilePath : String {
+        let manager = NSFileManager.defaultManager()
+        let url = manager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first as! NSURL
+        println(url.URLByAppendingPathComponent("events").path!)
+        return url.URLByAppendingPathComponent("events").path!
+    }
     
 }
 

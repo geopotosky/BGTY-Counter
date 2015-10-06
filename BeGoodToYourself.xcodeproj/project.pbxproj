@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E5A515CC1BBDDCD600186690 /* TodoList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A515CB1BBDDCD600186690 /* TodoList.swift */; };
 		E5C961AB1BB7032C006D20C8 /* BGClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C961AA1BB7032C006D20C8 /* BGClient.swift */; };
 		E5C961AD1BB70390006D20C8 /* BGConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C961AC1BB70390006D20C8 /* BGConstants.swift */; };
 		E5C961AF1BB70A54006D20C8 /* BeGoodFlickrViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C961AE1BB70A54006D20C8 /* BeGoodFlickrViewController.swift */; };
@@ -25,6 +26,9 @@
 		E5D00F0D1BAE0C8300971CC6 /* EventTextDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D00F0C1BAE0C8300971CC6 /* EventTextDelegate.swift */; };
 		E5D00F101BAE184E00971CC6 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E5D00F0E1BAE184E00971CC6 /* Model.xcdatamodeld */; };
 		E5D00F121BAF8DCF00971CC6 /* BeGoodPickdateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D00F111BAF8DCF00971CC6 /* BeGoodPickdateViewController.swift */; };
+		E5E830E31BBCD6F4004A02B9 /* TodoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E830E21BBCD6F4004A02B9 /* TodoTableViewController.swift */; };
+		E5E830E51BBCD735004A02B9 /* TodoEditTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E830E41BBCD735004A02B9 /* TodoEditTableViewController.swift */; };
+		E5E830E71BBDB1CB004A02B9 /* TodoAddTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E830E61BBDB1CB004A02B9 /* TodoAddTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +42,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E5A515CB1BBDDCD600186690 /* TodoList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodoList.swift; sourceTree = "<group>"; };
 		E5C961AA1BB7032C006D20C8 /* BGClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BGClient.swift; sourceTree = "<group>"; };
 		E5C961AC1BB70390006D20C8 /* BGConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BGConstants.swift; sourceTree = "<group>"; };
 		E5C961AE1BB70A54006D20C8 /* BeGoodFlickrViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeGoodFlickrViewController.swift; sourceTree = "<group>"; };
@@ -60,6 +65,9 @@
 		E5D00F0C1BAE0C8300971CC6 /* EventTextDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTextDelegate.swift; sourceTree = "<group>"; };
 		E5D00F0F1BAE184E00971CC6 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		E5D00F111BAF8DCF00971CC6 /* BeGoodPickdateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeGoodPickdateViewController.swift; sourceTree = "<group>"; };
+		E5E830E21BBCD6F4004A02B9 /* TodoTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodoTableViewController.swift; sourceTree = "<group>"; };
+		E5E830E41BBCD735004A02B9 /* TodoEditTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodoEditTableViewController.swift; sourceTree = "<group>"; };
+		E5E830E61BBDB1CB004A02B9 /* TodoAddTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodoAddTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,6 +167,7 @@
 			isa = PBXGroup;
 			children = (
 				E5D00F0A1BAE0BF000971CC6 /* Events.swift */,
+				E5A515CB1BBDDCD600186690 /* TodoList.swift */,
 			);
 			name = Objects;
 			sourceTree = "<group>";
@@ -173,6 +182,9 @@
 				E5D00F061BAE06E700971CC6 /* BeGoodCollectionViewCell.swift */,
 				E5D00F081BAE08F400971CC6 /* BeGoodShowViewController.swift */,
 				E5C961AE1BB70A54006D20C8 /* BeGoodFlickrViewController.swift */,
+				E5E830E21BBCD6F4004A02B9 /* TodoTableViewController.swift */,
+				E5E830E41BBCD735004A02B9 /* TodoEditTableViewController.swift */,
+				E5E830E61BBDB1CB004A02B9 /* TodoAddTableViewController.swift */,
 				E5D00EDF1BADFF4300971CC6 /* Main.storyboard */,
 				E5D00EE21BADFF4300971CC6 /* Images.xcassets */,
 				E5D00EE41BADFF4300971CC6 /* LaunchScreen.xib */,
@@ -281,11 +293,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				E5D00EDE1BADFF4300971CC6 /* BeGoodAddEventViewController.swift in Sources */,
+				E5E830E51BBCD735004A02B9 /* TodoEditTableViewController.swift in Sources */,
+				E5E830E31BBCD6F4004A02B9 /* TodoTableViewController.swift in Sources */,
 				E5D00F071BAE06E700971CC6 /* BeGoodCollectionViewCell.swift in Sources */,
+				E5E830E71BBDB1CB004A02B9 /* TodoAddTableViewController.swift in Sources */,
 				E5D00F0D1BAE0C8300971CC6 /* EventTextDelegate.swift in Sources */,
 				E5D00F031BAE056B00971CC6 /* BeGoodTableViewController.swift in Sources */,
 				E5D00EDC1BADFF4300971CC6 /* AppDelegate.swift in Sources */,
 				E5C961AB1BB7032C006D20C8 /* BGClient.swift in Sources */,
+				E5A515CC1BBDDCD600186690 /* TodoList.swift in Sources */,
 				E5D00F121BAF8DCF00971CC6 /* BeGoodPickdateViewController.swift in Sources */,
 				E5D00F0B1BAE0BF000971CC6 /* Events.swift in Sources */,
 				E5C961AD1BB70390006D20C8 /* BGConstants.swift in Sources */,

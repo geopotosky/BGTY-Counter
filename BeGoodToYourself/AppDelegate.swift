@@ -13,7 +13,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     
-    var events: [Events]!
+    //var events: [Events]!
+    //var events = [Events]()
     var phraseText: String!
 
 

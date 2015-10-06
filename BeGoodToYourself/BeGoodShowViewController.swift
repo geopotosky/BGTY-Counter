@@ -24,6 +24,8 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
     @IBOutlet weak var untilEventSelector: UISegmentedControl!
     
     var events: [Events]!
+    //var events: Events!
+    
     //    var events: Events!
     var eventIndex:Int!
     var eventIndexPath: NSIndexPath!
@@ -49,11 +51,11 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         super.viewDidLoad()
         
         //Get shared model info
-        let object = UIApplication.sharedApplication().delegate
-        let appDelegate = object as! AppDelegate
-        events = appDelegate.events
+//        let object = UIApplication.sharedApplication().delegate
+//        let appDelegate = object as! AppDelegate
+//        events = appDelegate.events
         
-//        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Edit, target: self, action: "editEvent")
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "addTodoList")
         
         //* - Hide the Tab Bar
         self.tabBarController?.tabBar.hidden = true
@@ -63,10 +65,13 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
 //        let buttons = [b1, b2] as NSArray
 //        self.navigationItem.rightBarButtonItems = [b1, b2]
         
+        
         fetchedResultsController.performFetch(nil)
         
         // Set the view controller as the delegate
         fetchedResultsController.delegate = self
+        
+        
         
         //-Countdown Timer routine
         var timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("update"), userInfo: nil, repeats: true)
@@ -141,9 +146,17 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         if durationMinutes == 0 {
             untilEventSelector.setEnabled(false, forSegmentAtIndex: 3)
         }
+        
         //-Set the default segment value (days)
         let tempText1 = String(stringInterpolationSegment: self.durationDays)
-        untilEventText.text = ("Only \(tempText1) Days")
+        
+        //-Check for end of event
+        if tempText1 == "-1" {
+            untilEventText.text = "ZERO Days"
+        } else {
+            
+            untilEventText.text = ("Only \(tempText1) Days")
+        }
         
         //-Set the duration count in seconds which will be used in the countdown calculation
         count = durationSeconds
@@ -252,7 +265,9 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         
         if(count > 0)
         {
+            untilCounter()
             count = count - 1
+            
             let minutes:Int = (count / 60)
             let hours:Int = ((count / 60) / 60) % 24
             let days:Int = ((count / 60) / 60) / 24
@@ -263,6 +278,49 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
             countDownLabel.text = timerOutput as String
             //CountDownDescription.text = eventText
         }
+        else{
+            countDownLabel.text = "Event Has Past"
+        }
+        
+    }
+    
+    func untilCounter(){
+        
+        let event = fetchedResultsController.objectAtIndexPath(eventIndexPath) as! Events
+        
+        let pickerDate = event.eventDate
+        let elapsedTime = pickerDate!.timeIntervalSinceDate(timeAtPress)  //* Event Date in seconds raw
+        durationSeconds = Int(elapsedTime)
+        durationSeconds = count
+        durationMinutes = count / 60
+        durationHours = (count / 60) / 60
+        durationDays = ((count / 60) / 60) / 24
+        durationWeeks = (((count / 60) / 60) / 24) / 7
+        
+        println(durationSeconds)
+        println(durationMinutes)
+        
+    }
+    
+    
+    func addTodoList(){
+        println("Show: Add To Do List button pushed")
+        
+        let storyboard = self.storyboard
+        let controller = self.storyboard?.instantiateViewControllerWithIdentifier("TodoTableViewController") as! TodoTableViewController
+        
+        let event = fetchedResultsController.objectAtIndexPath(eventIndexPath) as! Events
+        
+        controller.eventIndexPath2 = eventIndexPath
+        //controller.events = events[eventIndex]
+        println(controller.eventIndexPath2)
+        
+        controller.events = event
+        
+            
+        //controller.events = self.events
+        println("self.event1: \(self.events)")
+        self.navigationController!.pushViewController(controller, animated: true)
         
     }
     

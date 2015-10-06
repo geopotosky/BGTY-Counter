@@ -33,8 +33,8 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
     
     //Meme variables
     var eventImage : UIImage!
-    //var events: Events!
-    var events: [Events]!
+    var events: Events!
+    //var events: [Events]!
     
     
     var eventIndex2:Int!
@@ -57,7 +57,7 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
         NSStrokeColorAttributeName : UIColor.blueColor(),
         NSForegroundColorAttributeName : UIColor.whiteColor(),
         NSFontAttributeName : UIFont(name: "HelveticaNeue-CondensedBlack", size: 26)!,
-        NSStrokeWidthAttributeName : -1.0
+        NSStrokeWidthAttributeName : -1.5
     ]
     
     
@@ -86,9 +86,9 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
 //        datePickerButton.setTranslatesAutoresizingMaskIntoConstraints(false)
         
         //Get shared model info
-        let object = UIApplication.sharedApplication().delegate
-        let appDelegate = object as! AppDelegate
-        events = appDelegate.events
+//        let object = UIApplication.sharedApplication().delegate
+//        let appDelegate = object as! AppDelegate
+//        events = appDelegate.events
         
         println("New Date1: \(tempEventDate2)")
         
@@ -163,6 +163,10 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
     //-Perform when view appears
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        
+        
+        //-Archive the graph any time this list of events is displayed.
+//        NSKeyedArchiver.archiveRootObject(self.events, toFile: eventsFilePath)
         
         
 //        println(self.flickrImageURL)
@@ -353,14 +357,14 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
     //Move screen up to prevent keyboard overlap
     func keyboardWillShow(notification: NSNotification) {
         if textFieldEvent.isFirstResponder(){
-            self.view.frame.origin.y -= getKeyboardHeight(notification)
+//            self.view.frame.origin.y -= getKeyboardHeight(notification)
         }
     }
     
     //Move screen back down after done using keyboard
     func keyboardWillHide(notification: NSNotification) {
         if textFieldEvent.isFirstResponder(){
-            self.view.frame.origin.y += getKeyboardHeight(notification)
+//            self.view.frame.origin.y += getKeyboardHeight(notification)
         }
     }
     
@@ -410,8 +414,8 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
         let eventImage = UIImageJPEGRepresentation(imageViewPicker.image, 100)
         
         // Add it to the shared Memes array in the Application Delegate
-//        let object = UIApplication.sharedApplication().delegate
-//        let appDelegate = object as! AppDelegate
+        let object = UIApplication.sharedApplication().delegate
+        let appDelegate = object as! AppDelegate
 
         
         if editEventFlag == true {
@@ -441,8 +445,9 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
             let eventToBeAdded = Events(eventDate: self.tempEventDate2, textEvent: textFieldEvent.text!, eventImage: eventImage, context: sharedContext)
             
 //            appDelegate.events.append(eventToBeAdded)
-//            events.append(eventToBeAdded)
+            //events.append(eventToBeAdded)
 //            self.events?.append(eventToBeAdded)
+            
             
             //-Save the shared context, using the convenience method in the CoreDataStackManager
             CoreDataStackManager.sharedInstance().saveContext()
@@ -495,6 +500,18 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
     @IBAction func CancelEventButton(sender: UIBarButtonItem) {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
+    
+    
+    
+    //-Saving the array. Helper.
+    
+    var eventsFilePath : String {
+        let manager = NSFileManager.defaultManager()
+        let url = manager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first as! NSURL
+        println(url.URLByAppendingPathComponent("events").path!)
+        return url.URLByAppendingPathComponent("events").path!
+    }
+    
 }
 
 
