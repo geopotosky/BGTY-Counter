@@ -185,7 +185,7 @@
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Gjz-SZ-BTC">
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                     <variation key="widthClass=compact">
                                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -194,7 +194,7 @@
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="asB-L5-BIx">
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -263,9 +263,6 @@
                                                 <action selector="getFlickrImage:" destination="kX8-fN-XuE" eventType="touchUpInside" id="KOj-Oz-A5d"/>
                                             </connections>
                                         </button>
-                                        <connections>
-                                            <action selector="getFlickrImage:" destination="kX8-fN-XuE" id="e64-g5-eSM"/>
-                                        </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="FPW-et-ysK"/>
                                     <barButtonItem title="Album" style="plain" id="DZM-Gz-Dc0">
@@ -540,7 +537,24 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="Ppa-ep-wBm"/>
-                                    <barButtonItem systemItem="action" id="JxG-V1-49U"/>
+                                    <barButtonItem style="plain" id="JBj-Ly-Pvt">
+                                        <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="gkK-XE-4HY">
+                                            <rect key="frame" x="213" y="7" width="30" height="30"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <state key="normal" image="calendar">
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="addCalendarEvent:" destination="uaL-RV-rzP" eventType="touchUpInside" id="mSg-Pr-djg"/>
+                                            </connections>
+                                        </button>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="slr-fA-MFS"/>
+                                    <barButtonItem systemItem="action" id="JxG-V1-49U">
+                                        <connections>
+                                            <action selector="shareEvent:" destination="uaL-RV-rzP" id="p1r-RO-jPP"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="Mxq-yf-4f2"/>
                                     <barButtonItem style="plain" systemItem="edit" id="Ub0-1K-ngy">
                                         <connections>
@@ -583,7 +597,7 @@
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b6z-ZJ-lTf">
                                         <rect key="frame" x="0.0" y="33" width="587" height="40"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MG OFF" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k7N-AD-ffd">
@@ -701,11 +715,14 @@
                         <outlet property="currentDateLabel" destination="6kD-27-ezi" id="Dil-pY-ELu"/>
                         <outlet property="deleteEventButton" destination="nAF-WU-Uz1" id="Fux-Pn-nX8"/>
                         <outlet property="editEventButton" destination="Ub0-1K-ngy" id="Mn9-oO-ZyO"/>
+                        <outlet property="eventCalendarButton" destination="gkK-XE-4HY" id="VoN-dc-yRg"/>
                         <outlet property="eventDate" destination="Wq6-KR-Tqs" id="msA-xg-ODv"/>
                         <outlet property="imageView" destination="88p-qG-CH9" id="3VK-lN-hRX"/>
                         <outlet property="mgFactorButon" destination="2Hf-bb-OTz" id="iBf-Ga-8M2"/>
                         <outlet property="mgFactorLabel" destination="k7N-AD-ffd" id="PCW-pz-LRg"/>
+                        <outlet property="shareEventButton" destination="7F4-nT-YdI" id="tl8-9K-gEl"/>
                         <outlet property="textFieldEvent" destination="CrU-e8-JTi" id="CSR-nT-3gz"/>
+                        <outlet property="toolbarObject" destination="7F4-nT-YdI" id="Epl-dd-3QP"/>
                         <outlet property="untilEventSelector" destination="R2m-Kp-Bv4" id="MQm-27-nkH"/>
                         <outlet property="untilEventText" destination="b6z-ZJ-lTf" id="qkM-pz-q0N"/>
                     </connections>
@@ -948,6 +965,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="calendar" width="30" height="30"/>
         <image name="collection" width="30" height="30"/>
         <image name="flickr" width="44" height="44"/>
         <image name="table" width="30" height="30"/>

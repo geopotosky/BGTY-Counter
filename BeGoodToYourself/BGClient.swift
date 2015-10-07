@@ -176,9 +176,6 @@ class BGClient : NSObject {
                 var parsingError: NSError? = nil
                 let parsedResult = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments, error: &parsingError) as! NSDictionary
                 
-                //println("2nd Parsed Result -------")
-                //println(parsedResult)
-                
                 /* Get the photos dictionary */
                 if let photosDictionary = parsedResult.valueForKey("photos") as? [String:AnyObject] {
                     
@@ -191,45 +188,35 @@ class BGClient : NSObject {
                     /* If photos are returned, let's grab one! */
                     if totalPhotosVal > 0 {
                         if let photosArray = photosDictionary["photo"] as? [[String: AnyObject]] {
-                                
-                                //var count1 = 0
-                                //for photo in photosArray {
-                                    //* - Grab 21 random images
-                                    //if count1 <= 20 {
-                                        // Grabs 1 image
-                                        let randomPhotoIndex = Int(arc4random_uniform(UInt32(photosArray.count)))
-                                        let photoDictionary = photosArray[randomPhotoIndex] as [String:AnyObject]
+                            
+                            let randomPhotoIndex = Int(arc4random_uniform(UInt32(photosArray.count)))
+                            let photoDictionary = photosArray[randomPhotoIndex] as [String:AnyObject]
                                         
-                                        //* - Get the image url
-                                        let imageUrlString = photoDictionary["url_m"] as? String
-                                        let imageURL = NSURL(string: imageUrlString!)
-                                        
-                                        /* If an image exists at the url, set the image and title */
-                                        if let imageData = NSData(contentsOfURL: imageURL!) {
-                                            //dispatch_async(dispatch_get_main_queue(), {
-                                            //dispatch_async(dispatch_get_main_queue()){
-                                                println("found another")
-                                                completionHandler(success: true, pictureURL: imageUrlString, errorString: nil)
-                                            //} //End Dispatch
-                                            //count1 += 1
-                                            
-                                        } else {
-                                            completionHandler(success: false, pictureURL: nil, errorString: "Image does not exist at \(imageURL)")
-                                        }
-                                    //} //End count
-                                    
-                                    //completionHandler(success: true, pictureURL: imageUrlString, errorString: nil)
-                                    
-                                //}
-                                //completionHandler(success: true, errorString: nil)
-                            //}) //End Big Dispatch
+                            //* - Get the image url
+                            let imageUrlString = photoDictionary["url_m"] as? String
+                            let imageURL = NSURL(string: imageUrlString!)
+                            let urlRequest = NSURLRequest(URL: imageURL!)
+                            let mainQueue = NSOperationQueue()
+                            
+                            NSURLConnection.sendAsynchronousRequest(urlRequest, queue: mainQueue, completionHandler:{(response: NSURLResponse!, data: NSData!, error: NSError!) -> Void in
+                                if data.length > 0 && error == nil {
+
+                                    completionHandler(success: true, pictureURL: imageUrlString, errorString: nil)
+                                }
+                                else if data.length == 0 && error == nil {
+                                        completionHandler(success: false, pictureURL: nil, errorString: "Nothing was downloaded")
+                                }
+                                else
+                                {
+                                    completionHandler(success: false, pictureURL: nil, errorString: "Nothing was downloaded")
+                                }
+                            })
+
                         } else {
                             completionHandler(success: false, pictureURL: nil, errorString: "Cant find key 'photo' in \(photosDictionary)")
                         }
                     } else {
-                        //                        dispatch_async(dispatch_get_main_queue(), {
-                        //                            self.pinImage.image = nil
-                        //                        })
+
                     }
                 } else {
                     completionHandler(success: false, pictureURL: nil, errorString: "Cant find key 'photos' in \(parsedResult)")

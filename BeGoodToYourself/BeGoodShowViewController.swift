@@ -9,6 +9,7 @@
 
 import UIKit
 import CoreData
+import EventKit
 
 
 class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDelegate {
@@ -24,7 +25,9 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
     @IBOutlet weak var untilEventSelector: UISegmentedControl!
     @IBOutlet weak var mgFactorButon: UIButton!
     @IBOutlet weak var mgFactorLabel: UILabel!
-    
+    @IBOutlet weak var shareEventButton: UIToolbar!
+    @IBOutlet weak var eventCalendarButton: UIButton!
+    @IBOutlet weak var toolbarObject: UIToolbar!
     
     var events: [Events]!
     //var events: Events!
@@ -50,16 +53,17 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
     var durationWeeks: Int!
     var durationMonths: Int!
     
+    var shareEventImage: UIImage!
+    
+    //* - Alert variable
+    var alertMessage: String!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //Get shared model info
-//        let object = UIApplication.sharedApplication().delegate
-//        let appDelegate = object as! AppDelegate
-//        events = appDelegate.events
-        
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "addTodoList")
+        //self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "addTodoList")
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image:UIImage(named:"list-33x33.png"), style:.Plain, target: self, action: "addTodoList")
         
         //* - Hide the Tab Bar
         self.tabBarController?.tabBar.hidden = true
@@ -416,6 +420,218 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
 
         self.navigationController!.pushViewController(controller, animated: true)
         
+    }
+    
+    
+    //-Generate the Event Image to share
+    func generateEventImage() -> UIImage {
+        
+        //Hide toolbar and navbar
+        //navbarObject.hidden = true
+        toolbarObject.hidden = true
+        
+        //Render view to an image
+        UIGraphicsBeginImageContext(self.view.frame.size)
+        self.view.drawViewHierarchyInRect(self.view.frame,
+            afterScreenUpdates: true)
+        let shareEventImage : UIImage =
+        UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        //Hide toolbar and navbar
+        //navbarObject.hidden = false
+        toolbarObject.hidden = false
+        
+        return shareEventImage
+    }
+    
+    
+    //-Share the generated event image with other apps
+    @IBAction func shareEvent(sender: UIBarButtonItem) {
+        
+        //-Create a event image, pass it to the activity view controller.
+        self.shareEventImage = generateEventImage()
+        
+        let activityVC = UIActivityViewController(activityItems: [self.shareEventImage!], applicationActivities: nil)
+        
+        activityVC.excludedActivityTypes =  [
+            UIActivityTypeSaveToCameraRoll
+//            UIActivityTypePostToTwitter,
+//            UIActivityTypePostToFacebook,
+//            UIActivityTypePostToWeibo,
+//            UIActivityTypeMessage,
+//            UIActivityTypeMail,
+//            UIActivityTypePrint,
+//            UIActivityTypeCopyToPasteboard,
+//            UIActivityTypeAssignToContact,
+//            UIActivityTypeSaveToCameraRoll,
+//            UIActivityTypeAddToReadingList,
+//            UIActivityTypePostToFlickr,
+//            UIActivityTypePostToVimeo,
+//            UIActivityTypePostToTencentWeibo
+        ]
+        
+        activityVC.completionWithItemsHandler = {
+            activity, completed, items, error in
+            if completed {
+                self.dismissViewControllerAnimated(true, completion: nil)
+            }
+        }
+        
+        self.presentViewController(activityVC, animated: true, completion: nil)
+    }
+    
+    //-
+    @IBAction func addCalendarEvent(sender: UIButton) {
+        println("Add Calendar Button touched")
+        
+        // 1
+        let eventStore = EKEventStore()
+        
+        // 2
+        switch EKEventStore.authorizationStatusForEntityType(EKEntityTypeEvent) {
+        case .Authorized:
+            println("authorized")
+            extractEventEntityCalendarsOutOfStore(eventStore)
+            insertEvent(eventStore)
+        case .Denied:
+            println("Access denied")
+        case .NotDetermined:
+            // 3
+            eventStore.requestAccessToEntityType(EKEntityTypeEvent, completion:
+                {[weak self] (granted: Bool, error: NSError!) -> Void in
+                    if granted {
+                        self!.extractEventEntityCalendarsOutOfStore(eventStore)
+                        self!.insertEvent(eventStore)
+                    } else {
+                        println("Access denied")
+                    }
+                })
+        default:
+            println("Case Default")
+        }
+        
+    }
+    
+    func extractEventEntityCalendarsOutOfStore(eventStore: EKEventStore){
+        let calendarTypes = [
+        
+            "Local",
+            "CalDAV",
+            "Exchange",
+            "Subscription",
+            "Birthday",
+        ]
+        
+        let calendars = eventStore.calendarsForEntityType(EKEntityTypeEvent) as! [EKCalendar]
+        for calendar in calendars{
+            println("Calendar title = \(calendar.title)")
+            println("Calendar typle = \(calendarTypes[Int(calendar.type.value)])")
+            
+            let color = UIColor(CGColor: calendar.CGColor)
+            println("Calendar color = \(color)")
+            
+            if calendar.allowsContentModifications{
+                println("This Calendar allows modifications")
+            } else{
+                println("This calendar does not allow modifications")
+            }
+            println("------------------------------")
+            }
+        
+    }
+    
+//    //-Find an event source with a given type and value
+//    func sourceInEventStore(
+//        eventStore: EKEventStore,
+//        type: EKSourceType,
+//        title: String) -> EKSource?{
+//            for source in eventStore.sources() as! [EKSource]{
+//                if source.sourceType.value == type.value &&
+//                    source.title.caseInsensitiveCompare(title) == NSComparisonResult.OrderedSame{
+//                        return source
+//                }
+//            }
+//    }
+    
+    
+//    func calendarWithTitle(
+//        title: String,
+//        type: EKCalendarType,
+//        source: EKSource,
+//        eventType: EKEntityType) -> EKCalendar?{
+//            for calendar in source.calendarsForEntityType(eventType) as [EKCalendar]{
+//            //for calendar in source.calendarsForEntityType(eventType).allObjects as [EKCalendar]{
+//                if calendar.title.caseInsentiveCompare(title) == NSComparisonResult.OrderedSame &&
+//                    calendar.type.value == type.value{
+//                        return calendar
+//                }
+//            }
+//            return nil
+//    }
+
+    
+    func insertEvent(store: EKEventStore) {
+        
+        let calendars = store.calendarsForEntityType(EKEntityTypeEvent)
+            as! [EKCalendar]
+        
+        println(calendars)
+        
+        for calendar in calendars {
+            if calendar.title == "Calendar" {
+
+                let event = fetchedResultsController.objectAtIndexPath(eventIndexPath) as! Events
+                
+                //-Set the selected event start date & time
+                let startDate = event.eventDate
+                println("calendar start: \(startDate)")
+                //-2 hours ahead for endtime
+                let endDate = startDate!.dateByAddingTimeInterval(2 * 60 * 60)
+                
+                //-Create Calendar Event
+                var calendarEvent = EKEvent(eventStore: store)
+                calendarEvent.calendar = calendar
+                
+                calendarEvent.title = event.textEvent
+                calendarEvent.startDate = startDate
+                calendarEvent.endDate = endDate
+
+                //-Save Event in Calendar
+                var error: NSError?
+                let result = store.saveEvent(calendarEvent, span: EKSpanThisEvent, error: &error)
+                
+                if result == true {
+                    //* - Call Alert message
+                    self.alertMessage = "Event added to your Calendar"
+                    self.errorAlertMessage()
+                }
+                else {
+                    if let theError = error {
+                        //* - Call Alert message
+                        self.alertMessage = "Calendars are restricted. Please allow access to add events to your Calendar."
+                        self.errorAlertMessage()
+                        println("An error occured \(theError)")
+                    }
+                }
+            }
+        }
+    }
+ 
+    
+    //* - Alert Message function
+    func errorAlertMessage(){
+        dispatch_async(dispatch_get_main_queue()) {
+            let actionSheetController: UIAlertController = UIAlertController(title: "Alert!", message: "\(self.alertMessage)", preferredStyle: .Alert)
+            //* - Create and add the OK action
+            let okAction: UIAlertAction = UIAlertAction(title: "OK", style: .Default) { action -> Void in
+                //self.dismissViewControllerAnimated(true, completion: nil)
+            }
+            actionSheetController.addAction(okAction)
+            
+            //* - Present the AlertController
+            self.presentViewController(actionSheetController, animated: true, completion: nil)
+        }
     }
     
 }

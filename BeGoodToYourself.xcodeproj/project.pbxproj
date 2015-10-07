@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		E511C9241BC47FA1000B26B7 /* MGButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E511C9231BC47FA1000B26B7 /* MGButton.swift */; };
+		E53286241BC5553A0081C7F7 /* list-33x33.png in Resources */ = {isa = PBXBuildFile; fileRef = E53286231BC5553A0081C7F7 /* list-33x33.png */; };
 		E5A515CC1BBDDCD600186690 /* TodoList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A515CB1BBDDCD600186690 /* TodoList.swift */; };
 		E5C961AB1BB7032C006D20C8 /* BGClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C961AA1BB7032C006D20C8 /* BGClient.swift */; };
 		E5C961AD1BB70390006D20C8 /* BGConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C961AC1BB70390006D20C8 /* BGConstants.swift */; };
@@ -44,6 +45,7 @@
 
 /* Begin PBXFileReference section */
 		E511C9231BC47FA1000B26B7 /* MGButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MGButton.swift; sourceTree = "<group>"; };
+		E53286231BC5553A0081C7F7 /* list-33x33.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "list-33x33.png"; sourceTree = "<group>"; };
 		E5A515CB1BBDDCD600186690 /* TodoList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodoList.swift; sourceTree = "<group>"; };
 		E5C961AA1BB7032C006D20C8 /* BGClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BGClient.swift; sourceTree = "<group>"; };
 		E5C961AC1BB70390006D20C8 /* BGConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BGConstants.swift; sourceTree = "<group>"; };
@@ -94,6 +96,7 @@
 			isa = PBXGroup;
 			children = (
 				E511C9231BC47FA1000B26B7 /* MGButton.swift */,
+				E53286231BC5553A0081C7F7 /* list-33x33.png */,
 			);
 			name = Custom;
 			sourceTree = "<group>";
@@ -286,6 +289,7 @@
 				E5D00EE11BADFF4300971CC6 /* Main.storyboard in Resources */,
 				E5D00EE61BADFF4300971CC6 /* LaunchScreen.xib in Resources */,
 				E5D00EE31BADFF4300971CC6 /* Images.xcassets in Resources */,
+				E53286241BC5553A0081C7F7 /* list-33x33.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
