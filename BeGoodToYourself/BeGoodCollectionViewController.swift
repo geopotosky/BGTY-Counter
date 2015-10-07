@@ -116,11 +116,6 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
         
         editButtonFlag = true
         
-        //-Get shared model info
-//                let object = UIApplication.sharedApplication().delegate
-//                let appDelegate = object as! AppDelegate
-//                events = appDelegate.events
-        
         //-Brute Force Reload the scene to view collection updates
         self.collectionView.reloadData()
         
@@ -128,11 +123,24 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
     }
     
     
-    //-Enable all TabBar Item when the view disappears
+    //-Reset the collection Edit view when the view disappears
     override func viewWillDisappear(animated: Bool) {
         
-        tabBarItemONE.enabled = true
-        tabBarItemTWO.enabled = true
+//        tabBarItemONE.enabled = true
+//        tabBarItemTWO.enabled = true
+        
+        self.navigationItem.hidesBackButton = true
+        let newBackButton = UIBarButtonItem(title: "Edit", style: UIBarButtonItemStyle.Plain, target: self, action: "editButton")
+        self.navigationItem.leftBarButtonItem = newBackButton
+        bottomButton.hidden = true
+        editButtonFlag = true
+        
+        
+        var index : Int = 0
+        for item in selectedIndexes{
+            selectedIndexes.removeAtIndex(index)
+        }
+        
         
     }
     
@@ -149,7 +157,7 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
         if self.navigationItem.leftBarButtonItem?.title == "Done" {
             
             //-Enable the TabBar Item
-            tabBarItemONE.enabled = true
+            //tabBarItemONE.enabled = true
             
             //-Recreate navigation Back button and change name to "Edit"
             
@@ -167,16 +175,16 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
             self.navigationItem.leftBarButtonItem = newBackButton
             
             //-Disable the Tab Bar Item
-            let tabBarControllerItems = self.tabBarController?.tabBar.items
-            if let arrayOfTabBarItems = tabBarControllerItems as! AnyObject as? NSArray{
-                
-                tabBarItemONE = arrayOfTabBarItems[0] as! UITabBarItem
-                tabBarItemONE.enabled = false
-                
-                //tabBarItemTWO = arrayOfTabBarItems[1] as! UITabBarItem
-                //tabBarItemTWO.enabled = false
-                
-            }
+//            let tabBarControllerItems = self.tabBarController?.tabBar.items
+//            if let arrayOfTabBarItems = tabBarControllerItems as! AnyObject as? NSArray{
+//                
+//                tabBarItemONE = arrayOfTabBarItems[0] as! UITabBarItem
+//                tabBarItemONE.enabled = false
+//                
+//                //tabBarItemTWO = arrayOfTabBarItems[1] as! UITabBarItem
+//                //tabBarItemTWO.enabled = false
+//                
+//            }
             
             bottomButton.hidden = false
             editButtonFlag = false
@@ -224,20 +232,15 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
             
             let cell = collectionView.cellForItemAtIndexPath(indexPath) as! BeGoodCollectionViewCell
             
-            //let meme = fetchedResultsController.objectAtIndexPath(indexPath) as! Memes
-            
             // Whenever a cell is tapped we will toggle its presence in the selectedIndexes array
             if let index = find(selectedIndexes, indexPath) {
                 selectedIndexes.removeAtIndex(index)
             }
             else {
-                //cell.cellOverlay.backgroundColor = UIColor.purpleColor()
                 selectedIndexes.append(indexPath)
             }
             
             // Then reconfigure the cell
-            //self.configureCell(cell, atIndexPath: indexPath)
-            //configureCell(cell, withMeme: meme)
             configureCell(cell, atIndexPath: indexPath)
             
             

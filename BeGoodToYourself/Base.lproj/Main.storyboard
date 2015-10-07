@@ -177,7 +177,7 @@
                             <tableView clipsSubviews="YES" contentMode="scaleAspectFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="51" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="w0P-nO-H6A">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleAspectFit" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="BeGoodTableCell" textLabel="Gjz-SZ-BTC" detailTextLabel="asB-L5-BIx" rowHeight="51" style="IBUITableViewCellStyleSubtitle" id="9gT-av-dyw">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="BeGoodTableCell" textLabel="Gjz-SZ-BTC" detailTextLabel="asB-L5-BIx" rowHeight="51" style="IBUITableViewCellStyleSubtitle" id="9gT-av-dyw">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9gT-av-dyw" id="5W2-Re-1rb">
                                             <autoresizingMask key="autoresizingMask"/>
@@ -554,7 +554,6 @@
                                 <subviews>
                                     <button opaque="NO" alpha="0.79999999999999982" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Hf-bb-OTz" customClass="MGButton" customModule="BeGoodToYourself" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="69" height="29"/>
-                                        <color key="backgroundColor" red="0.80000001190000003" green="1" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="69" id="4u2-4r-N3k"/>
                                         </constraints>

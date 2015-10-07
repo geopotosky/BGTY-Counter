@@ -58,12 +58,6 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
         //-Archive the graph any time this list of events is displayed.
         NSKeyedArchiver.archiveRootObject(self.events, toFile: eventsFilePath)
         
-        
-        //Get shared model info
-//                let object = UIApplication.sharedApplication().delegate
-//                let appDelegate = object as! AppDelegate
-//                events = appDelegate.events
-        
         //Brute Force Reload the scene to view table updates
         self.tableView.reloadData()
 
@@ -71,20 +65,36 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
     }
     
     
+    //-Reset the Table Edit view when the view disappears
+    override func viewWillDisappear(animated: Bool) {
+        
+        resetEditing(false, animated: false)
+       
+    }
+    
     override func setEditing(editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
         self.tableView.setEditing(editing, animated: animated)
+        println("Edit pushed")
     }
     
     
-    //* - GEO: Add the "sharedContext" convenience property
+    //-Reset the Table Edit view when the view disappears
+        
+    func resetEditing(editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+        self.tableView.setEditing(editing, animated: animated)
+    }
+
+    
+    
+    //-Add the "sharedContext" convenience property
     lazy var sharedContext: NSManagedObjectContext = {
         return CoreDataStackManager.sharedInstance().managedObjectContext!
         }()
     
     
-    // Mark: - Fetched Results Controller
-    
+    //-Fetched Results Controller
     lazy var fetchedResultsController: NSFetchedResultsController = {
         
         let fetchRequest = NSFetchRequest(entityName: "Events")
@@ -102,7 +112,7 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
     
     
     
-    //* - Configure Cell
+    //-Configure Cell
     
     func configureCell(cell: UITableViewCell, withEvent event: Events) {
         
@@ -118,8 +128,6 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
         cell.textLabel!.text = event.textEvent
         cell.detailTextLabel!.text = event2
         cell.imageView!.image = finalImage
-        //eventImageView.image = finalImage
-        
         
     }
     
@@ -188,7 +196,7 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
     
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle,
         forRowAtIndexPath indexPath: NSIndexPath) {
-            
+
             switch (editingStyle) {
             case .Delete:
                 
@@ -196,9 +204,8 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
                 let event = fetchedResultsController.objectAtIndexPath(indexPath) as! Events
                 sharedContext.deleteObject(event)
                 CoreDataStackManager.sharedInstance().saveContext()
-                
-                //events.removeAtIndex(indexPath.row)
-                //tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
+
+                //-Archive the graph any time this list of events is displayed.
                 NSKeyedArchiver.archiveRootObject(self.events, toFile: eventsFilePath)
                 
             default:
@@ -261,8 +268,7 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
     }
     
     
-    //Button Function - Create a New EVent
-    //@IBAction func memeEditButton(sender: UIBarButtonItem) {
+    //-Create a New EVent
     func addEvent(){
         let storyboard = self.storyboard
         let controller = self.storyboard?.instantiateViewControllerWithIdentifier("BeGoodAddEventViewController") as! BeGoodAddEventViewController
@@ -272,7 +278,6 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
     
     
     //-Saving the array. Helper.
-    
     var eventsFilePath : String {
         let manager = NSFileManager.defaultManager()
         let url = manager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first as! NSURL
