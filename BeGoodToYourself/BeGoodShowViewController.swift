@@ -57,6 +57,7 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
     
     //* - Alert variable
     var alertMessage: String!
+    var alertTitle: String!
     
     
     override func viewDidLoad() {
@@ -201,6 +202,7 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         controller.eventIndexPath2 = eventIndexPath
         controller.eventIndex2 = eventIndex
         controller.editEventFlag = true
+        
 
         self.navigationController!.pushViewController(controller, animated: true)
 //
@@ -262,6 +264,38 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         else{
             countDownLabel.text = "Event Has Past"
         }
+        
+        //------------------- UNTIL TICKER -----------------------------
+        var numberFormatter = NSNumberFormatter()
+        numberFormatter.numberStyle = NSNumberFormatterStyle.DecimalStyle
+        
+        switch untilEventSelector.selectedSegmentIndex {
+            
+        case 0:
+            let tempText1 = numberFormatter.stringFromNumber(self.durationWeeks)!
+            //let tempText1 = String(stringInterpolationSegment: self.durationWeeks)
+            untilEventText.text = ("Only \(tempText1) Weeks")
+        case 1:
+            //let tempText1 = numberFormatter.stringFromNumber(self.durationDays)!
+            let tempText1 = String(stringInterpolationSegment: self.durationDays)
+            untilEventText.text = ("Only \(tempText1) Days")
+        case 2:
+            let tempText1 = numberFormatter.stringFromNumber(self.durationHours)!
+            //let tempText1 = String(stringInterpolationSegment: self.durationHours)
+            untilEventText.text = ("Only \(tempText1) Hours")
+        case 3:
+            let tempText1 = numberFormatter.stringFromNumber(self.durationMinutes)!
+            //let tempText1 = String(stringInterpolationSegment: self.durationMinutes)
+            untilEventText.text = ("Only \(tempText1) Minutes")
+        case 4:
+            let tempText1 = numberFormatter.stringFromNumber(self.durationSeconds)!
+            //let tempText1 = String(stringInterpolationSegment: self.durationSeconds)
+            untilEventText.text = ("Only \(tempText1) Seconds")
+        default:
+            println("Error")
+            
+        }
+        
         
     }
     
@@ -337,7 +371,6 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         else {
             mgFactorValue = 0
             mgFactorLabel.text = "MG OFF"
-            
         }
         
         let event = fetchedResultsController.objectAtIndexPath(eventIndexPath) as! Events
@@ -348,62 +381,7 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         durationHours = (durationSeconds / 60) / 60
         durationDays = ((durationSeconds / 60) / 60) / 24
         durationWeeks = (((durationSeconds / 60) / 60) / 24) / 7
-        
-        //-Disable Segment button if value = 0
-        if durationWeeks == 0 {
-            untilEventSelector.setEnabled(false, forSegmentAtIndex: 0)
-        }
-        if durationDays == 0 {
-            untilEventSelector.setEnabled(false, forSegmentAtIndex: 1)
-        }
-        if durationHours == 0 {
-            untilEventSelector.setEnabled(false, forSegmentAtIndex: 2)
-        }
-        if durationMinutes == 0 {
-            untilEventSelector.setEnabled(false, forSegmentAtIndex: 3)
-        }
-        
-        //-Set the default segment value (days)
-        //let tempText1 = String(stringInterpolationSegment: self.durationDays)
-        
-        //-Check for end of event
-        //if tempText1 == "-1" {
-        if self.durationDays <= 0 {
-            untilEventSelector.selectedSegmentIndex = 1
-            untilEventText.text = "ZERO Days"
-        } else {
-        
-            var numberFormatter = NSNumberFormatter()
-            numberFormatter.numberStyle = NSNumberFormatterStyle.DecimalStyle
-            
-            switch untilEventSelector.selectedSegmentIndex {
-                
-            case 0:
-                let tempText1 = numberFormatter.stringFromNumber(self.durationWeeks)!
-                //let tempText1 = String(stringInterpolationSegment: self.durationWeeks)
-                untilEventText.text = ("Only \(tempText1) Weeks")
-            case 1:
-                let tempText1 = numberFormatter.stringFromNumber(self.durationDays)!
-                //let tempText1 = String(stringInterpolationSegment: self.durationDays)
-                untilEventText.text = ("Only \(tempText1) Days")
-            case 2:
-                let tempText1 = numberFormatter.stringFromNumber(self.durationHours)!
-                //let tempText1 = String(stringInterpolationSegment: self.durationHours)
-                untilEventText.text = ("Only \(tempText1) Hours")
-            case 3:
-                let tempText1 = numberFormatter.stringFromNumber(self.durationMinutes)!
-                //let tempText1 = String(stringInterpolationSegment: self.durationMinutes)
-                untilEventText.text = ("Only \(tempText1) Minutes")
-            case 4:
-                let tempText1 = numberFormatter.stringFromNumber(self.durationSeconds)!
-                //let tempText1 = String(stringInterpolationSegment: self.durationSeconds)
-                untilEventText.text = ("Only \(tempText1) Seconds")
-            default:
-                println("Error")
-                
-            }
-        }
-    
+
         //-Set the duration count in seconds which will be used in the countdown calculation
         count = durationSeconds
 
@@ -606,14 +584,16 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
                 
                 if result == true {
                     //* - Call Alert message
+                    self.alertTitle = "SUCCESS!"
                     self.alertMessage = "Event added to your Calendar"
-                    self.errorAlertMessage()
+                    self.calendarAlertMessage()
                 }
                 else {
                     if let theError = error {
                         //* - Call Alert message
-                        self.alertMessage = "Calendars are restricted. Please allow access to add events to your Calendar."
-                        self.errorAlertMessage()
+                        self.alertTitle = "ALERT"
+                        self.alertMessage = "One of your Calendars may be restricted. Please check to see if your Calendar is updated or allow access to add events."
+                        self.calendarAlertMessage()
                         println("An error occured \(theError)")
                     }
                 }
@@ -622,13 +602,22 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
     }
  
     
-    //* - Alert Message function
-    func errorAlertMessage(){
+    //-Alert Message function
+    func calendarAlertMessage(){
         dispatch_async(dispatch_get_main_queue()) {
-            let actionSheetController: UIAlertController = UIAlertController(title: "Alert!", message: "\(self.alertMessage)", preferredStyle: .Alert)
+            let actionSheetController = UIAlertController(title: "\(self.alertTitle)", message: "\(self.alertMessage)", preferredStyle: .Alert)
+            
+            //-Update alert colors and attributes
+            actionSheetController.view.tintColor = UIColor.blueColor()
+            let subview = actionSheetController.view.subviews.first! as! UIView
+            let alertContentView = subview.subviews.first! as! UIView
+            alertContentView.backgroundColor = UIColor.greenColor()
+            alertContentView.layer.cornerRadius = 5;
+            
             //* - Create and add the OK action
             let okAction: UIAlertAction = UIAlertAction(title: "OK", style: .Default) { action -> Void in
                 //self.dismissViewControllerAnimated(true, completion: nil)
+                
             }
             actionSheetController.addAction(okAction)
             

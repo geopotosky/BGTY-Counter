@@ -13,8 +13,8 @@ class BeGoodFlickrViewController: UIViewController {
     @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var phraseTextField: UITextField!
     @IBOutlet weak var searchButton: UIButton!
-    @IBOutlet weak var searchButtonLabel: UILabel!
     @IBOutlet weak var pickImageButton: UIButton!
+    @IBOutlet weak var flickrActivityIndicator: UIActivityIndicatorView!
     
     var tapRecognizer: UITapGestureRecognizer? = nil
     
@@ -31,6 +31,7 @@ class BeGoodFlickrViewController: UIViewController {
     var flickrImageURL: String!
     var eventIndexPath2: NSIndexPath!
     var eventImage2: NSData!
+    var currentImage: UIImage!
     
     
     override func viewDidLoad() {
@@ -41,7 +42,9 @@ class BeGoodFlickrViewController: UIViewController {
         tapRecognizer?.numberOfTapsRequired = 1
         
         searchFlag = false
-        searchButtonLabel.text = "Search"
+        //searchButtonLabel.text = "Search"
+        pickImageButton.hidden = true
+        flickrActivityIndicator.hidden = true
         
     }
     
@@ -53,6 +56,12 @@ class BeGoodFlickrViewController: UIViewController {
         
         /* Subscribe to keyboard events so we can adjust the view to show hidden controls */
         self.subscribeToKeyboardNotifications()
+        
+        if editEventFlag2 == false {
+            self.photoImageView.image = UIImage(named: "BG_Placeholder_Image.png")
+        } else {
+            self.photoImageView.image = currentImage
+        }
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -71,6 +80,11 @@ class BeGoodFlickrViewController: UIViewController {
         
         println("search button pushed")
         searchFlag = true
+        pickImageButton.hidden = true
+        
+        self.flickrActivityIndicator.hidden = false
+        self.flickrActivityIndicator.startAnimating()
+        
         appDelegate.phraseText = self.phraseTextField.text
         println(appDelegate.phraseText)
         
@@ -79,10 +93,9 @@ class BeGoodFlickrViewController: UIViewController {
         
         /* Verify Phrase Textfield in NOT Empty */
         if !self.phraseTextField.text.isEmpty {
-            //self.photoTitleLabel.text = "Searching..."
             
             //-Update Search button text
-            self.updateSearchButton()
+            //self.updateSearchButton()
             
             //* - Call the Get Flickr Images function
             BGClient.sharedInstance().getFlickrData(self) { (success, pictureURL, errorString) in
@@ -102,6 +115,9 @@ class BeGoodFlickrViewController: UIViewController {
                         dispatch_async(dispatch_get_main_queue(), {
                             //self.defaultLabel.alpha = 0.0
                             self.photoImageView.image = UIImage(data: imageData)
+                            self.pickImageButton.hidden = false
+                            self.flickrActivityIndicator.hidden = true
+                            self.flickrActivityIndicator.stopAnimating()
                             
                         })
                         //* - Save to local file
@@ -111,7 +127,7 @@ class BeGoodFlickrViewController: UIViewController {
                         dispatch_async(dispatch_get_main_queue(), {
                             //self.photoTitleLabel.text = "No Photos Found. Search Again."
                             //self.defaultLabel.alpha = 1.0
-                            self.photoImageView.image = nil
+                            self.photoImageView.image = UIImage(named: "BG_Placeholder_Image.png")
                         })
                     }
                     
@@ -241,14 +257,14 @@ class BeGoodFlickrViewController: UIViewController {
     }
     
     
-    //-Update the button label based on selection criteria
-    func updateSearchButton() {
-        if searchFlag == true {
-            searchButtonLabel.text = "Search Again"
-        } else {
-            searchButtonLabel.text = "Search"
-        }
-    }
+//    //-Update the button label based on selection criteria
+//    func updateSearchButton() {
+//        if searchFlag == true {
+//            searchButtonLabel.text = "Search Again"
+//        } else {
+//            searchButtonLabel.text = "Search"
+//        }
+//    }
     
 }
 

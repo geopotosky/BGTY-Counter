@@ -24,7 +24,6 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
     @IBOutlet weak var toolbarObject: UIToolbar!
     @IBOutlet weak var navbarObject: UINavigationBar!
     @IBOutlet weak var saveEventButton: UIBarButtonItem!
-//    @IBOutlet weak var shareMemeButton: UIBarButtonItem!
     @IBOutlet weak var cancelEventButton: UIBarButtonItem!
     
     //set the textfield delegates
@@ -129,7 +128,11 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
         fetchedResultsController.delegate = self
         
         if editEventFlag == false {
-            datePickerLable.text = "Enter a New Date and Time"
+            //-Load default values for new event
+            imageViewPicker.image = UIImage(named: "BG_Placeholder_Image.png")
+            currentEventDate = NSDate()
+            
+            
         } else {
             
             let event = fetchedResultsController.objectAtIndexPath(eventIndexPath2) as! Events
@@ -145,7 +148,6 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
             dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle //Set date style
             dateFormatter.timeZone = NSTimeZone()
             let strDate = dateFormatter.stringFromDate(currentEventDate)
-            //datePickerButton.titleLabel?.text = strDate
             datePickerLable.text = strDate
             
         }
@@ -288,7 +290,7 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
     }
     
     
-    //Button to Pick an image from the library
+    //-Button to Pick an image from the library
     @IBAction func PickAnImage(sender: AnyObject) {
         
         let imagePicker = UIImagePickerController()
@@ -297,7 +299,7 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
         self.presentViewController(imagePicker, animated: true, completion: nil)
     }
     
-    //Select an image for the Event from your Camera Roll
+    //-Select an image for the Event from your Camera Roll
     func imagePickerController(imagePicker: UIImagePickerController,
         didFinishPickingMediaWithInfo info: [NSObject : AnyObject]){
             
@@ -313,12 +315,13 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
     }
     
     
-    //Cancel the picked image
+    //-Cancel the picked image
     func imagePickerControllerDidCancel(imagePicker: UIImagePickerController){
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
-    //Select an image by taking a Picture
+    
+    //-Select an image by taking a Picture
     @IBAction func pickAnImageFromCamera (sender: AnyObject) {
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
@@ -335,32 +338,33 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
         let controller = self.storyboard?.instantiateViewControllerWithIdentifier("BeGoodFlickrViewController") as! BeGoodFlickrViewController
         controller.editEventFlag2 = editEventFlag
         controller.eventIndexPath2 = self.eventIndexPath2
+        controller.currentImage = imageViewPicker.image
         self.navigationController!.pushViewController(controller, animated: true)
         
     }
     
     
-    //Subscribe to Keyboard appearing and hiding notifications
+    //-Subscribe to Keyboard appearing and hiding notifications
     func subscribeToKeyboardNotifications() {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:"    , name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:"    , name: UIKeyboardWillHideNotification, object: nil)
     }
     
-    //Move screen up to prevent keyboard overlap
+    //-Move screen up to prevent keyboard overlap
     func keyboardWillShow(notification: NSNotification) {
         if textFieldEvent.isFirstResponder(){
 //            self.view.frame.origin.y -= getKeyboardHeight(notification)
         }
     }
     
-    //Move screen back down after done using keyboard
+    //-Move screen back down after done using keyboard
     func keyboardWillHide(notification: NSNotification) {
         if textFieldEvent.isFirstResponder(){
 //            self.view.frame.origin.y += getKeyboardHeight(notification)
         }
     }
     
-    //Calculate the keyboard height and place in variable
+    //-Calculate the keyboard height and place in variable
     func getKeyboardHeight(notification: NSNotification) -> CGFloat {
         let userInfo = notification.userInfo
         let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue // of CGRect
@@ -379,12 +383,11 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
     //-Save the Event
     func saveEvent() {
         
-        //-Create the Meme
         let eventImage = UIImageJPEGRepresentation(imageViewPicker.image, 100)
         
-        // Add it to the shared Memes array in the Application Delegate
-        let object = UIApplication.sharedApplication().delegate
-        let appDelegate = object as! AppDelegate
+//        //-Add it to the shared Memes array in the Application Delegate
+//        let object = UIApplication.sharedApplication().delegate
+//        let appDelegate = object as! AppDelegate
 
         if editEventFlag == true {
             
@@ -403,6 +406,7 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
             controller.editEventFlag = true
             controller.eventIndexPath = self.eventIndexPath2
             controller.eventIndex = self.eventIndex2
+            
             self.navigationController?.popViewControllerAnimated(true)
             
             
@@ -421,14 +425,13 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
     }
 
     
-    //Cancel the Editor and go back to the previous scene
+    //-Cancel the Editor and go back to the previous scene
     @IBAction func CancelEventButton(sender: UIBarButtonItem) {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     
     //-Saving the array. Helper.
-    
     var eventsFilePath : String {
         let manager = NSFileManager.defaultManager()
         let url = manager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first as! NSURL

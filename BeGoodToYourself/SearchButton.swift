@@ -1,23 +1,22 @@
 //
-//  MGButton.swift
+//  SearchButton.swift
 //  BeGoodToYourself
 //
-//  Created by George Potosky on 10/6/15.
+//  Created by George Potosky on 10/8/15.
 //  Copyright (c) 2015 GeoWorld. All rights reserved.
 //
-
 
 import Foundation
 import UIKit
 
 //* - Create custom button
-class MGButton: UIButton {
+class SearchButton: UIButton {
     required init(coder Decoder: NSCoder) {
         super.init(coder: Decoder)
-        let borderColor = UIColor(red:0.0,green:0.5,blue:0.8,alpha:1.0)
-        //let buttonColor = UIColor(red:0.6,green:0.2,blue:0.9,alpha:0.4)
-        let buttonColor = UIColor.greenColor()
-        self.layer.cornerRadius = 5.0;
+        let borderColor = UIColor(red:0.6,green:1.0,blue:0.6,alpha:1.0)
+        //let buttonColor = UIColor(red:0.6,green:0.9,blue:0.4,alpha:0.5)
+        let buttonColor = UIColor.whiteColor()
+        self.layer.cornerRadius = 7.0;
         self.layer.borderColor = borderColor.CGColor
         self.layer.borderWidth = 1.5
         self.backgroundColor = UIColor.whiteColor()
