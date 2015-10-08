@@ -755,15 +755,6 @@
                                     <action selector="datePickerAction:" destination="4Kf-R2-ncF" eventType="valueChanged" id="KP4-v2-5dL"/>
                                 </connections>
                             </datePicker>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="29Y-Lp-P9c">
-                                <rect key="frame" x="140" y="398" width="321" height="43"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="43" id="KiJ-of-7A9"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                <color key="textColor" red="0.89484690659999999" green="0.21935226699999999" blue="0.016786375919999999" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hq5-Oo-qTM">
                                 <rect key="frame" x="140" y="295" width="321" height="36"/>
                                 <color key="backgroundColor" red="0.69019609689999994" green="0.88627451660000001" blue="0.94509804249999996" alpha="1" colorSpace="calibratedRGB"/>
@@ -776,15 +767,6 @@
                                     <action selector="pickEventDate:" destination="4Kf-R2-ncF" eventType="touchUpInside" id="qlh-O7-WRu"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jv4-qN-TA7">
-                                <rect key="frame" x="140" y="456" width="321" height="37"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="37" id="NgH-cZ-6qv"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Event Date" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AHU-oo-1Xu">
                                 <rect key="frame" x="140" y="66" width="321" height="21"/>
                                 <color key="backgroundColor" red="0.69019609689999994" green="0.88627451660000001" blue="0.94509804249999996" alpha="1" colorSpace="calibratedRGB"/>
@@ -796,35 +778,25 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.85920250519999997" green="0.96853656489999995" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="hq5-Oo-qTM" firstAttribute="top" secondItem="qig-cg-hkv" secondAttribute="bottom" constant="15" id="6Nj-hT-6bK"/>
-                            <constraint firstItem="hq5-Oo-qTM" firstAttribute="leading" secondItem="29Y-Lp-P9c" secondAttribute="leading" id="9hy-hp-KIU"/>
-                            <constraint firstItem="hq5-Oo-qTM" firstAttribute="trailing" secondItem="qig-cg-hkv" secondAttribute="trailing" id="CJ0-0F-OkP"/>
-                            <constraint firstItem="jv4-qN-TA7" firstAttribute="trailing" secondItem="29Y-Lp-P9c" secondAttribute="trailing" id="EJL-PJ-A0D"/>
-                            <constraint firstItem="29Y-Lp-P9c" firstAttribute="leading" secondItem="jv4-qN-TA7" secondAttribute="leading" id="F9S-RM-tgq"/>
+                            <constraint firstItem="hq5-Oo-qTM" firstAttribute="centerX" secondItem="4xT-Jo-3by" secondAttribute="centerX" id="0ma-3d-MCh"/>
                             <constraint firstItem="AHU-oo-1Xu" firstAttribute="trailing" secondItem="qig-cg-hkv" secondAttribute="trailing" id="Jrp-ow-NEr"/>
-                            <constraint firstItem="jv4-qN-TA7" firstAttribute="top" secondItem="29Y-Lp-P9c" secondAttribute="bottom" constant="15" id="PaB-ur-K1p"/>
-                            <constraint firstItem="jv4-qN-TA7" firstAttribute="centerX" secondItem="4xT-Jo-3by" secondAttribute="centerX" id="Ttw-Kz-ceq"/>
+                            <constraint firstItem="hq5-Oo-qTM" firstAttribute="trailing" secondItem="qig-cg-hkv" secondAttribute="trailing" id="KRn-fg-bGd"/>
                             <constraint firstItem="qig-cg-hkv" firstAttribute="top" secondItem="AHU-oo-1Xu" secondAttribute="bottom" constant="31" id="UcP-H3-YTr"/>
-                            <constraint firstItem="29Y-Lp-P9c" firstAttribute="top" secondItem="hq5-Oo-qTM" secondAttribute="bottom" constant="67" id="a4Q-Xr-ypb"/>
-                            <constraint firstItem="qig-cg-hkv" firstAttribute="leading" secondItem="hq5-Oo-qTM" secondAttribute="leading" id="fba-IC-nCw"/>
                             <constraint firstItem="qig-cg-hkv" firstAttribute="top" secondItem="hIV-FX-Myh" secondAttribute="bottom" constant="98" id="hDl-Ly-uGs"/>
                             <constraint firstItem="AHU-oo-1Xu" firstAttribute="leading" secondItem="qig-cg-hkv" secondAttribute="leading" id="hUq-Uf-S97"/>
-                            <constraint firstItem="29Y-Lp-P9c" firstAttribute="trailing" secondItem="hq5-Oo-qTM" secondAttribute="trailing" id="tv2-87-bKT"/>
+                            <constraint firstItem="hq5-Oo-qTM" firstAttribute="leading" secondItem="qig-cg-hkv" secondAttribute="leading" id="qkt-Ep-1uT"/>
+                            <constraint firstItem="hq5-Oo-qTM" firstAttribute="top" secondItem="qig-cg-hkv" secondAttribute="bottom" constant="15" id="rcB-gD-gsv"/>
                         </constraints>
                         <variation key="widthClass=compact">
                             <mask key="subviews">
                                 <include reference="qig-cg-hkv"/>
-                                <include reference="29Y-Lp-P9c"/>
                                 <include reference="hq5-Oo-qTM"/>
-                                <include reference="jv4-qN-TA7"/>
                             </mask>
                         </variation>
                     </view>
                     <connections>
-                        <outlet property="CountDownLabel" destination="29Y-Lp-P9c" id="5lr-p4-gYX"/>
-                        <outlet property="countDownLabel" destination="jv4-qN-TA7" id="NkJ-fQ-Aq3"/>
                         <outlet property="eventDateLabel" destination="AHU-oo-1Xu" id="CJn-w9-b9S"/>
                         <outlet property="myDatePicker" destination="qig-cg-hkv" id="mQg-le-jQP"/>
                         <outlet property="pickDateButton" destination="hq5-Oo-qTM" id="Wza-Tq-0bC"/>

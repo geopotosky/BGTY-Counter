@@ -64,6 +64,9 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         
         //self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "addTodoList")
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image:UIImage(named:"list-33x33.png"), style:.Plain, target: self, action: "addTodoList")
+
+        //self.toolbarObject?.backgroundColor = UIColor(red:0.69,green:0.85,blue:0.95,alpha:1.0)
+        self.toolbarObject?.backgroundColor = UIColor.greenColor()
         
         //* - Hide the Tab Bar
         self.tabBarController?.tabBar.hidden = true

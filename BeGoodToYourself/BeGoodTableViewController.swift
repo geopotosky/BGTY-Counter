@@ -33,9 +33,10 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
         self.navigationItem.leftBarButtonItem = self.editButtonItem()
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "addEvent")
         //-Manage Top and Bottom bar colors
-        self.navigationController!.navigationBar.barTintColor = UIColor(red:0.69,green:0.85,blue:0.95,alpha:1.0)
-        self.tabBarController?.tabBar.barTintColor = UIColor(red:0.69,green:0.85,blue:0.95,alpha:1.0)
-
+        //self.navigationController!.navigationBar.barTintColor = UIColor(red:0.69,green:0.85,blue:0.95,alpha:1.0)
+        //self.tabBarController?.tabBar.barTintColor = UIColor(red:0.69,green:0.85,blue:0.95,alpha:1.0)        
+        self.navigationController!.navigationBar.barTintColor = UIColor(red:0.66,green:0.97,blue:0.59,alpha:1.0)
+        self.tabBarController?.tabBar.barTintColor = UIColor(red:0.66,green:0.97,blue:0.59,alpha:1.0)
         
         //self.tabBarController?.tabBar.hidden = false
         

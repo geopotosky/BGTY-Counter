@@ -44,7 +44,7 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
     var todaysDate: NSDate!
     
     var editEventFlag: Bool!
-    var tempEventDate2: NSDate!
+    var currentEventDate: NSDate!
     var flickrImageURL: String!
     var flickrImage: UIImage!
     
@@ -67,6 +67,7 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
         
         //-Create buttons
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Save, target: self, action: "saveEvent")
+        self.toolbarObject?.backgroundColor = UIColor.greenColor()
         
         //-Disable SAVE button if creating new Event
         //-Enable SAVE button if editing existing Event
@@ -84,13 +85,7 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
 //        datePickerButton.titleLabel?.lineBreakMode = NSLineBreakMode.ByWordWrapping
 //        datePickerButton.titleLabel?.textAlignment = NSTextAlignment.Center
 //        datePickerButton.setTranslatesAutoresizingMaskIntoConstraints(false)
-        
-        //Get shared model info
-//        let object = UIApplication.sharedApplication().delegate
-//        let appDelegate = object as! AppDelegate
-//        events = appDelegate.events
-        
-        println("New Date1: \(tempEventDate2)")
+
         
         //-Date Picker Formatting -----------------------------------------------------
         var dateFormatter = NSDateFormatter()
@@ -142,16 +137,14 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
             //-Add Selected Meme attributes and populate Editor fields
             self.textFieldEvent.text = event.textEvent
             imageViewPicker.image = UIImage(data: event.eventImage!)
-            tempEventDate2 = event.eventDate
+            currentEventDate = event.eventDate
             
             var dateFormatter = NSDateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
             dateFormatter.timeStyle = NSDateFormatterStyle.MediumStyle //Set time style
             dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle //Set date style
             dateFormatter.timeZone = NSTimeZone()
-            println("New Date1: \(tempEventDate2)")
-            let strDate = dateFormatter.stringFromDate(tempEventDate2)
-            println("New Date1 String: \(strDate)")
+            let strDate = dateFormatter.stringFromDate(currentEventDate)
             //datePickerButton.titleLabel?.text = strDate
             datePickerLable.text = strDate
             
@@ -215,9 +208,8 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
         dateFormatter.timeStyle = NSDateFormatterStyle.MediumStyle //Set time style
         dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle //Set date style
         dateFormatter.timeZone = NSTimeZone()
-        if tempEventDate2 != nil {
-            println("New Date2: \(tempEventDate2)")
-            let strDate = dateFormatter.stringFromDate(tempEventDate2)
+        if currentEventDate != nil {
+            let strDate = dateFormatter.stringFromDate(currentEventDate)
             println("New Date2 String: \(strDate)")
             //datePickerButton.titleLabel?.text = strDate
             datePickerLable.text = strDate
@@ -290,6 +282,7 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
         let storyboard = self.storyboard
         let controller = self.storyboard?.instantiateViewControllerWithIdentifier("BeGoodPickdateViewController") as! BeGoodPickdateViewController
         controller.editEventFlag2 = editEventFlag
+        controller.currentEventDate = self.currentEventDate
         self.navigationController!.pushViewController(controller, animated: true)
         
     }
@@ -381,32 +374,9 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
         NSNotificationCenter.defaultCenter().removeObserver(self, name:
             UIKeyboardWillHideNotification, object: nil)
     }
-    
-//    //Generate the Meme
-//    func generateMemedImage() -> UIImage {
-//        
-//        //Hide toolbar and navbar
-//        navbarObject.hidden = true
-//        toolbarObject.hidden = true
-//        
-//        //Render view to an image
-//        UIGraphicsBeginImageContext(self.view.frame.size)
-//        self.view.drawViewHierarchyInRect(self.view.frame,
-//            afterScreenUpdates: true)
-//        let memedImage : UIImage =
-//        UIGraphicsGetImageFromCurrentImageContext()
-//        UIGraphicsEndImageContext()
-//        
-//        //Show toolbar and navbar
-//        navbarObject.hidden = false
-//        toolbarObject.hidden = false
-//        
-//        return memedImage
-//    }
 
     
     //-Save the Event
-    //@IBAction func saveEvent(sender: UIBarButtonItem) {
     func saveEvent() {
         
         //-Create the Meme
@@ -416,13 +386,12 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
         let object = UIApplication.sharedApplication().delegate
         let appDelegate = object as! AppDelegate
 
-        
         if editEventFlag == true {
             
             //-Update selected event
             println("Update Selected Event")
             let event = self.fetchedResultsController.objectAtIndexPath(self.eventIndexPath2) as! Events
-            event.eventDate = self.tempEventDate2
+            event.eventDate = self.currentEventDate
             event.textEvent = textFieldEvent.text!
             event.eventImage = eventImage
             self.sharedContext.refreshObject(event, mergeChanges: true)
@@ -441,12 +410,7 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
             
             //-Save new event
             println("Save New Event")
-            let eventToBeAdded = Events(eventDate: self.tempEventDate2, textEvent: textFieldEvent.text!, eventImage: eventImage, context: sharedContext)
-            
-//            appDelegate.events.append(eventToBeAdded)
-            //events.append(eventToBeAdded)
-//            self.events?.append(eventToBeAdded)
-            
+            let eventToBeAdded = Events(eventDate: self.currentEventDate, textEvent: textFieldEvent.text!, eventImage: eventImage, context: sharedContext)
             
             //-Save the shared context, using the convenience method in the CoreDataStackManager
             CoreDataStackManager.sharedInstance().saveContext()
@@ -457,49 +421,10 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
     }
 
     
-    
-//    //Share the Event
-//    @IBAction func shareMyEvent(sender: AnyObject) {
-//        
-//        //Create a memed image, pass it to the activity view controller.
-//        self.memedImage = generateMemedImage()
-//        
-//        let activityVC = UIActivityViewController(activityItems: [self.memedImage!], applicationActivities: nil)
-//        
-//        //If the user completes an action in the activity view controller,
-//        //save the Meme to the shared storage.
-//        activityVC.completionWithItemsHandler = {
-//            activity, completed, items, error in
-//            if completed {
-//                self.saveMeme()
-//                //println("Newly Saved Meme Index: \(appDelegate.memes.last)")
-//                //self.dismissViewControllerAnimated(true, completion: nil)
-//                
-//                //                let storyboard = self.storyboard
-//                //                let controller = self.storyboard?.instantiateViewControllerWithIdentifier("MemeDetailViewController") as! MemeDetailViewController
-//                //
-//                //                //let meme = self.fetchedResultsController.objectAtIndexPath(self.memeIndexPath2) as! Memes
-//                //                controller.editEventFlag = true
-//                //                //controller.memes = self.memes
-//                //                controller.memeIndexPath = self.memeIndexPath2
-//                //                controller.memeIndex = self.memeIndex2
-//                //                //controller.memedImage = self.memedImage2
-//                //                //println("controller.memedImage: \(controller.memedImage)")
-//                //
-//                //                self.presentViewController(controller, animated: true, completion: nil)
-//                
-//            }
-//        }
-//        
-//        self.presentViewController(activityVC, animated: true, completion: nil)
-//        
-//    }
-    
     //Cancel the Editor and go back to the previous scene
     @IBAction func CancelEventButton(sender: UIBarButtonItem) {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
-    
     
     
     //-Saving the array. Helper.
