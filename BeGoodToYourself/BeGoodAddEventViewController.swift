@@ -79,6 +79,12 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
         //-Hide the Tab Bar
         self.tabBarController?.tabBar.hidden = true
         
+        
+//        var pinchGestureRecognizer: UIPinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: "pinchGestureDetected:")
+//        pinchGestureRecognizer.setDelegate(self)
+//        imageView.addGestureRecognizer(pinchGestureRecognizer)
+        
+        
 //        let datePickButton = UIButton.buttonWithType(.System) as! UIButton
 //        datePickerButton.setTitle(title, forState: .Normal)
 //        datePickerButton.titleLabel?.lineBreakMode = NSLineBreakMode.ByWordWrapping
@@ -112,7 +118,7 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
         //-----------------------------------------------------------------------------
         
         //-Add font attributes to Event Description
-        self.textFieldEvent.defaultTextAttributes = eventTextAttributes
+        //self.textFieldEvent.defaultTextAttributes = eventTextAttributes
         
         //-Set starting textfield default values
         self.textFieldEvent.text = "Enter Event Description"
@@ -273,6 +279,14 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
 //        println("New Date: \(tempEventDate2)")
 //        controller.navigationController?.popViewControllerAnimated(true)
 //    }
+    
+    
+    //-Pinch Gesture method
+    @IBAction func scaleImage(recognizer: UIPinchGestureRecognizer) {
+        recognizer.view!.transform = CGAffineTransformScale(recognizer.view!.transform, recognizer.scale, recognizer.scale)
+        recognizer.scale = 1
+    }
+    
     
     
     @IBAction func pickEventDate(sender: UIButton) {

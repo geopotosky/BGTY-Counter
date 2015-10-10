@@ -29,6 +29,15 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
     @IBOutlet weak var eventCalendarButton: UIButton!
     @IBOutlet weak var toolbarObject: UIToolbar!
     
+    @IBOutlet weak var secondsTickerLabel: UILabel!
+    @IBOutlet weak var secondsWordLabel: UILabel!
+    @IBOutlet weak var minutesTickerLabel: UILabel!
+    @IBOutlet weak var minutesWordLabel: UILabel!
+    @IBOutlet weak var hoursTickerLabel: UILabel!
+    @IBOutlet weak var hoursWordLabel: UILabel!
+    @IBOutlet weak var daysTickerLabel: UILabel!
+    @IBOutlet weak var daysWordLabel: UILabel!
+    
     var events: [Events]!
     //var events: Events!
     
@@ -69,8 +78,10 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         //self.toolbarObject?.backgroundColor = UIColor(red:0.69,green:0.85,blue:0.95,alpha:1.0)
         self.toolbarObject?.backgroundColor = UIColor.greenColor()
         
-        //* - Hide the Tab Bar
+        //-Hide the Tab Bar
         self.tabBarController?.tabBar.hidden = true
+        //-Hide the "Event Ended" message
+        countDownLabel.hidden = true
         
 //        let b1 = UIBarButtonItem(barButtonSystemItem: .Trash, target: self,  action: "deleteMeme")
 //        let b2 = UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action: "editMeme")
@@ -96,6 +107,18 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
     //Perform when view appears
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        
+        //-UnHider the main ticker
+        secondsTickerLabel.hidden = false
+        secondsWordLabel.hidden = false
+        minutesTickerLabel.hidden = false
+        minutesWordLabel.hidden = false
+        hoursTickerLabel.hidden = false
+        hoursWordLabel.hidden = false
+        daysTickerLabel.hidden = false
+        daysWordLabel.hidden = false
+        countDownLabel.hidden = true
+        
         
         println("BeGoodShowVC viewWillAppear")
         
@@ -186,7 +209,7 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
             //let tempText1 = String(stringInterpolationSegment: self.durationSeconds)
             untilEventText.text = ("Only \(tempText1) Seconds")
         default:
-            println("Error")
+            println("Less than 1 day left")
             
         }
 
@@ -260,8 +283,25 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
             let timerOutput = String(format: "%5d Days %2d:%2d:%02d", days, hours, minutes2, seconds) as String
             countDownLabel.text = timerOutput as String
             //CountDownDescription.text = eventText
+            
+            secondsTickerLabel.text = String(format: "%02d", seconds)
+            minutesTickerLabel.text = String(format: "%02d", minutes2)
+            hoursTickerLabel.text = String(format: "%02d", hours)
+            daysTickerLabel.text = String(days)
+            
         }
         else{
+            //-Hide the main ticker and show the "Event Ended" message
+            secondsTickerLabel.hidden = true
+            secondsWordLabel.hidden = true
+            minutesTickerLabel.hidden = true
+            minutesWordLabel.hidden = true
+            hoursTickerLabel.hidden = true
+            hoursWordLabel.hidden = true
+            daysTickerLabel.hidden = true
+            daysWordLabel.hidden = true
+            countDownLabel.hidden = false
+            
             countDownLabel.text = "Event Has Past"
         }
         
@@ -274,25 +314,45 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         case 0:
             let tempText1 = numberFormatter.stringFromNumber(self.durationWeeks)!
             //let tempText1 = String(stringInterpolationSegment: self.durationWeeks)
-            untilEventText.text = ("Only \(tempText1) Weeks")
+            if self.durationWeeks < 2 {
+                untilEventText.text = ("Only \(tempText1) Week")
+            } else {
+                untilEventText.text = ("Only \(tempText1) Weeks")
+            }
         case 1:
             //let tempText1 = numberFormatter.stringFromNumber(self.durationDays)!
             let tempText1 = String(stringInterpolationSegment: self.durationDays)
-            untilEventText.text = ("Only \(tempText1) Days")
+            if self.durationDays < 2 {
+                untilEventText.text = ("Only \(tempText1) Day")
+            } else {
+                untilEventText.text = ("Only \(tempText1) Days")
+            }
         case 2:
             let tempText1 = numberFormatter.stringFromNumber(self.durationHours)!
             //let tempText1 = String(stringInterpolationSegment: self.durationHours)
-            untilEventText.text = ("Only \(tempText1) Hours")
+            if self.durationHours < 2 {
+                untilEventText.text = ("Only \(tempText1) Hour")
+            } else {
+                untilEventText.text = ("Only \(tempText1) Hours")
+            }
         case 3:
             let tempText1 = numberFormatter.stringFromNumber(self.durationMinutes)!
             //let tempText1 = String(stringInterpolationSegment: self.durationMinutes)
-            untilEventText.text = ("Only \(tempText1) Minutes")
+            if self.durationMinutes < 2 {
+                untilEventText.text = ("Only \(tempText1) Minute")
+            } else {
+                untilEventText.text = ("Only \(tempText1) Minutes")
+            }
         case 4:
             let tempText1 = numberFormatter.stringFromNumber(self.durationSeconds)!
             //let tempText1 = String(stringInterpolationSegment: self.durationSeconds)
-            untilEventText.text = ("Only \(tempText1) Seconds")
+            if self.durationSeconds < 2 {
+                untilEventText.text = ("Only \(tempText1) Second")
+            } else {
+                untilEventText.text = ("Only \(tempText1) Seconds")
+            }
         default:
-            println("Error")
+            println("Less than 1 day left")
             
         }
         
@@ -326,6 +386,15 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         durationHours = (durationSeconds / 60) / 60
         durationDays = ((durationSeconds / 60) / 60) / 24
         durationWeeks = (((durationSeconds / 60) / 60) / 24) / 7
+        
+        //-Disable MG button is days < 2
+        if durationDays < 2 {
+            mgFactorLabel.enabled = false
+            mgFactorButon.enabled = false
+        } else {
+            mgFactorLabel.enabled = true
+            mgFactorButon.enabled = true
+        }
         
         //-Disable Segment button if value = 0
         if durationWeeks == 0 {
