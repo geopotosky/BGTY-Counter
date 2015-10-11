@@ -12,6 +12,10 @@
 		E53286601BC6DC040081C7F7 /* BG_Placeholder_Image.png in Resources */ = {isa = PBXBuildFile; fileRef = E532865F1BC6DC040081C7F7 /* BG_Placeholder_Image.png */; };
 		E53286621BC6F3960081C7F7 /* SearchButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53286611BC6F3960081C7F7 /* SearchButton.swift */; };
 		E5A515CC1BBDDCD600186690 /* TodoList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A515CB1BBDDCD600186690 /* TodoList.swift */; };
+		E5B7DEB81BC9E10D0026D4CE /* BudgetTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B7DEB71BC9E10D0026D4CE /* BudgetTableViewController.swift */; };
+		E5B7DEBA1BC9E1500026D4CE /* BudgetEditTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B7DEB91BC9E1500026D4CE /* BudgetEditTableViewController.swift */; };
+		E5B7DEBC1BC9E1690026D4CE /* BudgetAddTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B7DEBB1BC9E1690026D4CE /* BudgetAddTableViewController.swift */; };
+		E5B7DEBE1BC9E2290026D4CE /* PriceTextDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B7DEBD1BC9E2290026D4CE /* PriceTextDelegate.swift */; };
 		E5C961AB1BB7032C006D20C8 /* BGClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C961AA1BB7032C006D20C8 /* BGClient.swift */; };
 		E5C961AD1BB70390006D20C8 /* BGConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C961AC1BB70390006D20C8 /* BGConstants.swift */; };
 		E5C961AF1BB70A54006D20C8 /* BeGoodFlickrViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C961AE1BB70A54006D20C8 /* BeGoodFlickrViewController.swift */; };
@@ -51,6 +55,10 @@
 		E532865F1BC6DC040081C7F7 /* BG_Placeholder_Image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BG_Placeholder_Image.png; sourceTree = "<group>"; };
 		E53286611BC6F3960081C7F7 /* SearchButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchButton.swift; sourceTree = "<group>"; };
 		E5A515CB1BBDDCD600186690 /* TodoList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodoList.swift; sourceTree = "<group>"; };
+		E5B7DEB71BC9E10D0026D4CE /* BudgetTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BudgetTableViewController.swift; sourceTree = "<group>"; };
+		E5B7DEB91BC9E1500026D4CE /* BudgetEditTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BudgetEditTableViewController.swift; sourceTree = "<group>"; };
+		E5B7DEBB1BC9E1690026D4CE /* BudgetAddTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BudgetAddTableViewController.swift; sourceTree = "<group>"; };
+		E5B7DEBD1BC9E2290026D4CE /* PriceTextDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PriceTextDelegate.swift; sourceTree = "<group>"; };
 		E5C961AA1BB7032C006D20C8 /* BGClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BGClient.swift; sourceTree = "<group>"; };
 		E5C961AC1BB70390006D20C8 /* BGConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BGConstants.swift; sourceTree = "<group>"; };
 		E5C961AE1BB70A54006D20C8 /* BeGoodFlickrViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeGoodFlickrViewController.swift; sourceTree = "<group>"; };
@@ -179,6 +187,7 @@
 			children = (
 				E5D00EDB1BADFF4300971CC6 /* AppDelegate.swift */,
 				E5D00F0C1BAE0C8300971CC6 /* EventTextDelegate.swift */,
+				E5B7DEBD1BC9E2290026D4CE /* PriceTextDelegate.swift */,
 			);
 			name = "Delegate Files";
 			sourceTree = "<group>";
@@ -208,6 +217,9 @@
 				E5D00EDF1BADFF4300971CC6 /* Main.storyboard */,
 				E5D00EE21BADFF4300971CC6 /* Images.xcassets */,
 				E5D00EE41BADFF4300971CC6 /* LaunchScreen.xib */,
+				E5B7DEB71BC9E10D0026D4CE /* BudgetTableViewController.swift */,
+				E5B7DEB91BC9E1500026D4CE /* BudgetEditTableViewController.swift */,
+				E5B7DEBB1BC9E1690026D4CE /* BudgetAddTableViewController.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -324,14 +336,18 @@
 				E5D00F031BAE056B00971CC6 /* BeGoodTableViewController.swift in Sources */,
 				E5D00EDC1BADFF4300971CC6 /* AppDelegate.swift in Sources */,
 				E5C961AB1BB7032C006D20C8 /* BGClient.swift in Sources */,
+				E5B7DEBA1BC9E1500026D4CE /* BudgetEditTableViewController.swift in Sources */,
 				E5A515CC1BBDDCD600186690 /* TodoList.swift in Sources */,
 				E5D00F121BAF8DCF00971CC6 /* BeGoodPickdateViewController.swift in Sources */,
+				E5B7DEBE1BC9E2290026D4CE /* PriceTextDelegate.swift in Sources */,
 				E5D00F0B1BAE0BF000971CC6 /* Events.swift in Sources */,
 				E5C961AD1BB70390006D20C8 /* BGConstants.swift in Sources */,
 				E5D00EFE1BADFFF100971CC6 /* CoreDataStackManager.swift in Sources */,
+				E5B7DEB81BC9E10D0026D4CE /* BudgetTableViewController.swift in Sources */,
 				E53286621BC6F3960081C7F7 /* SearchButton.swift in Sources */,
 				E5C961AF1BB70A54006D20C8 /* BeGoodFlickrViewController.swift in Sources */,
 				E5D00F101BAE184E00971CC6 /* Model.xcdatamodeld in Sources */,
+				E5B7DEBC1BC9E1690026D4CE /* BudgetAddTableViewController.swift in Sources */,
 				E5D00F091BAE08F400971CC6 /* BeGoodShowViewController.swift in Sources */,
 				E5D00F051BAE062900971CC6 /* BeGoodCollectionViewController.swift in Sources */,
 			);
