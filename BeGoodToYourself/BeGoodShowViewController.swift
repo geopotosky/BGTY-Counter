@@ -84,8 +84,8 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         //-Hide the "Event Ended" message
         countDownLabel.hidden = true
         
-        let b1 = UIBarButtonItem(barButtonSystemItem: .Stop, target: self,  action: "addBudgetList")
-        let b2 = UIBarButtonItem(image:UIImage(named:"list-33x33.png"), style:.Plain, target: self, action: "addTodoList")
+        let b1 = UIBarButtonItem(image:UIImage(named:"budget-33.png"), style:.Plain, target: self,  action: "addBudgetList")
+        let b2 = UIBarButtonItem(image:UIImage(named:"list-33.png"), style:.Plain, target: self, action: "addTodoList")
         let buttons = [b2, b1] as NSArray
         self.navigationItem.rightBarButtonItems = [b2, b1]
         
@@ -479,10 +479,10 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         let storyboard = self.storyboard
         let controller = self.storyboard?.instantiateViewControllerWithIdentifier("BudgetTableViewController") as! BudgetTableViewController
         
-//        let event = fetchedResultsController.objectAtIndexPath(eventIndexPath) as! Events
-//        
-//        controller.eventIndexPath2 = eventIndexPath
-//        controller.events = event
+        let event = fetchedResultsController.objectAtIndexPath(eventIndexPath) as! Events
+        
+        controller.eventIndexPath2 = eventIndexPath
+        controller.events = event
         
         self.navigationController!.pushViewController(controller, animated: true)
         

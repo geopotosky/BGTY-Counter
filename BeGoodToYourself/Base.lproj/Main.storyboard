@@ -436,28 +436,15 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="LOE-un-foY">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LwJ-3Q-gVr" customClass="SearchButton" customModule="BeGoodToYourself" customModuleProvider="target">
-                                <rect key="frame" x="527" y="50" width="43" height="41"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="43" id="pTd-v6-oW8"/>
-                                </constraints>
-                                <state key="normal" image="search">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="searchFlicker:" destination="ZmE-op-jQe" eventType="touchUpInside" id="0sk-cq-eS3"/>
-                                </connections>
-                            </button>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="BVU-P7-qmq">
                                 <rect key="frame" x="282" y="281" width="37" height="37"/>
                                 <color key="color" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </activityIndicatorView>
-                            <textField opaque="NO" clipsSubviews="YES" alpha="0.89999999999999991" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Enter Text Phrase" borderStyle="bezel" textAlignment="center" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="bAG-vk-hpE">
-                                <rect key="frame" x="24" y="50" width="495" height="41"/>
+                            <textField opaque="NO" clipsSubviews="YES" alpha="0.89999999999999991" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Enter Text Phrase" textAlignment="center" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bAG-vk-hpE">
+                                <rect key="frame" x="16" y="50" width="568" height="41"/>
                                 <color key="backgroundColor" red="0.69019609689999994" green="0.88627451660000001" blue="0.94509804249999996" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="tintColor" red="0.33570066079999999" green="0.85385101009999997" blue="0.16488248059999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="41" id="Oj7-dO-qm4"/>
+                                    <constraint firstAttribute="height" constant="41" id="vBb-fD-u8W"/>
                                 </constraints>
                                 <color key="textColor" red="0.0" green="0.43921568989999998" blue="0.75294119120000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
@@ -478,21 +465,31 @@
                                     <action selector="pickFlickrImage:" destination="ZmE-op-jQe" eventType="touchUpInside" id="r9T-gy-k5k"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" alpha="0.89999999999999991" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LwJ-3Q-gVr">
+                                <rect key="frame" x="541" y="50" width="43" height="41"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="43" id="Ozv-eS-9hv"/>
+                                </constraints>
+                                <state key="normal" image="search"/>
+                                <connections>
+                                    <action selector="searchFlicker:" destination="ZmE-op-jQe" eventType="touchUpInside" id="0sk-cq-eS3"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="bAG-vk-hpE" firstAttribute="top" secondItem="LwJ-3Q-gVr" secondAttribute="top" id="0J5-Pe-N0O"/>
-                            <constraint firstItem="LwJ-3Q-gVr" firstAttribute="leading" secondItem="bAG-vk-hpE" secondAttribute="trailing" constant="8" symbolic="YES" id="5hh-TW-DII"/>
+                            <constraint firstItem="LwJ-3Q-gVr" firstAttribute="top" secondItem="bAG-vk-hpE" secondAttribute="top" id="6vc-dB-Ze0"/>
                             <constraint firstItem="9Xb-iV-kKJ" firstAttribute="bottom" secondItem="T6P-i9-QSS" secondAttribute="top" id="8ef-g4-jpd"/>
                             <constraint firstItem="BVU-P7-qmq" firstAttribute="centerX" secondItem="9Xb-iV-kKJ" secondAttribute="centerX" id="Coi-9p-wbR"/>
+                            <constraint firstItem="LwJ-3Q-gVr" firstAttribute="trailing" secondItem="bAG-vk-hpE" secondAttribute="trailing" id="KeA-Wt-tBP"/>
                             <constraint firstItem="LOE-un-foY" firstAttribute="trailing" secondItem="9Xb-iV-kKJ" secondAttribute="trailing" id="OGf-ki-SHa"/>
                             <constraint firstItem="LOE-un-foY" firstAttribute="leading" secondItem="9Xb-iV-kKJ" secondAttribute="leading" id="OaA-bU-Oez"/>
                             <constraint firstItem="LOE-un-foY" firstAttribute="bottom" secondItem="T6P-i9-QSS" secondAttribute="top" id="PdZ-Vk-UmQ"/>
-                            <constraint firstItem="bAG-vk-hpE" firstAttribute="top" secondItem="P84-aH-48J" secondAttribute="bottom" constant="30" id="PgO-UB-Ciz"/>
-                            <constraint firstItem="bAG-vk-hpE" firstAttribute="bottom" secondItem="LwJ-3Q-gVr" secondAttribute="bottom" id="QTH-I2-VAt"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="LwJ-3Q-gVr" secondAttribute="trailing" constant="14" id="T1o-Fz-v5C"/>
+                            <constraint firstItem="bAG-vk-hpE" firstAttribute="leading" secondItem="2Fk-us-SFS" secondAttribute="leadingMargin" id="Rli-aG-Tcd"/>
                             <constraint firstItem="BVU-P7-qmq" firstAttribute="top" secondItem="2Fk-us-SFS" secondAttribute="top" constant="281" id="VZS-9z-qG0"/>
-                            <constraint firstItem="bAG-vk-hpE" firstAttribute="leading" secondItem="2Fk-us-SFS" secondAttribute="leadingMargin" constant="8" id="Xn7-LI-KyL"/>
+                            <constraint firstItem="LwJ-3Q-gVr" firstAttribute="bottom" secondItem="bAG-vk-hpE" secondAttribute="bottom" id="Wqd-4p-h7H"/>
+                            <constraint firstItem="bAG-vk-hpE" firstAttribute="top" secondItem="P84-aH-48J" secondAttribute="bottom" constant="30" id="Wxh-5O-6IP"/>
+                            <constraint firstItem="bAG-vk-hpE" firstAttribute="centerX" secondItem="BVU-P7-qmq" secondAttribute="centerX" id="XFF-xj-5IZ"/>
                             <constraint firstAttribute="trailing" secondItem="LOE-un-foY" secondAttribute="trailing" id="ck4-ep-hLU"/>
                             <constraint firstItem="LOE-un-foY" firstAttribute="top" secondItem="2Fk-us-SFS" secondAttribute="top" id="gKn-Yz-Qau"/>
                             <constraint firstItem="LOE-un-foY" firstAttribute="leading" secondItem="2Fk-us-SFS" secondAttribute="leading" id="hV8-ei-rTp"/>
@@ -985,7 +982,7 @@
                     <navigationItem key="navigationItem" title="Edit Item" id="sJ9-EG-jlJ">
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="J02-wf-8dl">
                             <connections>
-                                <segue destination="ni9-KS-KIF" kind="unwind" unwindAction="editToMainViewController:" id="rqH-dt-Es7"/>
+                                <segue destination="ni9-KS-KIF" kind="unwind" identifier="saveDataEdit" unwindAction="editToMainViewController:" id="rqH-dt-Es7"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -1034,7 +1031,7 @@
                     <navigationItem key="navigationItem" title="Add item" id="68N-Jn-f65">
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="pdY-hw-4n9">
                             <connections>
-                                <segue destination="cfa-rh-cmU" kind="unwind" unwindAction="saveToMainViewController:" id="duD-8A-cvv"/>
+                                <segue destination="cfa-rh-cmU" kind="unwind" identifier="saveDataAdd" unwindAction="saveToMainViewController:" id="duD-8A-cvv"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -1157,7 +1154,7 @@
                     <navigationItem key="navigationItem" title="Edit Data" id="qkC-Xq-rVR">
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="v8s-yv-OvJ">
                             <connections>
-                                <segue destination="utv-D0-OlO" kind="unwind" identifier="saveData" unwindAction="editToTableData:" id="DeW-hh-U6b"/>
+                                <segue destination="utv-D0-OlO" kind="unwind" identifier="saveDataEdit" unwindAction="editToTableData:" id="DeW-hh-U6b"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -1223,7 +1220,7 @@
                     <navigationItem key="navigationItem" title="Edit Data" id="MYp-Wd-BSA">
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="VLU-d2-3Cn">
                             <connections>
-                                <segue destination="lIa-TC-vCQ" kind="unwind" identifier="saveData" unwindAction="saveToTableData:" id="7av-qu-CYF"/>
+                                <segue destination="lIa-TC-vCQ" kind="unwind" identifier="saveDataAdd" unwindAction="saveToTableData:" id="7av-qu-CYF"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

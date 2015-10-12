@@ -21,35 +21,55 @@ class TodoTableViewController: UITableViewController, NSFetchedResultsController
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         //-Create buttons
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "addTodoList")
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
+        //self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "addTodoList")
         
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        let b1 = self.editButtonItem()
+        let b2 = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "addTodoList")
+        let buttons = [b2, b1] as NSArray
+        self.navigationItem.rightBarButtonItems = [b2, b1]
+        
         
         fetchedResultsController.performFetch(nil)
-        
         fetchedResultsController.delegate = self
         
     }
     
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
+//    override func viewWillAppear(animated: Bool) {
+//        super.viewWillAppear(animated)
+//        
+//
+//    }
+    
+    
+//    override func didReceiveMemoryWarning() {
+//        super.didReceiveMemoryWarning()
+//        // Dispose of any resources that can be recreated.
+//    }
+    
+    
+    //-Reset the Table Edit view when the view disappears
+    override func viewWillDisappear(animated: Bool) {
         
-
+        resetEditing(false, animated: false)
+        
+    }
+    
+    override func setEditing(editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+        self.tableView.setEditing(editing, animated: animated)
     }
     
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    //-Reset the Table Edit view when the view disappears
+    
+    func resetEditing(editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+        self.tableView.setEditing(editing, animated: animated)
     }
     
-    // MARK: - Table view data source
+    
+    //-Table view data source
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
@@ -69,27 +89,7 @@ class TodoTableViewController: UITableViewController, NSFetchedResultsController
     }
     
     
-//    lazy var fetchedResultsController: NSFetchedResultsController = {
-//        
-//        let fetchRequest = NSFetchRequest(entityName: "TodoList")
-//        fetchRequest.predicate = NSPredicate(format: "event == %@", self.event);
-//        //fetchRequest.sortDescriptors = [NSSortDescriptor(key: "todoListText", ascending: true)]
-//        fetchRequest.sortDescriptors = []
-//        
-//        
-//        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
-//            managedObjectContext: self.sharedContext,
-//            sectionNameKeyPath: nil,
-//            cacheName: nil)
-//        
-//        return fetchedResultsController
-//        
-//        }()
-    
-    
     lazy var fetchedResultsController: NSFetchedResultsController = {
-        
-//      let event = self.fetchedResultsController.objectAtIndexPath(self.eventIndexPath2) as! Events
         
         let fetchRequest = NSFetchRequest(entityName: "TodoList")
         
@@ -113,46 +113,19 @@ class TodoTableViewController: UITableViewController, NSFetchedResultsController
     }
     
     
-//    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-//        let cell = tableView.dequeueReusableCellWithIdentifier("todoTableCell", forIndexPath: indexPath) as! UITableViewCell
-//        
-//        // Configure the cell...
-//        cell.textLabel?.text = models[indexPath.row]
-//        
-//        return cell
-//    }
-    
-    
     override func tableView(tableView: UITableView,
         cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
             let CellIdentifier = "todoTableCell"
             
-            // Here is how to replace the actors array using objectAtIndexPath
             let todos = fetchedResultsController.objectAtIndexPath(indexPath) as! TodoList
             
             let cell = tableView.dequeueReusableCellWithIdentifier(CellIdentifier) as!
             UITableViewCell
             
-            // This is the new configureCell method
             configureCell(cell, withList: todos)
             
             return cell
     }
-    
-//    // This one is also fairly easy. You can get the actor in the same way as cellForRowAtIndexPath above.
-//    override func tableView(tableView: UITableView,
-//        didSelectRowAtIndexPath indexPath: NSIndexPath) {
-//            let controller =
-//            storyboard!.instantiateViewControllerWithIdentifier("MovieListViewController")
-//                as! MovieListViewController
-//            
-//            // Similar to the method above
-//            let todos = fetchedResultsController.objectAtIndexPath(indexPath) as! TodoList
-//            
-//            controller.todos = todos
-//            
-//            self.navigationController!.pushViewController(controller, animated: true)
-//    }
     
 
     override func tableView(tableView: UITableView,
@@ -162,9 +135,8 @@ class TodoTableViewController: UITableViewController, NSFetchedResultsController
             switch (editingStyle) {
             case .Delete:
                 
-                // Here we get the actor, then delete it from core data
+                //-Here we get the Todo List item, then delete it from core data
                 let todos = fetchedResultsController.objectAtIndexPath(indexPath) as! TodoList
-                println("start delete process.")
                 sharedContext.deleteObject(todos)
                 CoreDataStackManager.sharedInstance().saveContext()
                 
@@ -237,43 +209,8 @@ class TodoTableViewController: UITableViewController, NSFetchedResultsController
         
     }
     
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-    // Return NO if you do not want the specified item to be editable.
-    return true
-    }
-    */
     
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-    if editingStyle == .Delete {
-    // Delete the row from the data source
-    tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-    } else if editingStyle == .Insert {
-    // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }
-    }
-    */
-    
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-    
-    }
-    */
-    
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-    // Return NO if you do not want the item to be re-orderable.
-    return true
-    }
-    */
-    
-    
-    // MARK: - Navigation
+    //-Navigation
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -282,16 +219,11 @@ class TodoTableViewController: UITableViewController, NSFetchedResultsController
             var path = tableView.indexPathForSelectedRow()
             var detailViewController = segue.destinationViewController as! TodoEditTableViewController
             
-            //let todos = fetchedResultsController.objectAtIndexPath(path!) as! TodoList
             detailViewController.events = self.events
             detailViewController.todosIndexPath = path
             detailViewController.todosIndex = path?.row
             
         }
-
-        
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
     }
     
     func addTodoList(){
@@ -309,7 +241,7 @@ class TodoTableViewController: UITableViewController, NSFetchedResultsController
         
         //let event = self.fetchedResultsController.objectAtIndexPath(self.eventIndexPath2) as! Events
         
-        let todos = fetchedResultsController.objectAtIndexPath(eventIndexPath2) as! TodoList
+        let todos = fetchedResultsController.objectAtIndexPath(tableView.indexPathForSelectedRow()!) as! TodoList
         todos.todoListText = detailViewController.editedModel!
         self.sharedContext.refreshObject(todos, mergeChanges: true)
         CoreDataStackManager.sharedInstance().saveContext()
@@ -331,7 +263,7 @@ class TodoTableViewController: UITableViewController, NSFetchedResultsController
         
         //let index = detailViewController.index
         
-        let modelString = detailViewController.editedModel
+        //let modelString = detailViewController.editedModel
         let listText = detailViewController.editedModel
         
         //models.append(modelString!)

@@ -18,6 +18,7 @@ class Events : NSManagedObject {
     @NSManaged var textEvent: String?
     @NSManaged var eventImage: NSData?
     @NSManaged var todoList: [TodoList]
+    @NSManaged var budget: [Budget]
     
     override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
         super.init(entity: entity, insertIntoManagedObjectContext: context)

@@ -7,21 +7,23 @@
 //
 
 import UIKit
+import CoreData
+
 
 class BudgetAddTableViewController: UITableViewController, UITextFieldDelegate {
     
-    var data:[String]!
+    var events: Events!
     
-    var price:[String]!
+    //var data:[String]!
+    
+    //var price:[String]!
     
 //    var index:Int?
     
     var dataString:String?
-    
     var priceString:String?
     
     @IBOutlet weak var textField: UITextField!
-    
     @IBOutlet weak var priceTextField: UITextField!
     
     //set the textfield delegates
@@ -128,10 +130,12 @@ class BudgetAddTableViewController: UITableViewController, UITextFieldDelegate {
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "saveData" {
+        if segue.identifier == "saveDataAdd" {
             dataString = textField.text
             priceString = priceTextField.text
         }
+
+        
         // Get the new view controller using [segue destinationViewController].
         // Pass the selected object to the new view controller.
     }

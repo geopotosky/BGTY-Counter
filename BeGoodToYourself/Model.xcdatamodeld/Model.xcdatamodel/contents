@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7701" systemVersion="14F27" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Budget" representedClassName="Budget" syncable="YES">
+        <attribute name="itemBudgetText" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="priceBudgetText" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="events" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Events" inverseName="budget" inverseEntity="Events" syncable="YES"/>
+    </entity>
     <entity name="Events" representedClassName="Events" syncable="YES">
         <attribute name="eventDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="eventImage" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="textEvent" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="budget" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="Budget" inverseName="events" inverseEntity="Budget" syncable="YES"/>
         <relationship name="todoList" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="TodoList" inverseName="events" inverseEntity="TodoList" syncable="YES"/>
     </entity>
     <entity name="TodoList" representedClassName="TodoList" syncable="YES">
@@ -11,7 +17,8 @@
         <relationship name="events" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Events" inverseName="todoList" inverseEntity="Events" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Events" positionX="-63" positionY="-18" width="128" height="105"/>
+        <element name="Events" positionX="-63" positionY="-18" width="128" height="120"/>
         <element name="TodoList" positionX="-63" positionY="9" width="128" height="75"/>
+        <element name="Budget" positionX="-54" positionY="18" width="128" height="90"/>
     </elements>
 </model>

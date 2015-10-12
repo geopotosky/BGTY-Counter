@@ -7,16 +7,23 @@
 //
 
 import UIKit
+import CoreData
 
-class BudgetTableViewController: UITableViewController {
+
+class BudgetTableViewController: UITableViewController, NSFetchedResultsControllerDelegate {
     
     @IBOutlet weak var totalLabel: UILabel!
     
-    //var tableData = ["iPhone 6 Plus Gold 128 GB", "iPhone 6 Plus Gold 64 GB", "iPhone 6 Plus Gold 16 GB", "iPhone 6 Gold 128 GB", "iPhone 6 Gold 64 GB", "iPhone 6 Gold 16 GB"]
-    var tableData = ["iPhone 6 Plus Gold 128 GB", "iPhone 6 Plus Gold 64 GB", "iPhone 6 Plus Gold 16 GB", "Geo Phone 2"]
+    var events: Events!
+    var eventIndexPath2: NSIndexPath!
+    var eventIndex: Int!
     
-    var detailData = ["$1,079.00", "$949.88", "$811.99", "$909.00", "$846.00", "$736.00"]
-    var detailNumbers = ["1.10","5.00","3.45", "3"]
+    
+    //var tableData = ["iPhone 6 Plus Gold 128 GB", "iPhone 6 Plus Gold 64 GB", "iPhone 6 Plus Gold 16 GB", "iPhone 6 Gold 128 GB", "iPhone 6 Gold 64 GB", "iPhone 6 Gold 16 GB"]
+    //var tableData = ["iPhone 6 Plus Gold 128 GB", "iPhone 6 Plus Gold 64 GB", "iPhone 6 Plus Gold 16 GB", "Geo Phone 2"]
+    
+    //var detailData = ["$1,079.00", "$949.88", "$811.99", "$909.00", "$846.00", "$736.00"]
+    //var detailNumbers = ["1.10","5.00","3.45", "3"]
     
     //var finalValue: Double! = 0.0
     
@@ -24,18 +31,23 @@ class BudgetTableViewController: UITableViewController {
         
         let detailViewController = segue.sourceViewController as! BudgetEditTableViewController
         
-        let editedData = detailViewController.dataString
+        //let editedData = detailViewController.dataString
         
         //let changedPrice = String.localizedStringWithFormat("$%.2f", detailViewController.priceString!)
-        let changedPrice = detailViewController.priceString
+        //let changedPrice = detailViewController.priceString
         
-        let index = detailViewController.index
+        //let index = detailViewController.index
         
-        tableData[index!] = editedData!
+        //tableData[index!] = editedData!
         
         //detailData[index!] = changedPrice!
-        detailNumbers[index!] = changedPrice!
+        //detailNumbers[index!] = changedPrice!
         
+        let budget = fetchedResultsController.objectAtIndexPath(tableView.indexPathForSelectedRow()!) as! Budget
+        budget.itemBudgetText = detailViewController.dataString!
+        budget.priceBudgetText = detailViewController.priceString!
+        self.sharedContext.refreshObject(budget, mergeChanges: true)
+        CoreDataStackManager.sharedInstance().saveContext()
         
         tableView.reloadData()
     }
@@ -46,9 +58,13 @@ class BudgetTableViewController: UITableViewController {
         
         let editedData = detailViewController.dataString
         let changedPrice = detailViewController.priceString
+        println("saving....")
+//        tableData.append(editedData!)
+//        detailNumbers.append(changedPrice!)
         
-        tableData.append(editedData!)
-        detailNumbers.append(changedPrice!)
+        let budget = Budget(itemBudgetText:  editedData, priceBudgetText: changedPrice, context: self.sharedContext)
+        budget.events = self.events
+        CoreDataStackManager.sharedInstance().saveContext()
         
         tableView.reloadData()
     }
@@ -59,36 +75,17 @@ class BudgetTableViewController: UITableViewController {
         
         
         //-Create buttons
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "addBudgetList")
+        //self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "addBudgetList")
+        
+        let b1 = self.editButtonItem()
+        let b2 = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "addBudgetList")
+        let buttons = [b2, b1] as NSArray
+        self.navigationItem.rightBarButtonItems = [b2, b1]
         
         
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
+        fetchedResultsController.performFetch(nil)
+        fetchedResultsController.delegate = self
         
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-        
-        //        println(detailNumbers.count)
-        //        for value in detailNumbers{
-        //
-        //        }
-        //
-        //        if detailNumbers.count > 0 {
-        //            var index : Int = 0
-        //            for counter in detailNumbers{
-        //
-        //                //let counterInt = counter.toInt()!
-        //                let counterInt = NSNumberFormatter().numberFromString(counter)?.doubleValue
-        //                println(counter)
-        //                println(counterInt)
-        //                finalValue = finalValue + counterInt!
-        //
-        //            }
-        //
-        //            index++
-        //        }
-        //
-        //        println("final value: \(finalValue)")
     }
     
     override func didReceiveMemoryWarning() {
@@ -100,52 +97,68 @@ class BudgetTableViewController: UITableViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        
         var finalValue: Float! = 0.0
-        //var yourBudgetTotal: String!
         
-        println(detailNumbers.count)
-        for value in detailNumbers{
-            
-        }
-        
-        if detailNumbers.count > 0 {
+        if events.budget.count > 0 {
             var index : Int = 0
-            for counter in detailNumbers{
-                
-                //let counterInt = counter.toInt()!
-                let counterInt = NSNumberFormatter().numberFromString(counter)?.floatValue
-                println(counter)
-                println(counterInt)
+            for counter in events.budget{
+                let priceCount = counter.priceBudgetText
+                let counterInt = NSNumberFormatter().numberFromString(priceCount!)?.floatValue
                 finalValue = finalValue + counterInt!
-                
-                let runningTotal = 12.0
-                let string = String(format:"%0.f", runningTotal)
-                println(string)
-                
-                let value: Float = 0.30
-                let unit: String = "mph"
-                
-                //let yourUILabel = String.localizedStringWithFormat("$%.2f %@", finalValue, unit)
-                //                let yourBudgetTotal = String.localizedStringWithFormat("$%.2f", finalValue)
-                //                println(yourBudgetTotal)
-                
             }
-            
             index++
         }
-        //let finalValue2 = String(format: "$%4d", finalValue)
-        println("final value: \(finalValue)")
         let totals: String = "Budget:"
         let yourBudgetTotal = String.localizedStringWithFormat("%@ $%.2f", totals, finalValue)
-        println(yourBudgetTotal)
         totalLabel.text = yourBudgetTotal
         
         
     }
     
     
-    // MARK: - Table view data source
+    //-Reset the Table Edit view when the view disappears
+    override func viewWillDisappear(animated: Bool) {
+        
+        resetEditing(false, animated: false)
+        
+    }
+    
+    override func setEditing(editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+        self.tableView.setEditing(editing, animated: animated)
+    }
+    
+    
+    //-Reset the Table Edit view when the view disappears
+    
+    func resetEditing(editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+        self.tableView.setEditing(editing, animated: animated)
+    }
+    
+    
+    var sharedContext: NSManagedObjectContext {
+        return CoreDataStackManager.sharedInstance().managedObjectContext!
+    }
+    
+    
+    lazy var fetchedResultsController: NSFetchedResultsController = {
+        
+        let fetchRequest = NSFetchRequest(entityName: "Budget")
+        
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "itemBudgetText", ascending: true)]
+        fetchRequest.predicate = NSPredicate(format: "events == %@", self.events);
+        
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
+            managedObjectContext: self.sharedContext,
+            sectionNameKeyPath: nil,
+            cacheName: nil)
+        
+        return fetchedResultsController
+        
+        }()
+    
+    //-Table view data source
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
@@ -154,78 +167,163 @@ class BudgetTableViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete method implementation.
-        // Return the number of rows in the section.
-        return tableData.count
+        let sectionInfo = self.fetchedResultsController.sections![section] as! NSFetchedResultsSectionInfo
+        return sectionInfo.numberOfObjects
+    }
+    
+//    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        // #warning Incomplete method implementation.
+//        // Return the number of rows in the section.
+//        return tableData.count
+//    }
+    
+    
+    override func tableView(tableView: UITableView,
+        cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+            let CellIdentifier = "tableCell"
+            
+            let budget = fetchedResultsController.objectAtIndexPath(indexPath) as! Budget
+            
+            let cell = tableView.dequeueReusableCellWithIdentifier(CellIdentifier) as!
+            UITableViewCell
+            
+            configureCell(cell, withList: budget)
+            
+            return cell
+    }
+
+    
+    override func tableView(tableView: UITableView,
+        commitEditingStyle editingStyle: UITableViewCellEditingStyle,
+        forRowAtIndexPath indexPath: NSIndexPath) {
+            
+            switch (editingStyle) {
+            case .Delete:
+                
+                //-Here we get the budget item, then delete it from core data
+                let budget = fetchedResultsController.objectAtIndexPath(indexPath) as! Budget
+                sharedContext.deleteObject(budget)
+                CoreDataStackManager.sharedInstance().saveContext()
+                
+                //-Update Budget total on view
+                var finalValue: Float! = 0.0
+                if events.budget.count > 0 {
+                    var index : Int = 0
+                    for counter in events.budget{
+                        let priceCount = counter.priceBudgetText
+                        let counterInt = NSNumberFormatter().numberFromString(priceCount!)?.floatValue
+                        finalValue = finalValue + counterInt!
+                    }
+                    index++
+                }
+                let totals: String = "Budget:"
+                let yourBudgetTotal = String.localizedStringWithFormat("%@ $%.2f", totals, finalValue)
+                totalLabel.text = yourBudgetTotal
+                
+                
+            default:
+                break
+            }
     }
     
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("tableCell", forIndexPath: indexPath) as! UITableViewCell
+    func controllerWillChangeContent(controller: NSFetchedResultsController) {
+        self.tableView.beginUpdates()
+    }
+    
+    func controller(controller: NSFetchedResultsController,
+        didChangeSection sectionInfo: NSFetchedResultsSectionInfo,
+        atIndex sectionIndex: Int,
+        forChangeType type: NSFetchedResultsChangeType) {
+            
+            switch type {
+            case .Insert:
+                self.tableView.insertSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Fade)
+                
+            case .Delete:
+                self.tableView.deleteSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Fade)
+                
+            default:
+                return
+            }
+    }
+    
+    //
+    // This is the most interesting method. Take particular note of way the that newIndexPath
+    // parameter gets unwrapped and put into an array literal: [newIndexPath!]
+    //
+    func controller(controller: NSFetchedResultsController,
+        didChangeObject anObject: AnyObject,
+        atIndexPath indexPath: NSIndexPath?,
+        forChangeType type: NSFetchedResultsChangeType,
+        newIndexPath: NSIndexPath?) {
+            
+            switch type {
+            case .Insert:
+                tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
+                
+            case .Delete:
+                tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
+                
+            case .Update:
+                let cell = tableView.cellForRowAtIndexPath(indexPath!) as UITableViewCell!
+                let budget = controller.objectAtIndexPath(indexPath!) as! Budget
+                self.configureCell(cell, withList: budget)
+                
+            case .Move:
+                tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
+                tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
+                
+            default:
+                return
+            }
+    }
+    
+    func controllerDidChangeContent(controller: NSFetchedResultsController) {
+        self.tableView.endUpdates()
+    }
+    
+    
+    func configureCell(cell: UITableViewCell, withList budget: Budget) {
         
-        // Configure the cell...
-        cell.textLabel?.text = tableData[indexPath.row]
         //cell.detailTextLabel?.text = detailData[indexPath.row]
         
-        let newValue = NSNumberFormatter().numberFromString(detailNumbers[indexPath.row])?.floatValue
+        cell.textLabel?.text = budget.itemBudgetText
+        let newValue = NSNumberFormatter().numberFromString(budget.priceBudgetText!)?.floatValue
         cell.detailTextLabel?.text = String.localizedStringWithFormat("$%.2f", newValue!)
-        //cell.detailTextLabel?.text = detailNumbers[indexPath.row]
         
-        return cell
     }
+
     
     
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-    // Return NO if you do not want the specified item to be editable.
-    return true
-    }
-    */
     
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-    if editingStyle == .Delete {
-    // Delete the row from the data source
-    tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-    } else if editingStyle == .Insert {
-    // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }
-    }
-    */
-    
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-    
-    }
-    */
-    
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-    // Return NO if you do not want the item to be re-orderable.
-    return true
-    }
-    */
-    
-    
-    // MARK: - Navigation
+    //-Navigation
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
-        if segue.identifier == "editBudget" {
-            var path = tableView.indexPathForSelectedRow()
-            var destination = segue.destinationViewController as! BudgetEditTableViewController
-            destination.index = path?.row
-            destination.data = tableData
-            //destination.price = detailData
-            destination.price = detailNumbers
-        }
+//        if segue.identifier == "editBudget" {
+//            var path = tableView.indexPathForSelectedRow()
+//            var destination = segue.destinationViewController as! BudgetEditTableViewController
+//            destination.index = path?.row
+//            destination.data = tableData
+//            //destination.price = detailData
+//            destination.price = detailNumbers
+//        }
         // Get the new view controller using [segue destinationViewController].
         // Pass the selected object to the new view controller.
+        
+        if segue.identifier == "editBudget" {
+            
+            var path = tableView.indexPathForSelectedRow()
+            var detailViewController = segue.destinationViewController as! BudgetEditTableViewController
+            
+            detailViewController.events = self.events
+            detailViewController.budgetIndexPath = path
+            detailViewController.budgetIndex = path?.row
+            
+        }
+        
     }
     
     

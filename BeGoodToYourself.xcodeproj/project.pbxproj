@@ -8,7 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		E511C9241BC47FA1000B26B7 /* MGButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E511C9231BC47FA1000B26B7 /* MGButton.swift */; };
-		E53286241BC5553A0081C7F7 /* list-33x33.png in Resources */ = {isa = PBXBuildFile; fileRef = E53286231BC5553A0081C7F7 /* list-33x33.png */; };
+		E52C7FE51BCB0D0E007ABC05 /* Budget.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52C7FE41BCB0D0E007ABC05 /* Budget.swift */; };
+		E52C7FEB1BCBE04A007ABC05 /* todolist-33x33.png in Resources */ = {isa = PBXBuildFile; fileRef = E52C7FEA1BCBE04A007ABC05 /* todolist-33x33.png */; };
+		E52C7FED1BCBFF59007ABC05 /* budget-33.png in Resources */ = {isa = PBXBuildFile; fileRef = E52C7FEC1BCBFF59007ABC05 /* budget-33.png */; };
+		E52C7FF51BCC079A007ABC05 /* TDList-33.png in Resources */ = {isa = PBXBuildFile; fileRef = E52C7FF41BCC079A007ABC05 /* TDList-33.png */; };
+		E52C7FF71BCC0AAF007ABC05 /* list-33.png in Resources */ = {isa = PBXBuildFile; fileRef = E52C7FF61BCC0AAF007ABC05 /* list-33.png */; };
 		E53286601BC6DC040081C7F7 /* BG_Placeholder_Image.png in Resources */ = {isa = PBXBuildFile; fileRef = E532865F1BC6DC040081C7F7 /* BG_Placeholder_Image.png */; };
 		E53286621BC6F3960081C7F7 /* SearchButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53286611BC6F3960081C7F7 /* SearchButton.swift */; };
 		E5A515CC1BBDDCD600186690 /* TodoList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A515CB1BBDDCD600186690 /* TodoList.swift */; };
@@ -51,7 +55,11 @@
 
 /* Begin PBXFileReference section */
 		E511C9231BC47FA1000B26B7 /* MGButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MGButton.swift; sourceTree = "<group>"; };
-		E53286231BC5553A0081C7F7 /* list-33x33.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "list-33x33.png"; sourceTree = "<group>"; };
+		E52C7FE41BCB0D0E007ABC05 /* Budget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Budget.swift; sourceTree = "<group>"; };
+		E52C7FEA1BCBE04A007ABC05 /* todolist-33x33.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "todolist-33x33.png"; sourceTree = "<group>"; };
+		E52C7FEC1BCBFF59007ABC05 /* budget-33.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "budget-33.png"; sourceTree = "<group>"; };
+		E52C7FF41BCC079A007ABC05 /* TDList-33.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TDList-33.png"; sourceTree = "<group>"; };
+		E52C7FF61BCC0AAF007ABC05 /* list-33.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "list-33.png"; sourceTree = "<group>"; };
 		E532865F1BC6DC040081C7F7 /* BG_Placeholder_Image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BG_Placeholder_Image.png; sourceTree = "<group>"; };
 		E53286611BC6F3960081C7F7 /* SearchButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchButton.swift; sourceTree = "<group>"; };
 		E5A515CB1BBDDCD600186690 /* TodoList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodoList.swift; sourceTree = "<group>"; };
@@ -109,7 +117,10 @@
 			children = (
 				E511C9231BC47FA1000B26B7 /* MGButton.swift */,
 				E53286611BC6F3960081C7F7 /* SearchButton.swift */,
-				E53286231BC5553A0081C7F7 /* list-33x33.png */,
+				E52C7FEA1BCBE04A007ABC05 /* todolist-33x33.png */,
+				E52C7FEC1BCBFF59007ABC05 /* budget-33.png */,
+				E52C7FF41BCC079A007ABC05 /* TDList-33.png */,
+				E52C7FF61BCC0AAF007ABC05 /* list-33.png */,
 				E532865F1BC6DC040081C7F7 /* BG_Placeholder_Image.png */,
 			);
 			name = Custom;
@@ -197,6 +208,7 @@
 			children = (
 				E5D00F0A1BAE0BF000971CC6 /* Events.swift */,
 				E5A515CB1BBDDCD600186690 /* TodoList.swift */,
+				E52C7FE41BCB0D0E007ABC05 /* Budget.swift */,
 			);
 			name = Objects;
 			sourceTree = "<group>";
@@ -304,11 +316,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E52C7FF51BCC079A007ABC05 /* TDList-33.png in Resources */,
 				E53286601BC6DC040081C7F7 /* BG_Placeholder_Image.png in Resources */,
 				E5D00EE11BADFF4300971CC6 /* Main.storyboard in Resources */,
+				E52C7FED1BCBFF59007ABC05 /* budget-33.png in Resources */,
 				E5D00EE61BADFF4300971CC6 /* LaunchScreen.xib in Resources */,
+				E52C7FF71BCC0AAF007ABC05 /* list-33.png in Resources */,
+				E52C7FEB1BCBE04A007ABC05 /* todolist-33x33.png in Resources */,
 				E5D00EE31BADFF4300971CC6 /* Images.xcassets in Resources */,
-				E53286241BC5553A0081C7F7 /* list-33x33.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -338,6 +353,7 @@
 				E5C961AB1BB7032C006D20C8 /* BGClient.swift in Sources */,
 				E5B7DEBA1BC9E1500026D4CE /* BudgetEditTableViewController.swift in Sources */,
 				E5A515CC1BBDDCD600186690 /* TodoList.swift in Sources */,
+				E52C7FE51BCB0D0E007ABC05 /* Budget.swift in Sources */,
 				E5D00F121BAF8DCF00971CC6 /* BeGoodPickdateViewController.swift in Sources */,
 				E5B7DEBE1BC9E2290026D4CE /* PriceTextDelegate.swift in Sources */,
 				E5D00F0B1BAE0BF000971CC6 /* Events.swift in Sources */,

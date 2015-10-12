@@ -7,21 +7,27 @@
 //
 
 import UIKit
+import CoreData
 
-class BudgetEditTableViewController: UITableViewController, UITextFieldDelegate {
+class BudgetEditTableViewController: UITableViewController, UITextFieldDelegate, NSFetchedResultsControllerDelegate {
     
-    var data:[String]!
     
-    var price:[String]!
+    var events: Events!
     
-    var index:Int?
+    var budgetIndexPath: NSIndexPath!
+    var budgetIndex: Int!
+    
+    
+    //var data:[String]!
+    
+    //var price:[String]!
+    
+    //var index:Int?
     
     var dataString:String?
-    
     var priceString:String?
     
     @IBOutlet weak var textField: UITextField!
-    
     @IBOutlet weak var priceTextField: UITextField!
     
     //set the textfield delegates
@@ -34,23 +40,49 @@ class BudgetEditTableViewController: UITableViewController, UITextFieldDelegate 
         //-Textfield delegate values
         self.priceTextField.delegate = priceTextDelegate
         
-        var item = data[index!]
-        textField.text = item
+        fetchedResultsController.performFetch(nil)
+        fetchedResultsController.delegate = self
         
-        var amount = price[index!]
-        priceTextField.text = amount
+        let budget = fetchedResultsController.objectAtIndexPath(budgetIndexPath) as! Budget
+        textField.text = budget.itemBudgetText
+        priceTextField.text = budget.priceBudgetText
         
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-        
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+//        var item = data[index!]
+//        textField.text = item
+//        
+//        var amount = price[index!]
+//        priceTextField.text = amount
+
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    
+    var sharedContext: NSManagedObjectContext {
+        return CoreDataStackManager.sharedInstance().managedObjectContext!
+    }
+    
+    
+    lazy var fetchedResultsController: NSFetchedResultsController = {
+        
+        let fetchRequest = NSFetchRequest(entityName: "Budget")
+        
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "itemBudgetText", ascending: true)]
+        fetchRequest.predicate = NSPredicate(format: "events == %@", self.events);
+        
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
+            managedObjectContext: self.sharedContext,
+            sectionNameKeyPath: nil,
+            cacheName: nil)
+        
+        return fetchedResultsController
+        
+        }()
+    
+    
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.section == 0 && indexPath.row == 0 {
@@ -62,76 +94,21 @@ class BudgetEditTableViewController: UITableViewController, UITextFieldDelegate 
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
-    /*
-    // MARK: - Table view data source
-    
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-    // #warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0
-    }
-    
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    // #warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return 0
-    }
-    */
-    
-    /*
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath) as! UITableViewCell
-    
-    // Configure the cell...
-    
-    return cell
-    }
-    */
-    
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-    // Return NO if you do not want the specified item to be editable.
-    return true
-    }
-    */
-    
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-    if editingStyle == .Delete {
-    // Delete the row from the data source
-    tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-    } else if editingStyle == .Insert {
-    // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }
-    }
-    */
-    
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-    
-    }
-    */
-    
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-    // Return NO if you do not want the item to be re-orderable.
-    return true
-    }
-    */
     
     
-    // MARK: - Navigation
+    //-Navigation
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "saveData" {
+        if segue.identifier == "saveDataEdit" {
             dataString = textField.text
             priceString = priceTextField.text
+            println("inside")
         }
+        println("outside")
+//        dataString = textField.text
+//        priceString = priceTextField.text
+        
         // Get the new view controller using [segue destinationViewController].
         // Pass the selected object to the new view controller.
     }
