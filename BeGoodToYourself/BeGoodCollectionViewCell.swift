@@ -11,8 +11,8 @@ import UIKit
 
 class BeGoodCollectionViewCell: UICollectionViewCell {
     
-    //Collection View Cell outlet
+    //-Collection View Cell outlet
     @IBOutlet weak var eventImageView: UIImageView!
-    
+    @IBOutlet weak var eventDateCellLabel: UILabel!
     
 }

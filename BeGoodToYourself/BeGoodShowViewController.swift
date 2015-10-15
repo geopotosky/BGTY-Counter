@@ -38,6 +38,9 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
     @IBOutlet weak var daysTickerLabel: UILabel!
     @IBOutlet weak var daysWordLabel: UILabel!
     
+    @IBOutlet weak var untilEventText2: UITextField!
+    
+    
     var events: [Events]!
     //var events: Events!
     
@@ -68,6 +71,20 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
     var alertMessage: String!
     var alertTitle: String!
     
+    //-Event Font Attributes
+    let eventTextAttributes = [
+        //NSStrokeColorAttributeName : UIColor(red:0.07,green:0.45,blue:0.74,alpha:1.0),
+        NSStrokeColorAttributeName : UIColor.whiteColor(),
+        //NSForegroundColorAttributeName : UIColor(red:0.66,green:0.97,blue:0.59,alpha:1.0),
+        //NSForegroundColorAttributeName : UIColor(red:0.69,green:0.85,blue:0.95,alpha:1.0),
+        
+        //NSForegroundColorAttributeName : UIColor(red:0.07,green:0.45,blue:0.74,alpha:1.0),
+        NSForegroundColorAttributeName : UIColor.blackColor(),
+        //NSForegroundColorAttributeName : UIColor.blueColor(),
+        NSFontAttributeName : UIFont(name: "HelveticaNeue-Bold", size: 26)!,
+        NSStrokeWidthAttributeName : -4.0
+    ]
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -83,6 +100,11 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         self.tabBarController?.tabBar.hidden = true
         //-Hide the "Event Ended" message
         countDownLabel.hidden = true
+        
+        //-Add font attributes
+        self.untilEventText2.defaultTextAttributes = eventTextAttributes
+        self.untilEventText2.textAlignment = NSTextAlignment.Center
+        
         
         let b1 = UIBarButtonItem(image:UIImage(named:"budget-33.png"), style:.Plain, target: self,  action: "addBudgetList")
         let b2 = UIBarButtonItem(image:UIImage(named:"list-33.png"), style:.Plain, target: self, action: "addTodoList")
@@ -119,14 +141,6 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         daysTickerLabel.hidden = false
         daysWordLabel.hidden = false
         countDownLabel.hidden = true
-        
-        
-        println("BeGoodShowVC viewWillAppear")
-        
-        //println("memes.count: \(memes.count)")
-        println("eventIndex: \(eventIndex)")
-        println("eventIndexPath: \(eventIndexPath)")
-        println("editEventFlag: \(editEventFlag)")
         
         let event = fetchedResultsController.objectAtIndexPath(eventIndexPath) as! Events
         
@@ -181,7 +195,7 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         
         }()
     
-    
+    //-Set the "until" dynamic text based on segment selection
     @IBAction func segmentPicked(sender: UISegmentedControl) {
         
         var numberFormatter = NSNumberFormatter()
@@ -192,23 +206,23 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         case 0:
             let tempText1 = numberFormatter.stringFromNumber(self.durationWeeks)!
             //let tempText1 = String(stringInterpolationSegment: self.durationWeeks)
-            untilEventText.text = ("Only \(tempText1) Weeks")
+            untilEventText2.text = ("Only \(tempText1) Weeks")
         case 1:
             //let tempText1 = numberFormatter.stringFromNumber(self.durationDays)!
             let tempText1 = String(stringInterpolationSegment: self.durationDays)
-            untilEventText.text = ("Only \(tempText1) Days")
+            untilEventText2.text = ("Only \(tempText1) Days")
         case 2:
             let tempText1 = numberFormatter.stringFromNumber(self.durationHours)!
             //let tempText1 = String(stringInterpolationSegment: self.durationHours)
-            untilEventText.text = ("Only \(tempText1) Hours")
+            untilEventText2.text = ("Only \(tempText1) Hours")
         case 3:
             let tempText1 = numberFormatter.stringFromNumber(self.durationMinutes)!
             //let tempText1 = String(stringInterpolationSegment: self.durationMinutes)
-            untilEventText.text = ("Only \(tempText1) Minutes")
+            untilEventText2.text = ("Only \(tempText1) Minutes")
         case 4:
             let tempText1 = numberFormatter.stringFromNumber(self.durationSeconds)!
             //let tempText1 = String(stringInterpolationSegment: self.durationSeconds)
-            untilEventText.text = ("Only \(tempText1) Seconds")
+            untilEventText2.text = ("Only \(tempText1) Seconds")
         default:
             println("Less than 1 day left")
             
@@ -239,7 +253,7 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         println("delete button pushed.")
         
         //-Create the AlertController
-        let actionSheetController: UIAlertController = UIAlertController(title: "Warning!", message: "Do you really want to Delete the Event and it's ToDo List?", preferredStyle: .Alert)
+        let actionSheetController: UIAlertController = UIAlertController(title: "Warning!", message: "Do you really want to Delete the Event?", preferredStyle: .Alert)
         
         //-Create and add the Cancel action
         let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .Cancel) { action -> Void in
@@ -248,7 +262,7 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         actionSheetController.addAction(cancelAction)
         
         //-Create and add the Delete Event action
-        let deleteAction: UIAlertAction = UIAlertAction(title: "Delete Meme", style: .Default) { action -> Void in
+        let deleteAction: UIAlertAction = UIAlertAction(title: "Delete Event", style: .Default) { action -> Void in
             let object = UIApplication.sharedApplication().delegate
             let appDelegate = object as! AppDelegate
             println(self.eventIndex)
@@ -316,41 +330,41 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
             let tempText1 = numberFormatter.stringFromNumber(self.durationWeeks)!
             //let tempText1 = String(stringInterpolationSegment: self.durationWeeks)
             if self.durationWeeks < 2 {
-                untilEventText.text = ("Only \(tempText1) Week")
+                untilEventText2.text = ("Only \(tempText1) Week")
             } else {
-                untilEventText.text = ("Only \(tempText1) Weeks")
+                untilEventText2.text = ("Only \(tempText1) Weeks")
             }
         case 1:
             //let tempText1 = numberFormatter.stringFromNumber(self.durationDays)!
             let tempText1 = String(stringInterpolationSegment: self.durationDays)
             if self.durationDays < 2 {
-                untilEventText.text = ("Only \(tempText1) Day")
+                untilEventText2.text = ("Only \(tempText1) Day")
             } else {
-                untilEventText.text = ("Only \(tempText1) Days")
+                untilEventText2.text = ("Only \(tempText1) Days")
             }
         case 2:
             let tempText1 = numberFormatter.stringFromNumber(self.durationHours)!
             //let tempText1 = String(stringInterpolationSegment: self.durationHours)
             if self.durationHours < 2 {
-                untilEventText.text = ("Only \(tempText1) Hour")
+                untilEventText2.text = ("Only \(tempText1) Hour")
             } else {
-                untilEventText.text = ("Only \(tempText1) Hours")
+                untilEventText2.text = ("Only \(tempText1) Hours")
             }
         case 3:
             let tempText1 = numberFormatter.stringFromNumber(self.durationMinutes)!
             //let tempText1 = String(stringInterpolationSegment: self.durationMinutes)
             if self.durationMinutes < 2 {
-                untilEventText.text = ("Only \(tempText1) Minute")
+                untilEventText2.text = ("Only \(tempText1) Minute")
             } else {
-                untilEventText.text = ("Only \(tempText1) Minutes")
+                untilEventText2.text = ("Only \(tempText1) Minutes")
             }
         case 4:
             let tempText1 = numberFormatter.stringFromNumber(self.durationSeconds)!
             //let tempText1 = String(stringInterpolationSegment: self.durationSeconds)
             if self.durationSeconds < 2 {
-                untilEventText.text = ("Only \(tempText1) Second")
+                untilEventText2.text = ("Only \(tempText1) Second")
             } else {
-                untilEventText.text = ("Only \(tempText1) Seconds")
+                untilEventText2.text = ("Only \(tempText1) Seconds")
             }
         default:
             println("Less than 1 day left")
@@ -419,7 +433,7 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
             untilEventText.text = "ZERO Days"
         } else {
             
-            untilEventText.text = ("Only \(tempText1) Days")
+            untilEventText2.text = ("Only \(tempText1) Days")
         }
         
         //-Set the duration count in seconds which will be used in the countdown calculation
@@ -491,11 +505,10 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
     //-Generate the Event Image to share
     func generateEventImage() -> UIImage {
         
-        //Hide toolbar and navbar
-        //navbarObject.hidden = true
+        //-Hide toolbar
         toolbarObject.hidden = true
         
-        //Render view to an image
+        //-Render view to an image
         UIGraphicsBeginImageContext(self.view.frame.size)
         self.view.drawViewHierarchyInRect(self.view.frame,
             afterScreenUpdates: true)
@@ -503,8 +516,7 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
-        //Hide toolbar and navbar
-        //navbarObject.hidden = false
+        //-UnHide toolbar
         toolbarObject.hidden = false
         
         return shareEventImage
@@ -548,12 +560,9 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
     
     //-
     @IBAction func addCalendarEvent(sender: UIButton) {
-        println("Add Calendar Button touched")
-        
-        // 1
+
         let eventStore = EKEventStore()
         
-        // 2
         switch EKEventStore.authorizationStatusForEntityType(EKEntityTypeEvent) {
         case .Authorized:
             println("authorized")
@@ -562,7 +571,6 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         case .Denied:
             println("Access denied")
         case .NotDetermined:
-            // 3
             eventStore.requestAccessToEntityType(EKEntityTypeEvent, completion:
                 {[weak self] (granted: Bool, error: NSError!) -> Void in
                     if granted {
@@ -661,6 +669,10 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
                 calendarEvent.title = event.textEvent
                 calendarEvent.startDate = startDate
                 calendarEvent.endDate = endDate
+                
+                let alarm = EKAlarm(relativeOffset: -3600.0)
+                calendarEvent.addAlarm(alarm)
+                
 
                 //-Save Event in Calendar
                 var error: NSError?
@@ -683,6 +695,15 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
                 }
             }
         }
+        
+        func addAlarmToCalendarWithStore(store: EKEventStore, calendar: EKCalendar){
+
+            let event = fetchedResultsController.objectAtIndexPath(eventIndexPath) as! Events
+            
+            //-Set the selected event start date & time
+            let startDate = event.eventDate
+            let endDate = startDate?.dateByAddingTimeInterval(20.0)
+        }
     }
  
     
@@ -698,14 +719,13 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
             alertContentView.backgroundColor = UIColor.greenColor()
             alertContentView.layer.cornerRadius = 5;
             
-            //* - Create and add the OK action
+            //-Create and add the OK action
             let okAction: UIAlertAction = UIAlertAction(title: "OK", style: .Default) { action -> Void in
-                //self.dismissViewControllerAnimated(true, completion: nil)
                 
             }
             actionSheetController.addAction(okAction)
             
-            //* - Present the AlertController
+            //-Present the AlertController
             self.presentViewController(actionSheetController, animated: true, completion: nil)
         }
     }

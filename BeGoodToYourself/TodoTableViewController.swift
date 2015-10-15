@@ -55,6 +55,7 @@ class TodoTableViewController: UITableViewController, NSFetchedResultsController
         
     }
     
+    //-Force set editing toggle (delete line items)
     override func setEditing(editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
         self.tableView.setEditing(editing, animated: animated)
@@ -62,7 +63,6 @@ class TodoTableViewController: UITableViewController, NSFetchedResultsController
     
     
     //-Reset the Table Edit view when the view disappears
-    
     func resetEditing(editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
         self.tableView.setEditing(editing, animated: animated)
@@ -88,7 +88,7 @@ class TodoTableViewController: UITableViewController, NSFetchedResultsController
         return CoreDataStackManager.sharedInstance().managedObjectContext!
     }
     
-    
+    //-Fetch the Todo List data
     lazy var fetchedResultsController: NSFetchedResultsController = {
         
         let fetchRequest = NSFetchRequest(entityName: "TodoList")
@@ -226,6 +226,7 @@ class TodoTableViewController: UITableViewController, NSFetchedResultsController
         }
     }
     
+    //-Add Todo List item function
     func addTodoList(){
         println("Add to List")
 
@@ -239,19 +240,10 @@ class TodoTableViewController: UITableViewController, NSFetchedResultsController
         
         let detailViewController = segue.sourceViewController as! TodoEditTableViewController
         
-        //let event = self.fetchedResultsController.objectAtIndexPath(self.eventIndexPath2) as! Events
-        
         let todos = fetchedResultsController.objectAtIndexPath(tableView.indexPathForSelectedRow()!) as! TodoList
         todos.todoListText = detailViewController.editedModel!
         self.sharedContext.refreshObject(todos, mergeChanges: true)
         CoreDataStackManager.sharedInstance().saveContext()
-        
-        //let listText = detailViewController.editedModel
-        //events.todos = listText
-
-        //let index = detailViewController.index
-        //let modelString = detailViewController.editedModel
-        //models[index!] = modelString!
         
         tableView.reloadData()
         
@@ -260,15 +252,7 @@ class TodoTableViewController: UITableViewController, NSFetchedResultsController
     @IBAction func saveToMainViewController (segue:UIStoryboardSegue) {
         
         let detailViewController = segue.sourceViewController as! TodoAddTableViewController
-        
-        //let index = detailViewController.index
-        
-        //let modelString = detailViewController.editedModel
         let listText = detailViewController.editedModel
-        
-        //models.append(modelString!)
-        
-        //let event = self.fetchedResultsController.objectAtIndexPath(self.eventIndexPath2) as! Events
         
         let todos = TodoList(todoListText:  listText, context: self.sharedContext)
         todos.events = self.events

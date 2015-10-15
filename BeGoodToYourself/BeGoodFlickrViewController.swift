@@ -18,12 +18,12 @@ class BeGoodFlickrViewController: UIViewController {
     
     var tapRecognizer: UITapGestureRecognizer? = nil
     
-    //* - Get the app delegate
+    //-Get the app delegate
     var appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
     var events: [Events]!
     
-    //* - Alert variable
+    //-Alert variable
     var alertMessage: String!
     
     var editEventFlag2: Bool!
@@ -37,7 +37,7 @@ class BeGoodFlickrViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        /* Initialize the tapRecognizer in viewDidLoad */
+        //-Initialize the tapRecognizer in viewDidLoad
         tapRecognizer = UITapGestureRecognizer(target: self, action: "handleSingleTap:")
         tapRecognizer?.numberOfTapsRequired = 1
         
@@ -51,10 +51,10 @@ class BeGoodFlickrViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        /* Add tap recognizer to dismiss keyboard */
+        //-Add tap recognizer to dismiss keyboard
         self.addKeyboardDismissRecognizer()
         
-        /* Subscribe to keyboard events so we can adjust the view to show hidden controls */
+        //-Subscribe to keyboard events so we can adjust the view to show hidden controls
         self.subscribeToKeyboardNotifications()
         
         if editEventFlag2 == false {
@@ -67,10 +67,10 @@ class BeGoodFlickrViewController: UIViewController {
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         
-        /* Remove tap recognizer */
+        //-Remove tap recognizer
         self.removeKeyboardDismissRecognizer()
         
-        /* Unsubscribe to all keyboard events */
+        //-Unsubscribe to all keyboard events
         self.unsubscribeToKeyboardNotifications()
     }
 
@@ -88,16 +88,16 @@ class BeGoodFlickrViewController: UIViewController {
         appDelegate.phraseText = self.phraseTextField.text
         println(appDelegate.phraseText)
         
-        /* Added from student request -- hides keyboard after searching */
+        //-Added from student request -- hides keyboard after searching
         self.dismissAnyVisibleKeyboards()
         
-        /* Verify Phrase Textfield in NOT Empty */
+        //-Verify Phrase Textfield in NOT Empty
         if !self.phraseTextField.text.isEmpty {
             
             //-Update Search button text
             //self.updateSearchButton()
             
-            //* - Call the Get Flickr Images function
+            //-Call the Get Flickr Images function
             BGClient.sharedInstance().getFlickrData(self) { (success, pictureURL, errorString) in
                 
                 if success {
@@ -146,13 +146,10 @@ class BeGoodFlickrViewController: UIViewController {
             self.errorAlertMessage()
         }
 
-        println("Hit me")
     }
 
     
     @IBAction func pickFlickrImage(sender: UIButton) {
-        
-        println("Flickr Image Picked.")
         
         if editEventFlag2 == true {
             let controller = self.navigationController!.viewControllers[2] as! BeGoodAddEventViewController
@@ -161,10 +158,7 @@ class BeGoodFlickrViewController: UIViewController {
             controller.flickrImage = self.photoImageView.image
             println(self.flickrImageURL)
             controller.imageFlag = 3
-            
-//            controller.tempEventDate2 = myDatePicker.date
-//            controller.imageViewPicker.image = imageData
-//            println("controller.tempEventDate2: \(controller.tempEventDate2)")
+
             self.navigationController?.popViewControllerAnimated(true)
             
         } else {
@@ -174,32 +168,26 @@ class BeGoodFlickrViewController: UIViewController {
             controller.flickrImage = self.photoImageView.image
             println(self.flickrImageURL)
             controller.imageFlag = 3
-            
-//            controller.imageViewPicker.image = myDatePicker.date
-//            println("controller.tempEventDate2: \(controller.tempEventDate2)")
+
             self.navigationController?.popViewControllerAnimated(true)
         }
         
     }
+
     
-    
-    /* ============================================================
-    * Functional stubs for handling UI problems
-    * ============================================================ */
-    
-    /* Dismissing the keyboard */
+    //-Dismissing the keyboard
     func addKeyboardDismissRecognizer() {
-        /* Add the recognizer to dismiss the keyboard */
+        //-Add the recognizer to dismiss the keyboard
         self.view.addGestureRecognizer(tapRecognizer!)
     }
     
     func removeKeyboardDismissRecognizer() {
-        /* Remove the recognizer to dismiss the keyboard */
+        //-Remove the recognizer to dismiss the keyboard
         self.view.removeGestureRecognizer(tapRecognizer!)
     }
     
     func handleSingleTap(recognizer: UITapGestureRecognizer) {
-        /* End editing here */
+        //-End editing here
         self.view.endEditing(true)
     }
     
@@ -241,17 +229,16 @@ class BeGoodFlickrViewController: UIViewController {
     }
     
     
-    //* - Alert Message function
+    //-Alert Message function
     func errorAlertMessage(){
         dispatch_async(dispatch_get_main_queue()) {
             let actionSheetController: UIAlertController = UIAlertController(title: "Alert!", message: "\(self.alertMessage)", preferredStyle: .Alert)
-            //* - Create and add the OK action
+            //-Create and add the OK action
             let okAction: UIAlertAction = UIAlertAction(title: "OK", style: .Default) { action -> Void in
-                //self.dismissViewControllerAnimated(true, completion: nil)
             }
             actionSheetController.addAction(okAction)
             
-            //* - Present the AlertController
+            //-Present the AlertController
             self.presentViewController(actionSheetController, animated: true, completion: nil)
         }
     }

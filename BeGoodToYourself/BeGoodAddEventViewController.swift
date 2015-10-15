@@ -20,22 +20,18 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
     @IBOutlet weak var cameraButton: UIBarButtonItem!
     @IBOutlet weak var flickrButton: UIButton!
     @IBOutlet weak var textFieldEvent: UITextField!
-//    @IBOutlet weak var textFieldBottom: UITextField!
     @IBOutlet weak var toolbarObject: UIToolbar!
-    @IBOutlet weak var navbarObject: UINavigationBar!
-    @IBOutlet weak var saveEventButton: UIBarButtonItem!
-    @IBOutlet weak var cancelEventButton: UIBarButtonItem!
+//    @IBOutlet weak var navbarObject: UINavigationBar!
+//    @IBOutlet weak var saveEventButton: UIBarButtonItem!
+//    @IBOutlet weak var cancelEventButton: UIBarButtonItem!
     
-    //set the textfield delegates
+    //-set the textfield delegates
     let eventTextDelegate = EventTextDelegate()
-    //let bottomTextDelegate = BottomTextDelegate()
     
-    //Meme variables
-    var eventImage : UIImage!
+    //-Event variables
     var events: Events!
-    //var events: [Events]!
     
-    
+    var eventImage : UIImage!
     var eventIndex2:Int!
     var eventIndexPath2: NSIndexPath!
     var eventImage2: NSData!
@@ -49,15 +45,8 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
     
     //-Disney image based on flag (0-no pic, 1-library, 2-camera, 3-Flickr)
     var imageFlag: Int! = 0
-
     
-    //-Event Description Font Attributes
-    let eventTextAttributes = [
-        NSStrokeColorAttributeName : UIColor.blueColor(),
-        NSForegroundColorAttributeName : UIColor.whiteColor(),
-        NSFontAttributeName : UIFont(name: "HelveticaNeue-CondensedBlack", size: 26)!,
-        NSStrokeWidthAttributeName : -1.5
-    ]
+    var tapRecognizer: UITapGestureRecognizer? = nil
     
     
     //-Perform when view loads
@@ -79,6 +68,10 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
         //-Hide the Tab Bar
         self.tabBarController?.tabBar.hidden = true
         
+        //-Initialize the tapRecognizer in viewDidLoad
+        tapRecognizer = UITapGestureRecognizer(target: self, action: "handleSingleTap:")
+        tapRecognizer?.numberOfTapsRequired = 1
+        
         
 //        var pinchGestureRecognizer: UIPinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: "pinchGestureDetected:")
 //        pinchGestureRecognizer.setDelegate(self)
@@ -93,6 +86,7 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
 
         
         //-Date Picker Formatting -----------------------------------------------------
+        
         var dateFormatter = NSDateFormatter()
         
         self.todaysDate = NSDate()
@@ -102,9 +96,6 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
         dateFormatter.timeZone = timeZone
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         let dateNew = dateFormatter.stringFromDate(date)
-        
-        println("-------------------")
-        println("TEST", dateNew)
 
         dateFormatter.timeStyle = NSDateFormatterStyle.MediumStyle //Set time style
         dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle //Set date style
@@ -112,13 +103,10 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
         println(dateFormatter.timeZone)
         
         let localDate = dateFormatter.stringFromDate(date)
-        //let strDate = dateFormatter.stringFromDate(myDatePicker.date)
         self.currentDate.text = localDate
         
         //-----------------------------------------------------------------------------
         
-        //-Add font attributes to Event Description
-        //self.textFieldEvent.defaultTextAttributes = eventTextAttributes
         
         //-Set starting textfield default values
         self.textFieldEvent.text = "Enter Event Description"
@@ -165,52 +153,19 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
+        //-Add tap recognizer to dismiss keyboard
+        self.addKeyboardDismissRecognizer()
         
-        //-Archive the graph any time this list of events is displayed.
-//        NSKeyedArchiver.archiveRootObject(self.events, toFile: eventsFilePath)
+        //-Subscribe to the Keyboard notification
+        self.subscribeToKeyboardNotifications()  //make the call to subscribe to keyboard notifications
         
-        
-//        println(self.flickrImageURL)
-//        if self.flickrImageURL != nil {
-//
-//            let imageURL = NSURL(string: self.flickrImageURL)
-//            if let imageData = NSData(contentsOfURL: imageURL!) {
-//                self.imageViewPicker.image = UIImage(data: imageData)
-//            
-//            } else {
-//                self.imageViewPicker.image = nil
-//            }
-//        }
-        
-        
-//        if self.imageViewPicker.image != nil {
-//            
-//        }
-        
-        
-//        if self.flickrImage != nil && self.imageViewPicker.image == nil {
-//            println("Flickr Image is present")
-//            self.imageViewPicker.image = flickrImage
-//                
-//        }
-        
+        //-Recognize the Flickr image request
         if imageFlag == 3 {
 
             self.navigationItem.rightBarButtonItem?.enabled = true
             self.imageViewPicker.image = flickrImage
         }
         
-        
-//        if editEventFlag == true {
-//            let event = fetchedResultsController.objectAtIndexPath(eventIndexPath2) as! Events
-//
-//            //* - Add Selected Meme attributes and populate Editor fields
-//            self.textFieldEvent.text = event.textEvent
-//            imageViewPicker.image = UIImage(data: event.eventImage!)
-//            tempEventDate2 = event.eventDate
-//        }
-        
-        //var tempEventDate2: NSDate!
         var dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         dateFormatter.timeStyle = NSDateFormatterStyle.MediumStyle //Set time style
@@ -219,9 +174,7 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
         if currentEventDate != nil {
             let strDate = dateFormatter.stringFromDate(currentEventDate)
             println("New Date2 String: \(strDate)")
-            //datePickerButton.titleLabel?.text = strDate
             datePickerLable.text = strDate
-            //datePickerButton.titleLabel?.adjustsFontSizeToFitWidth = true
 
             
 //            let button = UIButton.buttonWithType(.System) as! UIButton
@@ -232,17 +185,17 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
             
         }
     
-        
         //-Disable the CAMERA if you are using a simulator without a camera
         cameraButton.enabled = UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)
-        
-        //-Subscribe to the Keyboard notification
-        self.subscribeToKeyboardNotifications()  //make the call to subscribe to keyboard notifications
+
     }
     
     //-Perform when view disappears
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
+        
+        //-Remove tap recognizer
+        self.removeKeyboardDismissRecognizer()
         
         //-Unsubscribe from the keyboard notifications
         self.unsubscribeFromKeyboardNotifications() //make the call to unsubscribe to keyboard notifications
@@ -274,13 +227,6 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
         }()
     
     
-//    func didFinishSecondVC(controller: BeGoodPickdateViewController) {
-//        tempEventDate2 = controller.tempEventDate
-//        println("New Date: \(tempEventDate2)")
-//        controller.navigationController?.popViewControllerAnimated(true)
-//    }
-    
-    
     //-Pinch Gesture method
     @IBAction func scaleImage(recognizer: UIPinchGestureRecognizer) {
         recognizer.view!.transform = CGAffineTransformScale(recognizer.view!.transform, recognizer.scale, recognizer.scale)
@@ -288,7 +234,7 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
     }
     
     
-    
+    //-Pick Event Date
     @IBAction func pickEventDate(sender: UIButton) {
         println("pickEventDate")
         
@@ -296,7 +242,7 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
         datePickerButton.titleLabel?.textAlignment = NSTextAlignment.Center
         
         let storyboard = self.storyboard
-        let controller = self.storyboard?.instantiateViewControllerWithIdentifier("BeGoodPickdateViewController") as! BeGoodPickdateViewController
+        let controller = self.storyboard?.instantiateViewControllerWithIdentifier("BeGoodPickDateViewController") as! BeGoodPickDateViewController
         controller.editEventFlag2 = editEventFlag
         controller.currentEventDate = self.currentEventDate
         self.navigationController!.pushViewController(controller, animated: true)
@@ -321,8 +267,7 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
                 self.imageViewPicker.image = eventImage
                 imageFlag = 1
             }
-            //Enable the Sharing Button
-            //shareMemeButton.enabled = true
+            //Enable the Right Navbar Button
             self.navigationItem.rightBarButtonItem?.enabled = true
             
             self.dismissViewControllerAnimated(true, completion: nil)
@@ -393,15 +338,27 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
             UIKeyboardWillHideNotification, object: nil)
     }
 
+    //-Dismissing the keyboard
+    func addKeyboardDismissRecognizer() {
+        //-Add the recognizer to dismiss the keyboard
+        self.view.addGestureRecognizer(tapRecognizer!)
+    }
+    
+    func removeKeyboardDismissRecognizer() {
+        //-Remove the recognizer to dismiss the keyboard
+        self.view.removeGestureRecognizer(tapRecognizer!)
+    }
+    
+    func handleSingleTap(recognizer: UITapGestureRecognizer) {
+        //-End editing here
+        self.view.endEditing(true)
+    }
+    
     
     //-Save the Event
     func saveEvent() {
         
         let eventImage = UIImageJPEGRepresentation(imageViewPicker.image, 100)
-        
-//        //-Add it to the shared Memes array in the Application Delegate
-//        let object = UIApplication.sharedApplication().delegate
-//        let appDelegate = object as! AppDelegate
 
         if editEventFlag == true {
             
@@ -416,7 +373,6 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
             
             //-Pass event index info to Show scene
             let controller = self.navigationController!.viewControllers[1] as! BeGoodShowViewController
-            //controller.events = self.events
             controller.editEventFlag = true
             controller.eventIndexPath = self.eventIndexPath2
             controller.eventIndex = self.eventIndex2
@@ -439,13 +395,13 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
     }
 
     
-    //-Cancel the Editor and go back to the previous scene
-    @IBAction func CancelEventButton(sender: UIBarButtonItem) {
-        self.dismissViewControllerAnimated(true, completion: nil)
-    }
+//    //-Cancel the Editor and go back to the previous scene
+//    @IBAction func CancelEventButton(sender: UIBarButtonItem) {
+//        self.dismissViewControllerAnimated(true, completion: nil)
+//    }
     
     
-    //-Saving the array. Helper.
+    //-Saving the array Helper.
     var eventsFilePath : String {
         let manager = NSFileManager.defaultManager()
         let url = manager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first as! NSURL

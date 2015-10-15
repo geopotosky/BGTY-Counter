@@ -123,6 +123,7 @@ class BudgetTableViewController: UITableViewController, NSFetchedResultsControll
         
     }
     
+    //-Force set editing toggle (delete line items)
     override func setEditing(editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
         self.tableView.setEditing(editing, animated: animated)
@@ -130,7 +131,6 @@ class BudgetTableViewController: UITableViewController, NSFetchedResultsControll
     
     
     //-Reset the Table Edit view when the view disappears
-    
     func resetEditing(editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
         self.tableView.setEditing(editing, animated: animated)
@@ -142,6 +142,7 @@ class BudgetTableViewController: UITableViewController, NSFetchedResultsControll
     }
     
     
+    //-Fetch Budget data
     lazy var fetchedResultsController: NSFetchedResultsController = {
         
         let fetchRequest = NSFetchRequest(entityName: "Budget")
@@ -299,17 +300,8 @@ class BudgetTableViewController: UITableViewController, NSFetchedResultsControll
     
     //-Navigation
     
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        
-//        if segue.identifier == "editBudget" {
-//            var path = tableView.indexPathForSelectedRow()
-//            var destination = segue.destinationViewController as! BudgetEditTableViewController
-//            destination.index = path?.row
-//            destination.data = tableData
-//            //destination.price = detailData
-//            destination.price = detailNumbers
-//        }
+
         // Get the new view controller using [segue destinationViewController].
         // Pass the selected object to the new view controller.
         
@@ -326,7 +318,7 @@ class BudgetTableViewController: UITableViewController, NSFetchedResultsControll
         
     }
     
-    
+    //-Add Budget item function
     func addBudgetList(){
         println("Add to Budget")
         

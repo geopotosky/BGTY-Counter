@@ -19,8 +19,7 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
     
     
     //-Event variables
-    //var events: [Events]!
-    //var events: Events!
+    
     var events = [Events]()
     var eventIndex: Int!
     
@@ -46,7 +45,6 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
     var cancelButton: UIBarButtonItem!
     
     var sharedContext = CoreDataStackManager.sharedInstance().managedObjectContext!
-    
     
     
     override func viewDidLoad() {
@@ -130,9 +128,6 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
     //-Reset the collection Edit view when the view disappears
     override func viewWillDisappear(animated: Bool) {
         
-//        tabBarItemONE.enabled = true
-//        tabBarItemTWO.enabled = true
-        
         self.navigationItem.hidesBackButton = true
         let newBackButton = UIBarButtonItem(title: "Edit", style: UIBarButtonItemStyle.Plain, target: self, action: "editButton")
         self.navigationItem.leftBarButtonItem = newBackButton
@@ -149,7 +144,7 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
     }
     
     
-    //    //* - GEO: Add the "sharedContext" convenience property
+    //    //-Add the "sharedContext" convenience property
     //    lazy var sharedContext: NSManagedObjectContext = {
     //        return CoreDataStackManager.sharedInstance().managedObjectContext!
     //        }()
@@ -159,9 +154,6 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
         println("Hello Edit Button")
         
         if self.navigationItem.leftBarButtonItem?.title == "Done" {
-            
-            //-Enable the TabBar Item
-            //tabBarItemONE.enabled = true
             
             //-Recreate navigation Back button and change name to "Edit"
             
@@ -178,18 +170,6 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
             let newBackButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: "editButton")
             self.navigationItem.leftBarButtonItem = newBackButton
             
-            //-Disable the Tab Bar Item
-//            let tabBarControllerItems = self.tabBarController?.tabBar.items
-//            if let arrayOfTabBarItems = tabBarControllerItems as! AnyObject as? NSArray{
-//                
-//                tabBarItemONE = arrayOfTabBarItems[0] as! UITabBarItem
-//                tabBarItemONE.enabled = false
-//                
-//                //tabBarItemTWO = arrayOfTabBarItems[1] as! UITabBarItem
-//                //tabBarItemTWO.enabled = false
-//                
-//            }
-            
             bottomButton.hidden = false
             editButtonFlag = false
             //updateBottomButton()
@@ -197,7 +177,7 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
     }
     
     
-    //* - UICollectionView
+    //-UICollectionView
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return self.fetchedResultsController.sections?.count ?? 0
@@ -206,22 +186,41 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let sectionInfo = self.fetchedResultsController.sections![section] as! NSFetchedResultsSectionInfo
+        
+//        //-Check to see if you have any events. If not, go directly to the Add Event Screen.
+//        if sectionInfo.numberOfObjects == 0 {
+//            
+//            self.navigationItem.hidesBackButton = true
+//            let newBackButton = UIBarButtonItem(title: "Edit", style: UIBarButtonItemStyle.Plain, target: self, action: "editButton")
+//            self.navigationItem.leftBarButtonItem = newBackButton
+//            bottomButton.hidden = true
+//            
+//            println("Collection Empty")
+//            
+//            let actionSheetController: UIAlertController = UIAlertController(title: "Zippo!", message: "No Events. Press OK to create an Event", preferredStyle: .Alert)
+//            
+//            let okAction: UIAlertAction = UIAlertAction(title: "OK", style: .Default) { action -> Void in
+//                
+//                //let storyboard = self.storyboard
+//                let controller = self.storyboard?.instantiateViewControllerWithIdentifier("BeGoodAddEventViewController") as! BeGoodAddEventViewController
+//                controller.editEventFlag = false
+//                self.navigationController!.pushViewController(controller, animated: true)
+//            }
+//            actionSheetController.addAction(okAction)
+//            
+//            //-Present the AlertController
+//            self.presentViewController(actionSheetController, animated: true, completion: nil)
+//            
+//        }
+        
         return sectionInfo.numberOfObjects
     }
+    
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("BeGoodCollectionViewCell", forIndexPath: indexPath) as! BeGoodCollectionViewCell
-        
-        //        let CellIdentifier = "MemeCell"
-        
-        // Here is how to replace the actors array using objectAtIndexPath
-        //let meme = fetchedResultsController.objectAtIndexPath(indexPath) as! Memes
-        
-        //        let cell = tableView.dequeueReusableCellWithIdentifier(CellIdentifier) as! UITableViewCell
-        
-        // This is the new configureCell method
-        //configureCell(cell, withMeme: meme)
+
         configureCell(cell, atIndexPath: indexPath)
         
         return cell
@@ -236,7 +235,7 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
             
             let cell = collectionView.cellForItemAtIndexPath(indexPath) as! BeGoodCollectionViewCell
             
-            // Whenever a cell is tapped we will toggle its presence in the selectedIndexes array
+            //-Whenever a cell is tapped we will toggle its presence in the selectedIndexes array
             if let index = find(selectedIndexes, indexPath) {
                 selectedIndexes.removeAtIndex(index)
             }
@@ -248,7 +247,7 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
             configureCell(cell, atIndexPath: indexPath)
             
             
-            // And update the buttom button
+            //-And update the buttom button
             //updateBottomButton()
             
         } else {
@@ -257,10 +256,9 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
             
             let controller =
             storyboard!.instantiateViewControllerWithIdentifier("BeGoodShowViewController") as! BeGoodShowViewController
-            // Similar to the method above
+
             let event = fetchedResultsController.objectAtIndexPath(indexPath) as! Events
-            
-            //controller.events = self.events
+
             controller.eventIndexPath = indexPath
             controller.eventIndex = indexPath.row
             
@@ -271,15 +269,21 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
     }
     
     //-Configure Cell
-    
-    //func configureCell(cell: MemeCollectionViewCell, withEvent event: Events) {
     func configureCell(cell: BeGoodCollectionViewCell, atIndexPath indexPath: NSIndexPath) {
         
         let event = fetchedResultsController.objectAtIndexPath(indexPath) as! Events
         
+        //-Format the Date for the cell
+        var dateFormatter = NSDateFormatter()
+        dateFormatter.timeStyle = NSDateFormatterStyle.NoStyle //Set time style
+        dateFormatter.dateStyle = NSDateFormatterStyle.ShortStyle //Set date style
+        dateFormatter.timeZone = NSTimeZone()
+        
+        cell.eventDateCellLabel!.text = dateFormatter.stringFromDate(event.eventDate!)
+        println(cell.eventDateCellLabel!.text)
+        
         let eventImage2 = event.eventImage
         let finalImage = UIImage(data: eventImage2!)
-        
         cell.eventImageView!.image = finalImage
         
         if let index = find(self.selectedIndexes, indexPath) {
@@ -306,7 +310,7 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
         }()
     
     
-    //* - Fetched Results Controller Delegate
+    //-Fetched Results Controller Delegate
     
     // Whenever changes are made to Core Data the following three methods are invoked. This first method is used to
     // create three fresh arrays to record the index paths that will be changed.
@@ -453,7 +457,7 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
     //@IBAction func addEventButton(sender: UIBarButtonItem) {
     func addEvent() {
         
-        let storyboard = self.storyboard
+        //let storyboard = self.storyboard
         let controller = self.storyboard?.instantiateViewControllerWithIdentifier("BeGoodAddEventViewController") as! BeGoodAddEventViewController
         controller.editEventFlag = false
         self.navigationController!.pushViewController(controller, animated: true)

@@ -20,6 +20,7 @@
 		E5B7DEBA1BC9E1500026D4CE /* BudgetEditTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B7DEB91BC9E1500026D4CE /* BudgetEditTableViewController.swift */; };
 		E5B7DEBC1BC9E1690026D4CE /* BudgetAddTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B7DEBB1BC9E1690026D4CE /* BudgetAddTableViewController.swift */; };
 		E5B7DEBE1BC9E2290026D4CE /* PriceTextDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B7DEBD1BC9E2290026D4CE /* PriceTextDelegate.swift */; };
+		E5B92CBF1BCFD5A10051CA09 /* BeGoodPickDateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B92CBE1BCFD5A10051CA09 /* BeGoodPickDateViewController.swift */; };
 		E5C961AB1BB7032C006D20C8 /* BGClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C961AA1BB7032C006D20C8 /* BGClient.swift */; };
 		E5C961AD1BB70390006D20C8 /* BGConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C961AC1BB70390006D20C8 /* BGConstants.swift */; };
 		E5C961AF1BB70A54006D20C8 /* BeGoodFlickrViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C961AE1BB70A54006D20C8 /* BeGoodFlickrViewController.swift */; };
@@ -37,7 +38,6 @@
 		E5D00F0B1BAE0BF000971CC6 /* Events.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D00F0A1BAE0BF000971CC6 /* Events.swift */; };
 		E5D00F0D1BAE0C8300971CC6 /* EventTextDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D00F0C1BAE0C8300971CC6 /* EventTextDelegate.swift */; };
 		E5D00F101BAE184E00971CC6 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E5D00F0E1BAE184E00971CC6 /* Model.xcdatamodeld */; };
-		E5D00F121BAF8DCF00971CC6 /* BeGoodPickdateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D00F111BAF8DCF00971CC6 /* BeGoodPickdateViewController.swift */; };
 		E5E830E31BBCD6F4004A02B9 /* TodoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E830E21BBCD6F4004A02B9 /* TodoTableViewController.swift */; };
 		E5E830E51BBCD735004A02B9 /* TodoEditTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E830E41BBCD735004A02B9 /* TodoEditTableViewController.swift */; };
 		E5E830E71BBDB1CB004A02B9 /* TodoAddTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E830E61BBDB1CB004A02B9 /* TodoAddTableViewController.swift */; };
@@ -67,6 +67,7 @@
 		E5B7DEB91BC9E1500026D4CE /* BudgetEditTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BudgetEditTableViewController.swift; sourceTree = "<group>"; };
 		E5B7DEBB1BC9E1690026D4CE /* BudgetAddTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BudgetAddTableViewController.swift; sourceTree = "<group>"; };
 		E5B7DEBD1BC9E2290026D4CE /* PriceTextDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PriceTextDelegate.swift; sourceTree = "<group>"; };
+		E5B92CBE1BCFD5A10051CA09 /* BeGoodPickDateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BeGoodPickDateViewController.swift; path = ../BeGoodPickDateViewController.swift; sourceTree = "<group>"; };
 		E5C961AA1BB7032C006D20C8 /* BGClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BGClient.swift; sourceTree = "<group>"; };
 		E5C961AC1BB70390006D20C8 /* BGConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BGConstants.swift; sourceTree = "<group>"; };
 		E5C961AE1BB70A54006D20C8 /* BeGoodFlickrViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeGoodFlickrViewController.swift; sourceTree = "<group>"; };
@@ -88,7 +89,6 @@
 		E5D00F0A1BAE0BF000971CC6 /* Events.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Events.swift; sourceTree = "<group>"; };
 		E5D00F0C1BAE0C8300971CC6 /* EventTextDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTextDelegate.swift; sourceTree = "<group>"; };
 		E5D00F0F1BAE184E00971CC6 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
-		E5D00F111BAF8DCF00971CC6 /* BeGoodPickdateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeGoodPickdateViewController.swift; sourceTree = "<group>"; };
 		E5E830E21BBCD6F4004A02B9 /* TodoTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodoTableViewController.swift; sourceTree = "<group>"; };
 		E5E830E41BBCD735004A02B9 /* TodoEditTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodoEditTableViewController.swift; sourceTree = "<group>"; };
 		E5E830E61BBDB1CB004A02B9 /* TodoAddTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodoAddTableViewController.swift; sourceTree = "<group>"; };
@@ -216,8 +216,8 @@
 		E5D00F011BAE013400971CC6 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E5B92CBE1BCFD5A10051CA09 /* BeGoodPickDateViewController.swift */,
 				E5D00EDD1BADFF4300971CC6 /* BeGoodAddEventViewController.swift */,
-				E5D00F111BAF8DCF00971CC6 /* BeGoodPickdateViewController.swift */,
 				E5D00F021BAE056B00971CC6 /* BeGoodTableViewController.swift */,
 				E5D00F041BAE062900971CC6 /* BeGoodCollectionViewController.swift */,
 				E5D00F061BAE06E700971CC6 /* BeGoodCollectionViewCell.swift */,
@@ -354,7 +354,6 @@
 				E5B7DEBA1BC9E1500026D4CE /* BudgetEditTableViewController.swift in Sources */,
 				E5A515CC1BBDDCD600186690 /* TodoList.swift in Sources */,
 				E52C7FE51BCB0D0E007ABC05 /* Budget.swift in Sources */,
-				E5D00F121BAF8DCF00971CC6 /* BeGoodPickdateViewController.swift in Sources */,
 				E5B7DEBE1BC9E2290026D4CE /* PriceTextDelegate.swift in Sources */,
 				E5D00F0B1BAE0BF000971CC6 /* Events.swift in Sources */,
 				E5C961AD1BB70390006D20C8 /* BGConstants.swift in Sources */,
@@ -362,6 +361,7 @@
 				E5B7DEB81BC9E10D0026D4CE /* BudgetTableViewController.swift in Sources */,
 				E53286621BC6F3960081C7F7 /* SearchButton.swift in Sources */,
 				E5C961AF1BB70A54006D20C8 /* BeGoodFlickrViewController.swift in Sources */,
+				E5B92CBF1BCFD5A10051CA09 /* BeGoodPickDateViewController.swift in Sources */,
 				E5D00F101BAE184E00971CC6 /* Model.xcdatamodeld in Sources */,
 				E5B7DEBC1BC9E1690026D4CE /* BudgetAddTableViewController.swift in Sources */,
 				E5D00F091BAE08F400971CC6 /* BeGoodShowViewController.swift in Sources */,
