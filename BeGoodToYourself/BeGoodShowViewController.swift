@@ -106,10 +106,10 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         self.untilEventText2.textAlignment = NSTextAlignment.Center
         
         
-        let b1 = UIBarButtonItem(image:UIImage(named:"budget-33.png"), style:.Plain, target: self,  action: "addBudgetList")
-        let b2 = UIBarButtonItem(image:UIImage(named:"list-33.png"), style:.Plain, target: self, action: "addTodoList")
-        let buttons = [b2, b1] as NSArray
-        self.navigationItem.rightBarButtonItems = [b2, b1]
+//        let b1 = UIBarButtonItem(image:UIImage(named:"budget-33.png"), style:.Plain, target: self,  action: "addBudgetList")
+//        let b2 = UIBarButtonItem(image:UIImage(named:"list-33.png"), style:.Plain, target: self, action: "addTodoList")
+//        let buttons = [b2, b1] as NSArray
+//        self.navigationItem.rightBarButtonItems = [b2, b1]
         
         
         fetchedResultsController.performFetch(nil)
@@ -730,5 +730,51 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         }
     }
     
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
+        switch(segue.identifier!){
+        case "chooseSchool":
+            var popoverController = (segue.destinationViewController as? BeGoodPopoverViewController)
+            
+            let event = fetchedResultsController.objectAtIndexPath(eventIndexPath) as! Events
+            
+            popoverController!.eventIndexPath2 = eventIndexPath
+            popoverController!.events = event
+            
+            //schoolListTC.popoverOniPhone = popoverOniPhoneSwitch.on
+            //schoolListTC.popoverOniPhoneLandscape = popoverOniPhoneLandscapeSwitch.on
+            //break
+            println("chooseSchool")
+            break
+        default:
+            break
+        }
+    }
+    
+    //-Function to call the To Do List routine for each event
+//    func addTodoList2(){
+//        self.performSegueWithIdentifier("chooseSchool", sender: self)
+//        func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
+//            if segue.identifier == "chooseSchool" {
+//                var popoverController = (segue.destinationViewController as? BeGoodPopoverViewController)
+//                
+//                let event = fetchedResultsController.objectAtIndexPath(eventIndexPath) as! Events
+//                
+//                popoverController!.eventIndexPath2 = eventIndexPath
+//                popoverController!.events = event
+//            }
+//            
+////        let storyboard = self.storyboard
+////        let controller = self.storyboard?.instantiateViewControllerWithIdentifier("TodoTableViewController") as! TodoTableViewController
+////        
+////        let event = fetchedResultsController.objectAtIndexPath(eventIndexPath) as! Events
+////        
+////        controller.eventIndexPath2 = eventIndexPath
+////        controller.events = event
+////        
+////        self.navigationController!.pushViewController(controller, animated: true)
+//
+//        
+//    }
+//    }
 }
 

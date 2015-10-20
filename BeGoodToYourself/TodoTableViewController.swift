@@ -15,14 +15,16 @@ class TodoTableViewController: UITableViewController, NSFetchedResultsController
     
     var events: Events!
     var eventIndexPath2: NSIndexPath!
-    var eventIndex: Int!
+    //var eventIndex: Int!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         //-Create buttons
-        //self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "addTodoList")
+        self.navigationController!.navigationBar.barTintColor = UIColor(red:0.66,green:0.97,blue:0.59,alpha:1.0)
+        
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Cancel, target: self, action: "cancelTodoList")
         
         let b1 = self.editButtonItem()
         let b2 = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "addTodoList")
@@ -233,6 +235,19 @@ class TodoTableViewController: UITableViewController, NSFetchedResultsController
         let storyboard = self.storyboard
         let controller = self.storyboard?.instantiateViewControllerWithIdentifier("TodoAddTableViewController") as! TodoAddTableViewController
         self.navigationController!.pushViewController(controller, animated: true)
+    }
+    
+    //-Cancel Todo List item function
+    func cancelTodoList(){
+        println("Cancel Todo List")
+        
+        var tmpController :UIViewController! = self.presentingViewController;
+        
+        self.dismissViewControllerAnimated(false, completion: {()->Void in
+            println("done");
+            tmpController.dismissViewControllerAnimated(false, completion: nil);
+        });
+
     }
     
     

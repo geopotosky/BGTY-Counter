@@ -30,6 +30,8 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
         
         self.navigationItem.leftBarButtonItem = self.editButtonItem()
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "addEvent")
+        
+        
         //-Manage Top and Bottom bar colors
         //-Blue Bars
         //self.navigationController!.navigationBar.barTintColor = UIColor(red:0.69,green:0.85,blue:0.95,alpha:1.0)
@@ -210,6 +212,7 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
         controller.eventIndex = indexPath.row
         
         self.navigationController!.pushViewController(controller, animated: true)
+        //self.presentViewController(controller, animated: true, completion: nil)
         
     }
     

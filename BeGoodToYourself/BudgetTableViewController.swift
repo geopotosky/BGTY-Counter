@@ -75,7 +75,9 @@ class BudgetTableViewController: UITableViewController, NSFetchedResultsControll
         
         
         //-Create buttons
-        //self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "addBudgetList")
+        self.navigationController!.navigationBar.barTintColor = UIColor(red:0.66,green:0.97,blue:0.59,alpha:1.0)
+        
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Cancel, target: self, action: "cancelBudgetList")
         
         let b1 = self.editButtonItem()
         let b2 = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "addBudgetList")
@@ -325,6 +327,19 @@ class BudgetTableViewController: UITableViewController, NSFetchedResultsControll
         let storyboard = self.storyboard
         let controller = self.storyboard?.instantiateViewControllerWithIdentifier("BudgetAddTableViewController") as! BudgetAddTableViewController
         self.navigationController!.pushViewController(controller, animated: true)
+    }
+    
+    //-Cancel Budget List item function
+    func cancelBudgetList(){
+        println("Cancel Budget List")
+        
+        var tmpController :UIViewController! = self.presentingViewController;
+        
+        self.dismissViewControllerAnimated(false, completion: {()->Void in
+            println("done");
+            tmpController.dismissViewControllerAnimated(false, completion: nil);
+        });
+        
     }
     
 }
