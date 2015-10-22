@@ -220,9 +220,7 @@
                         </constraints>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="My Events" id="WoV-A5-k6u">
-                        <barButtonItem key="backBarButtonItem" title="BACK" id="csq-uI-jen"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="My Events" id="WoV-A5-k6u"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="tableView" destination="w0P-nO-H6A" id="1LH-Lj-XpV"/>
@@ -424,22 +422,6 @@
                 </pinchGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-1954" y="-1116"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="AIb-F8-yL1">
-            <objects>
-                <navigationController id="vGm-Wd-Ynm" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="87n-vu-BY4">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="uaL-RV-rzP" kind="relationship" relationship="rootViewController" id="aVz-Fy-LlS"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Lq5-7w-lSG" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1346" y="-2024"/>
         </scene>
         <!--Be Good Flickr View Controller-->
         <scene sceneID="pgU-Eq-vji">
@@ -818,9 +800,8 @@
                             </mask>
                         </variation>
                     </view>
-                    <navigationItem key="navigationItem" title="My Event" id="sWH-hp-Ilb">
-                        <barButtonItem key="backBarButtonItem" title="Back" id="Bq5-ZL-XjK"/>
-                        <barButtonItem key="rightBarButtonItem" image=" menu" id="lq5-H1-Ueg">
+                    <navigationItem key="navigationItem" title="Event" id="sWH-hp-Ilb">
+                        <barButtonItem key="rightBarButtonItem" image=" menu" id="lq5-H1-Ueg" userLabel="Menu">
                             <connections>
                                 <segue destination="fV3-oI-Yyl" kind="popoverPresentation" identifier="chooseSchool" popoverAnchorBarButtonItem="lq5-H1-Ueg" id="UkM-eR-L99">
                                     <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
@@ -857,10 +838,10 @@
             </objects>
             <point key="canvasLocation" x="-1117" y="-383"/>
         </scene>
-        <!--BeGood Pickdate View Controller-->
+        <!--BeGood PickDate View Controller-->
         <scene sceneID="K4J-pR-6sn">
             <objects>
-                <viewController storyboardIdentifier="BeGoodPickdateViewController" id="4Kf-R2-ncF" userLabel="BeGood Pickdate View Controller" customClass="BeGoodPickdateViewController" customModule="BeGoodToYourself" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="BeGoodPickDateViewController" id="4Kf-R2-ncF" userLabel="BeGood PickDate View Controller" customClass="BeGoodPickDateViewController" customModule="BeGoodToYourself" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="hIV-FX-Myh"/>
                         <viewControllerLayoutGuide type="bottom" id="Hjp-SL-ulV"/>
@@ -965,7 +946,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2Sw-O4-1ga" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-752" y="345"/>
+            <point key="canvasLocation" x="-396" y="397"/>
         </scene>
         <!--To Do Edit Table View Controller-->
         <scene sceneID="8sw-6M-KJa">
@@ -1014,7 +995,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cQ6-0A-z1D" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="ni9-KS-KIF" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="10" y="-19"/>
+            <point key="canvasLocation" x="414" y="5"/>
         </scene>
         <!--To Do Add Table View Controller-->
         <scene sceneID="ufK-gd-8YN">
@@ -1063,7 +1044,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bOO-JN-2LQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="cfa-rh-cmU" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="10" y="740"/>
+            <point key="canvasLocation" x="414" y="748"/>
         </scene>
         <!--Event Budget-->
         <scene sceneID="hhx-P8-1nf">
@@ -1078,7 +1059,7 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" red="1" green="0.98545268789999996" blue="0.78796896400000005" alpha="1" colorSpace="calibratedRGB"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <prototypes>
@@ -1090,7 +1071,7 @@
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="nLO-tU-nYO">
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="EvR-IL-c2X">
@@ -1121,7 +1102,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GZy-5z-hxq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-752" y="-1116"/>
+            <point key="canvasLocation" x="-396" y="-1172"/>
         </scene>
         <!--Edit Budget Items-->
         <scene sceneID="Uvw-gN-4ne">
@@ -1187,7 +1168,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="A8F-Hu-bdb" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="utv-D0-OlO" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="10" y="-1502"/>
+            <point key="canvasLocation" x="430" y="-1562"/>
         </scene>
         <!--Add Budget Items-->
         <scene sceneID="z6h-gb-GQb">
@@ -1253,7 +1234,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="igk-B2-i0S" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="lIa-TC-vCQ" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="10" y="-728"/>
+            <point key="canvasLocation" x="430" y="-804"/>
         </scene>
         <!--Be Good Popover View Controller-->
         <scene sceneID="fBm-mi-eYZ">
@@ -1265,7 +1246,7 @@
                         <sections>
                             <tableViewSection id="y5q-oh-upx">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="XsO-93-ryJ" style="IBUITableViewCellStyleDefault" id="H1V-8Y-F8p">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="XsO-93-ryJ" imageView="WKG-ai-Odl" style="IBUITableViewCellStyleDefault" id="H1V-8Y-F8p">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="H1V-8Y-F8p" id="EfS-Fh-SRf">
                                             <autoresizingMask key="autoresizingMask"/>
@@ -1273,14 +1254,16 @@
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="To Do List" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="XsO-93-ryJ">
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="TDlist" id="WKG-ai-Odl">
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                </imageView>
                                             </subviews>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" red="0.80000001190000003" green="1" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="RZd-ah-R12" style="IBUITableViewCellStyleDefault" id="GIe-yE-EcT">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="RZd-ah-R12" imageView="Zfg-AX-ZaW" style="IBUITableViewCellStyleDefault" id="GIe-yE-EcT">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="GIe-yE-EcT" id="bmC-VQ-Icx">
                                             <autoresizingMask key="autoresizingMask"/>
@@ -1288,12 +1271,14 @@
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Budget Sheet" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="RZd-ah-R12">
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="budget" id="Zfg-AX-ZaW">
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                </imageView>
                                             </subviews>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" red="0.80000001190000003" green="1" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -1306,11 +1291,13 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IEe-Ku-Jod" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1117" y="1205"/>
+            <point key="canvasLocation" x="-1117" y="717"/>
         </scene>
     </scenes>
     <resources>
         <image name=" menu" width="30" height="30"/>
+        <image name="TDlist" width="400" height="400"/>
+        <image name="budget" width="700" height="700"/>
         <image name="calendar" width="30" height="30"/>
         <image name="collection" width="30" height="30"/>
         <image name="flickr-blue" width="30" height="30"/>

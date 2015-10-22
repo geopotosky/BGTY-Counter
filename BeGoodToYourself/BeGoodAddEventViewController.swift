@@ -238,10 +238,10 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
     @IBAction func pickEventDate(sender: UIButton) {
         println("pickEventDate")
         
-        datePickerButton.titleLabel?.adjustsFontSizeToFitWidth = true
-        datePickerButton.titleLabel?.textAlignment = NSTextAlignment.Center
+        //datePickerButton.titleLabel?.adjustsFontSizeToFitWidth = true
+        //datePickerButton.titleLabel?.textAlignment = NSTextAlignment.Center
         
-        let storyboard = self.storyboard
+        //let storyboard = self.storyboard
         let controller = self.storyboard?.instantiateViewControllerWithIdentifier("BeGoodPickDateViewController") as! BeGoodPickDateViewController
         controller.editEventFlag2 = editEventFlag
         controller.currentEventDate = self.currentEventDate

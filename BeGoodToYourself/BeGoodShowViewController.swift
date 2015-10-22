@@ -226,6 +226,50 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         default:
             println("Less than 1 day left")
             
+//        case 0:
+//            let tempText1 = numberFormatter.stringFromNumber(self.durationWeeks)!
+//            //let tempText1 = String(stringInterpolationSegment: self.durationWeeks)
+//            if self.durationWeeks < 2 {
+//                untilEventText2.text = ("Only \(tempText1) Week")
+//            } else {
+//                untilEventText2.text = ("Only \(tempText1) Weeks")
+//            }
+//        case 1:
+//            //let tempText1 = numberFormatter.stringFromNumber(self.durationDays)!
+//            let tempText1 = String(stringInterpolationSegment: self.durationDays)
+//            if self.durationDays < 2 {
+//                untilEventText2.text = ("Only \(tempText1) Day")
+//            } else {
+//                untilEventText2.text = ("Only \(tempText1) Days")
+//            }
+//        case 2:
+//            let tempText1 = numberFormatter.stringFromNumber(self.durationHours)!
+//            //let tempText1 = String(stringInterpolationSegment: self.durationHours)
+//            if self.durationHours < 2 {
+//                untilEventText2.text = ("Only \(tempText1) Hour")
+//            } else {
+//                untilEventText2.text = ("Only \(tempText1) Hours")
+//            }
+//        case 3:
+//            let tempText1 = numberFormatter.stringFromNumber(self.durationMinutes)!
+//            //let tempText1 = String(stringInterpolationSegment: self.durationMinutes)
+//            if self.durationMinutes < 2 {
+//                untilEventText2.text = ("Only \(tempText1) Minute")
+//            } else {
+//                untilEventText2.text = ("Only \(tempText1) Minutes")
+//            }
+//        case 4:
+//            let tempText1 = numberFormatter.stringFromNumber(self.durationSeconds)!
+//            //let tempText1 = String(stringInterpolationSegment: self.durationSeconds)
+//            if self.durationSeconds < 2 {
+//                untilEventText2.text = ("Only \(tempText1) Second")
+//            } else {
+//                untilEventText2.text = ("Only \(tempText1) Seconds")
+//            }
+//        default:
+//            println("Less than 1 day left")
+            
+            
         }
 
     }
@@ -472,35 +516,35 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
     }
     
     
-    //-Function to call the To Do List routine for each event
-    func addTodoList(){
-        
-        let storyboard = self.storyboard
-        let controller = self.storyboard?.instantiateViewControllerWithIdentifier("TodoTableViewController") as! TodoTableViewController
-        
-        let event = fetchedResultsController.objectAtIndexPath(eventIndexPath) as! Events
-        
-        controller.eventIndexPath2 = eventIndexPath
-        controller.events = event
-
-        self.navigationController!.pushViewController(controller, animated: true)
-        
-    }
-    
-    //-Function to call the Budget List routine for each event
-    func addBudgetList(){
-        
-        let storyboard = self.storyboard
-        let controller = self.storyboard?.instantiateViewControllerWithIdentifier("BudgetTableViewController") as! BudgetTableViewController
-        
-        let event = fetchedResultsController.objectAtIndexPath(eventIndexPath) as! Events
-        
-        controller.eventIndexPath2 = eventIndexPath
-        controller.events = event
-        
-        self.navigationController!.pushViewController(controller, animated: true)
-        
-    }
+//    //-Function to call the To Do List routine for each event
+//    func addTodoList(){
+//        
+//        let storyboard = self.storyboard
+//        let controller = self.storyboard?.instantiateViewControllerWithIdentifier("TodoTableViewController") as! TodoTableViewController
+//        
+//        let event = fetchedResultsController.objectAtIndexPath(eventIndexPath) as! Events
+//        
+//        controller.eventIndexPath2 = eventIndexPath
+//        controller.events = event
+//
+//        self.navigationController!.pushViewController(controller, animated: true)
+//        
+//    }
+//    
+//    //-Function to call the Budget List routine for each event
+//    func addBudgetList(){
+//        
+//        let storyboard = self.storyboard
+//        let controller = self.storyboard?.instantiateViewControllerWithIdentifier("BudgetTableViewController") as! BudgetTableViewController
+//        
+//        let event = fetchedResultsController.objectAtIndexPath(eventIndexPath) as! Events
+//        
+//        controller.eventIndexPath2 = eventIndexPath
+//        controller.events = event
+//        
+//        self.navigationController!.pushViewController(controller, animated: true)
+//        
+//    }
     
     //-Generate the Event Image to share
     func generateEventImage() -> UIImage {
