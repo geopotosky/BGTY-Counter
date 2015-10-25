@@ -77,10 +77,8 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         NSStrokeColorAttributeName : UIColor.whiteColor(),
         //NSForegroundColorAttributeName : UIColor(red:0.66,green:0.97,blue:0.59,alpha:1.0),
         //NSForegroundColorAttributeName : UIColor(red:0.69,green:0.85,blue:0.95,alpha:1.0),
-        
         //NSForegroundColorAttributeName : UIColor(red:0.07,green:0.45,blue:0.74,alpha:1.0),
         NSForegroundColorAttributeName : UIColor.blackColor(),
-        //NSForegroundColorAttributeName : UIColor.blueColor(),
         NSFontAttributeName : UIFont(name: "HelveticaNeue-Bold", size: 26)!,
         NSStrokeWidthAttributeName : -4.0
     ]
