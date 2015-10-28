@@ -758,7 +758,7 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
             actionSheetController.view.tintColor = UIColor.blueColor()
             let subview = actionSheetController.view.subviews.first! as! UIView
             let alertContentView = subview.subviews.first! as! UIView
-            alertContentView.backgroundColor = UIColor.greenColor()
+            alertContentView.backgroundColor = UIColor(red:0.66,green:0.97,blue:0.59,alpha:1.0)
             alertContentView.layer.cornerRadius = 5;
             
             //-Create and add the OK action

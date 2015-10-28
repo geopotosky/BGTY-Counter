@@ -103,9 +103,7 @@ class BudgetEditTableViewController: UITableViewController, UITextFieldDelegate,
         if segue.identifier == "saveDataEdit" {
             dataString = textField.text
             priceString = priceTextField.text
-            println("inside")
         }
-        println("outside")
 //        dataString = textField.text
 //        priceString = priceTextField.text
         

@@ -74,13 +74,6 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
 //        var pinchGestureRecognizer: UIPinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: "pinchGestureDetected:")
 //        pinchGestureRecognizer.setDelegate(self)
 //        imageView.addGestureRecognizer(pinchGestureRecognizer)
-        
-        
-//        let datePickButton = UIButton.buttonWithType(.System) as! UIButton
-//        datePickerButton.setTitle(title, forState: .Normal)
-//        datePickerButton.titleLabel?.lineBreakMode = NSLineBreakMode.ByWordWrapping
-//        datePickerButton.titleLabel?.textAlignment = NSTextAlignment.Center
-//        datePickerButton.setTranslatesAutoresizingMaskIntoConstraints(false)
 
         
         //-Date Picker Formatting -----------------------------------------------------
@@ -173,13 +166,6 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
             let strDate = dateFormatter.stringFromDate(currentEventDate)
             println("New Date2 String: \(strDate)")
             datePickerLable.text = strDate
-
-            
-//            let button = UIButton.buttonWithType(.System) as! UIButton
-//            button.setTitle(title, forState: .Normal)
-//            button.titleLabel?.lineBreakMode = NSLineBreakMode.ByWordWrapping
-//            button.titleLabel?.textAlignment = NSTextAlignment.Center
-//            button.setTranslatesAutoresizingMaskIntoConstraints(false)
             
         }
     
@@ -392,11 +378,6 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
 
     }
 
-    
-//    //-Cancel the Editor and go back to the previous scene
-//    @IBAction func CancelEventButton(sender: UIBarButtonItem) {
-//        self.dismissViewControllerAnimated(true, completion: nil)
-//    }
     
     
     //-Saving the array Helper.

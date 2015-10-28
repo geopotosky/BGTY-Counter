@@ -57,13 +57,10 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
         
         
         //-Manage Top and Bottom bar colors
-//        self.navigationController!.navigationBar.barTintColor = UIColor(red:0.69,green:0.85,blue:0.95,alpha:1.0)
-//        self.tabBarController?.tabBar.barTintColor = UIColor(red:0.69,green:0.85,blue:0.95,alpha:1.0)
         self.navigationController!.navigationBar.barTintColor = UIColor(red:0.66,green:0.97,blue:0.59,alpha:1.0)
         self.tabBarController?.tabBar.barTintColor = UIColor(red:0.66,green:0.97,blue:0.59,alpha:1.0)
         
         bottomButton.hidden = true
-        //self.tabBarController?.tabBar.hidden = false
         
         //-Start the fetched results controller
         var error: NSError?
@@ -74,9 +71,6 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
         }
         
         fetchedResultsController.delegate = self
-        
-        //        //* - Bottom Button updater
-        //        updateBottomButton()
         
         // Unarchive the event when the list is first shown
         self.events = NSKeyedUnarchiver.unarchiveObjectWithFile(eventsFilePath) as? [Events] ?? [Events]()
@@ -393,15 +387,8 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
     
     @IBAction func buttonButtonClicked() {
         
-        //        bottomButton.enabled = false
-        
-        //        if selectedIndexes.isEmpty {
-        //            self.navigationItem.leftBarButtonItem?.enabled = false
-        //            deleteAllPictures()
-        //        } else {
         deleteSelectedEvents()
-        
-        //        }
+
     }
     
     //* - Delete All Pictures before adding new pictures function
@@ -427,7 +414,6 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
         
         for event in eventsToDelete {
             sharedContext.deleteObject(event)
-            //            bottomButton.title = "New Collection"
         }
         
         selectedIndexes = [NSIndexPath]()
@@ -440,17 +426,17 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
     
     //* - Update the button label based on selection criteria
     
-    func updateBottomButton() {
-        if selectedIndexes.count > 0 {
-            //bottomButton.title = "Remove Selected Pictures"
-            bottomButton.titleLabel?.text = "Remove Selected Events"
-            
-            
-        } else {
-            //bottomButton.title = "New Collection"
-            bottomButton.titleLabel?.text = "Clear All Events"
-        }
-    }
+//    func updateBottomButton() {
+//        if selectedIndexes.count > 0 {
+//            //bottomButton.title = "Remove Selected Pictures"
+//            bottomButton.titleLabel?.text = "Remove Selected Events"
+//            
+//            
+//        } else {
+//            //bottomButton.title = "New Collection"
+//            bottomButton.titleLabel?.text = "Clear All Events"
+//        }
+//    }
 
     
     

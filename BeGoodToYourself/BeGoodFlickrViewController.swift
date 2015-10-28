@@ -243,16 +243,6 @@ class BeGoodFlickrViewController: UIViewController {
         }
     }
     
-    
-//    //-Update the button label based on selection criteria
-//    func updateSearchButton() {
-//        if searchFlag == true {
-//            searchButtonLabel.text = "Search Again"
-//        } else {
-//            searchButtonLabel.text = "Search"
-//        }
-//    }
-    
 }
 
 //-This extension was added as a fix based on student comments */

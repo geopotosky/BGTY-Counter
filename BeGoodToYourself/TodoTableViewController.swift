@@ -46,12 +46,6 @@ class TodoTableViewController: UITableViewController, NSFetchedResultsController
 //    }
     
     
-//    override func didReceiveMemoryWarning() {
-//        super.didReceiveMemoryWarning()
-//        // Dispose of any resources that can be recreated.
-//    }
-    
-    
     //-Reset the Table Edit view when the view disappears
     override func viewWillDisappear(animated: Bool) {
         

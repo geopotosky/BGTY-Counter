@@ -43,8 +43,6 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
         //self.navigationController!.navigationBar.barTintColor = UIColor(red:1.0,green:0.7,blue:0.43,alpha:1.0)
         //self.tabBarController?.tabBar.barTintColor = UIColor(red:1.0,green:0.7,blue:0.43,alpha:1.0)
         
-        //self.tabBarController?.tabBar.hidden = false
-        
         
         fetchedResultsController.performFetch(nil)
         

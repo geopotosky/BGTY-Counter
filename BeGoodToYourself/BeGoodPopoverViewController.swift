@@ -48,9 +48,7 @@ class BeGoodPopoverViewController: UITableViewController, UIPopoverPresentationC
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        //self.popoverPresentationController?.backgroundColor = UIColor(red:0.66,green:0.97,blue:0.59,alpha:1.0)
-        //self.popoverPresentationController?.backgroundColor = UIColor(red:0.82,green:1.0,blue:0.86,alpha:1.0)
+
         self.popoverPresentationController?.backgroundColor = UIColor.whiteColor()
         
         fetchedResultsController.performFetch(nil)
