@@ -21,9 +21,7 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
     @IBOutlet weak var flickrButton: UIButton!
     @IBOutlet weak var textFieldEvent: UITextField!
     @IBOutlet weak var toolbarObject: UIToolbar!
-//    @IBOutlet weak var navbarObject: UINavigationBar!
-//    @IBOutlet weak var saveEventButton: UIBarButtonItem!
-//    @IBOutlet weak var cancelEventButton: UIBarButtonItem!
+
     
     //-set the textfield delegates
     let eventTextDelegate = EventTextDelegate()
