@@ -41,9 +41,7 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
     
     
     var events: [Events]!
-    //var events: Events!
-    
-    //    var events: Events!
+
     var eventIndex:Int!
     var eventIndexPath: NSIndexPath!
     var editEventFlag: Bool!
@@ -72,11 +70,7 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
     
     //-Event Font Attributes
     let eventTextAttributes = [
-        //NSStrokeColorAttributeName : UIColor(red:0.07,green:0.45,blue:0.74,alpha:1.0),
         NSStrokeColorAttributeName : UIColor.whiteColor(),
-        //NSForegroundColorAttributeName : UIColor(red:0.66,green:0.97,blue:0.59,alpha:1.0),
-        //NSForegroundColorAttributeName : UIColor(red:0.69,green:0.85,blue:0.95,alpha:1.0),
-        //NSForegroundColorAttributeName : UIColor(red:0.07,green:0.45,blue:0.74,alpha:1.0),
         NSForegroundColorAttributeName : UIColor.blackColor(),
         NSFontAttributeName : UIFont(name: "HelveticaNeue-Bold", size: 26)!,
         NSStrokeWidthAttributeName : -4.0
@@ -86,13 +80,8 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "addTodoList")
-        
-//        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image:UIImage(named:"list-33x33.png"), style:.Plain, target: self, action: "addTodoList")
-
-        //self.toolbarObject?.backgroundColor = UIColor(red:0.69,green:0.85,blue:0.95,alpha:1.0)
+        //-Change toolbar color
         self.toolbarObject?.backgroundColor = UIColor.greenColor()
-        
         //-Hide the Tab Bar
         self.tabBarController?.tabBar.hidden = true
         //-Hide the "Event Ended" message
@@ -101,23 +90,27 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         //-Add font attributes
         self.untilEventText2.defaultTextAttributes = eventTextAttributes
         self.untilEventText2.textAlignment = NSTextAlignment.Center
-        
-        
-//        let b1 = UIBarButtonItem(image:UIImage(named:"budget-33.png"), style:.Plain, target: self,  action: "addBudgetList")
-//        let b2 = UIBarButtonItem(image:UIImage(named:"list-33.png"), style:.Plain, target: self, action: "addTodoList")
-//        let buttons = [b2, b1] as NSArray
-//        self.navigationItem.rightBarButtonItems = [b2, b1]
-        
-        
+
         fetchedResultsController.performFetch(nil)
         
         // Set the view controller as the delegate
         fetchedResultsController.delegate = self
         
         
-        //-Countdown Timer routine
+        //-Start Countdown Timer routine
         var timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("update"), userInfo: nil, repeats: true)
         
+        let event = fetchedResultsController.objectAtIndexPath(eventIndexPath) as! Events
+        
+        //-Set the initial time values
+        let pickerDate = event.eventDate
+        let elapsedTime = pickerDate!.timeIntervalSinceDate(timeAtPress)  //* Event Date in seconds raw
+        durationSeconds = Int(elapsedTime)
+        durationMinutes = durationSeconds / 60
+        durationHours = (durationSeconds / 60) / 60
+        durationDays = ((durationSeconds / 60) / 60) / 24
+        durationWeeks = (((durationSeconds / 60) / 60) / 24) / 7
+        println("didLoad: \(durationDays)")
         
         //-Call the "Until Date" selector method
         segmentPicked(untilEventSelector)
@@ -209,9 +202,15 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
             //let tempText1 = String(stringInterpolationSegment: self.durationWeeks)
             untilEventText2.text = ("Only \(tempText1) Weeks")
         case 1:
-            //let tempText1 = numberFormatter.stringFromNumber(self.durationDays)!
-            let tempText1 = String(stringInterpolationSegment: self.durationDays)
-            untilEventText2.text = ("Only \(tempText1) Days")
+            let tempText1 = numberFormatter.stringFromNumber(self.durationDays)!
+            //let tempText1 = String(stringInterpolationSegment: self.durationDays)
+            
+            if self.durationDays < 2 {
+                untilEventText2.text = ("Only \(tempText1) Day")
+            }
+            else {
+                untilEventText2.text = ("Only \(tempText1) Days")
+            }
         case 2:
             let tempText1 = numberFormatter.stringFromNumber(self.durationHours)!
             //let tempText1 = String(stringInterpolationSegment: self.durationHours)
@@ -226,49 +225,7 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
             untilEventText2.text = ("Only \(tempText1) Seconds")
         default:
             println("Less than 1 day left")
-            
-//        case 0:
-//            let tempText1 = numberFormatter.stringFromNumber(self.durationWeeks)!
-//            //let tempText1 = String(stringInterpolationSegment: self.durationWeeks)
-//            if self.durationWeeks < 2 {
-//                untilEventText2.text = ("Only \(tempText1) Week")
-//            } else {
-//                untilEventText2.text = ("Only \(tempText1) Weeks")
-//            }
-//        case 1:
-//            //let tempText1 = numberFormatter.stringFromNumber(self.durationDays)!
-//            let tempText1 = String(stringInterpolationSegment: self.durationDays)
-//            if self.durationDays < 2 {
-//                untilEventText2.text = ("Only \(tempText1) Day")
-//            } else {
-//                untilEventText2.text = ("Only \(tempText1) Days")
-//            }
-//        case 2:
-//            let tempText1 = numberFormatter.stringFromNumber(self.durationHours)!
-//            //let tempText1 = String(stringInterpolationSegment: self.durationHours)
-//            if self.durationHours < 2 {
-//                untilEventText2.text = ("Only \(tempText1) Hour")
-//            } else {
-//                untilEventText2.text = ("Only \(tempText1) Hours")
-//            }
-//        case 3:
-//            let tempText1 = numberFormatter.stringFromNumber(self.durationMinutes)!
-//            //let tempText1 = String(stringInterpolationSegment: self.durationMinutes)
-//            if self.durationMinutes < 2 {
-//                untilEventText2.text = ("Only \(tempText1) Minute")
-//            } else {
-//                untilEventText2.text = ("Only \(tempText1) Minutes")
-//            }
-//        case 4:
-//            let tempText1 = numberFormatter.stringFromNumber(self.durationSeconds)!
-//            //let tempText1 = String(stringInterpolationSegment: self.durationSeconds)
-//            if self.durationSeconds < 2 {
-//                untilEventText2.text = ("Only \(tempText1) Second")
-//            } else {
-//                untilEventText2.text = ("Only \(tempText1) Seconds")
-//            }
-//        default:
-//            println("Less than 1 day left")
+
             
             
         }
@@ -380,8 +337,8 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
                 untilEventText2.text = ("Only \(tempText1) Weeks")
             }
         case 1:
-            //let tempText1 = numberFormatter.stringFromNumber(self.durationDays)!
-            let tempText1 = String(stringInterpolationSegment: self.durationDays)
+            let tempText1 = numberFormatter.stringFromNumber(self.durationDays)!
+            //let tempText1 = String(stringInterpolationSegment: self.durationDays)
             if self.durationDays < 2 {
                 untilEventText2.text = ("Only \(tempText1) Day")
             } else {
@@ -476,9 +433,6 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         //-Check for end of event
         if tempText1 == "-1" {
             untilEventText.text = "ZERO Days"
-        } else {
-            
-            untilEventText2.text = ("Only \(tempText1) Days")
         }
         
         //-Set the duration count in seconds which will be used in the countdown calculation
@@ -515,37 +469,7 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         count = durationSeconds
 
     }
-    
-    
-//    //-Function to call the To Do List routine for each event
-//    func addTodoList(){
-//        
-//        let storyboard = self.storyboard
-//        let controller = self.storyboard?.instantiateViewControllerWithIdentifier("TodoTableViewController") as! TodoTableViewController
-//        
-//        let event = fetchedResultsController.objectAtIndexPath(eventIndexPath) as! Events
-//        
-//        controller.eventIndexPath2 = eventIndexPath
-//        controller.events = event
-//
-//        self.navigationController!.pushViewController(controller, animated: true)
-//        
-//    }
-//    
-//    //-Function to call the Budget List routine for each event
-//    func addBudgetList(){
-//        
-//        let storyboard = self.storyboard
-//        let controller = self.storyboard?.instantiateViewControllerWithIdentifier("BudgetTableViewController") as! BudgetTableViewController
-//        
-//        let event = fetchedResultsController.objectAtIndexPath(eventIndexPath) as! Events
-//        
-//        controller.eventIndexPath2 = eventIndexPath
-//        controller.events = event
-//        
-//        self.navigationController!.pushViewController(controller, animated: true)
-//        
-//    }
+
     
     //-Generate the Event Image to share
     func generateEventImage() -> UIImage {
@@ -630,63 +554,6 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         }
         
     }
-    
-//    func extractEventEntityCalendarsOutOfStore(eventStore: EKEventStore){
-//        let calendarTypes = [
-//        
-//            "Local",
-//            "CalDAV",
-//            "Exchange",
-//            "Subscription",
-//            "Birthday",
-//        ]
-//        
-//        let calendars = eventStore.calendarsForEntityType(EKEntityTypeEvent) as! [EKCalendar]
-//        for calendar in calendars{
-//            println("Calendar title = \(calendar.title)")
-//            println("Calendar typle = \(calendarTypes[Int(calendar.type.value)])")
-//            
-//            let color = UIColor(CGColor: calendar.CGColor)
-//            println("Calendar color = \(color)")
-//            
-//            if calendar.allowsContentModifications{
-//                println("This Calendar allows modifications")
-//            } else{
-//                println("This calendar does not allow modifications")
-//            }
-//            println("------------------------------")
-//            }
-//        
-//    }
-    
-//    //-Find an event source with a given type and value
-//    func sourceInEventStore(
-//        eventStore: EKEventStore,
-//        type: EKSourceType,
-//        title: String) -> EKSource?{
-//            for source in eventStore.sources() as! [EKSource]{
-//                if source.sourceType.value == type.value &&
-//                    source.title.caseInsensitiveCompare(title) == NSComparisonResult.OrderedSame{
-//                        return source
-//                }
-//            }
-//    }
-    
-    
-//    func calendarWithTitle(
-//        title: String,
-//        type: EKCalendarType,
-//        source: EKSource,
-//        eventType: EKEntityType) -> EKCalendar?{
-//            for calendar in source.calendarsForEntityType(eventType) as [EKCalendar]{
-//            //for calendar in source.calendarsForEntityType(eventType).allObjects as [EKCalendar]{
-//                if calendar.title.caseInsentiveCompare(title) == NSComparisonResult.OrderedSame &&
-//                    calendar.type.value == type.value{
-//                        return calendar
-//                }
-//            }
-//            return nil
-//    }
 
     
     func insertEvent(store: EKEventStore) {
@@ -779,46 +646,13 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         switch(segue.identifier!){
         case "eventMenu":
             var popoverController = (segue.destinationViewController as? BeGoodPopoverViewController)
-            
             let event = fetchedResultsController.objectAtIndexPath(eventIndexPath) as! Events
-            
             popoverController!.eventIndexPath2 = eventIndexPath
             popoverController!.events = event
-            
-            //schoolListTC.popoverOniPhone = popoverOniPhoneSwitch.on
-            //schoolListTC.popoverOniPhoneLandscape = popoverOniPhoneLandscapeSwitch.on
-            //break
             break
         default:
             break
         }
     }
-    
-    //-Function to call the To Do List routine for each event
-//    func addTodoList2(){
-//        self.performSegueWithIdentifier("chooseSchool", sender: self)
-//        func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
-//            if segue.identifier == "chooseSchool" {
-//                var popoverController = (segue.destinationViewController as? BeGoodPopoverViewController)
-//                
-//                let event = fetchedResultsController.objectAtIndexPath(eventIndexPath) as! Events
-//                
-//                popoverController!.eventIndexPath2 = eventIndexPath
-//                popoverController!.events = event
-//            }
-//            
-////        let storyboard = self.storyboard
-////        let controller = self.storyboard?.instantiateViewControllerWithIdentifier("TodoTableViewController") as! TodoTableViewController
-////        
-////        let event = fetchedResultsController.objectAtIndexPath(eventIndexPath) as! Events
-////        
-////        controller.eventIndexPath2 = eventIndexPath
-////        controller.events = event
-////        
-////        self.navigationController!.pushViewController(controller, animated: true)
-//
-//        
-//    }
-//    }
 }
 

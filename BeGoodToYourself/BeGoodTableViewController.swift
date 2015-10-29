@@ -106,7 +106,7 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
         
         let fetchRequest = NSFetchRequest(entityName: "Events")
         
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "textEvent", ascending: true)]
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "eventDate", ascending: true)]
         
         let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
             managedObjectContext: self.sharedContext,
