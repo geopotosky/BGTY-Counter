@@ -21,20 +21,20 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
     @IBOutlet weak var flickrButton: UIButton!
     @IBOutlet weak var textFieldEvent: UITextField!
     @IBOutlet weak var toolbarObject: UIToolbar!
-
+    
     //-Set the textfield delegates
     let eventTextDelegate = EventTextDelegate()
     
     //-Global Variables
     var events: Events!
     
-//    var eventImage : UIImage!
+    //    var eventImage : UIImage!
     var eventIndex2:Int!
     var eventIndexPath2: NSIndexPath!
-//    var eventImage2: NSData!
+    //    var eventImage2: NSData!
     
     var todaysDate: NSDate!
-//
+    //
     var editEventFlag: Bool!
     var currentEventDate: NSDate!
     var flickrImageURL: String!
@@ -70,10 +70,10 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
         tapRecognizer?.numberOfTapsRequired = 1
         
         
-//        var pinchGestureRecognizer: UIPinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: "pinchGestureDetected:")
-//        pinchGestureRecognizer.setDelegate(self)
-//        imageView.addGestureRecognizer(pinchGestureRecognizer)
-
+        //        var pinchGestureRecognizer: UIPinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: "pinchGestureDetected:")
+        //        pinchGestureRecognizer.setDelegate(self)
+        //        imageView.addGestureRecognizer(pinchGestureRecognizer)
+        
         
         //-Date Picker Formatting -----------------------------------------------------
         
@@ -86,7 +86,7 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
         dateFormatter.timeZone = timeZone
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         let dateNew = dateFormatter.stringFromDate(date)
-
+        
         dateFormatter.timeStyle = NSDateFormatterStyle.MediumStyle //Set time style
         dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle //Set date style
         dateFormatter.timeZone = NSTimeZone()
@@ -135,7 +135,7 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
             datePickerLable.text = strDate
             
         }
-
+        
         
     }
     
@@ -151,7 +151,7 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
         
         //-Recognize the Flickr image request
         if imageFlag == 3 {
-
+            
             self.navigationItem.rightBarButtonItem?.enabled = true
             self.imageViewPicker.image = flickrImage
         }
@@ -167,10 +167,10 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
             datePickerLable.text = strDate
             
         }
-    
+        
         //-Disable the CAMERA if you are using a simulator without a camera
         cameraButton.enabled = UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)
-
+        
     }
     
     //-Perform when view disappears
@@ -274,7 +274,7 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
     
     
     @IBAction func getFlickrImage(sender: UIButton) {
-    
+        
         println("Get Flickr Image")
         let storyboard = self.storyboard
         let controller = self.storyboard?.instantiateViewControllerWithIdentifier("BeGoodFlickrViewController") as! BeGoodFlickrViewController
@@ -295,14 +295,14 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
     //-Move screen up to prevent keyboard overlap
     func keyboardWillShow(notification: NSNotification) {
         if textFieldEvent.isFirstResponder(){
-//            self.view.frame.origin.y -= getKeyboardHeight(notification)
+            //            self.view.frame.origin.y -= getKeyboardHeight(notification)
         }
     }
     
     //-Move screen back down after done using keyboard
     func keyboardWillHide(notification: NSNotification) {
         if textFieldEvent.isFirstResponder(){
-//            self.view.frame.origin.y += getKeyboardHeight(notification)
+            //            self.view.frame.origin.y += getKeyboardHeight(notification)
         }
     }
     
@@ -320,7 +320,7 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
         NSNotificationCenter.defaultCenter().removeObserver(self, name:
             UIKeyboardWillHideNotification, object: nil)
     }
-
+    
     //-Dismissing the keyboard
     func addKeyboardDismissRecognizer() {
         //-Add the recognizer to dismiss the keyboard
@@ -342,7 +342,7 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
     func saveEvent() {
         
         let eventImage = UIImageJPEGRepresentation(imageViewPicker.image, 100)
-
+        
         if editEventFlag == true {
             
             //-Update selected event
@@ -371,12 +371,12 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
             
             //-Save the shared context, using the convenience method in the CoreDataStackManager
             CoreDataStackManager.sharedInstance().saveContext()
-
+            
             self.navigationController?.popViewControllerAnimated(true)
         }
-
+        
     }
-
+    
     
     
     //-Saving the array Helper.
