@@ -12,7 +12,7 @@ import CoreData
 
 class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, NSFetchedResultsControllerDelegate{
     
-    //Edit Screen outlets
+    //-Add/Edit Screen outlets
     @IBOutlet weak var currentDate: UILabel!
     @IBOutlet weak var datePickerLable: UILabel!
     @IBOutlet weak var datePickerButton: UIButton!
@@ -22,20 +22,19 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
     @IBOutlet weak var textFieldEvent: UITextField!
     @IBOutlet weak var toolbarObject: UIToolbar!
 
-    
-    //-set the textfield delegates
+    //-Set the textfield delegates
     let eventTextDelegate = EventTextDelegate()
     
-    //-Event variables
+    //-Global Variables
     var events: Events!
     
-    var eventImage : UIImage!
+//    var eventImage : UIImage!
     var eventIndex2:Int!
     var eventIndexPath2: NSIndexPath!
-    var eventImage2: NSData!
+//    var eventImage2: NSData!
     
     var todaysDate: NSDate!
-    
+//
     var editEventFlag: Bool!
     var currentEventDate: NSDate!
     var flickrImageURL: String!

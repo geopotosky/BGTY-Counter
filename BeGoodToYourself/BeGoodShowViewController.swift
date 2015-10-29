@@ -14,7 +14,6 @@ import EventKit
 
 class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDelegate {
     
-    @IBOutlet weak var currentDateLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var eventDate: UILabel!
     @IBOutlet weak var textFieldEvent: UILabel!
@@ -140,6 +139,10 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         daysWordLabel.hidden = false
         countDownLabel.hidden = true
         
+        //-Set MG button to OFF
+        mgFactorValue = 0
+        mgFactorLabel.text = "MG OFF"
+        
         let event = fetchedResultsController.objectAtIndexPath(eventIndexPath) as! Events
         
         var dateFormatter = NSDateFormatter()
@@ -157,7 +160,7 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         dateFormatter.timeZone = NSTimeZone()
         println(dateFormatter.timeZone)
         
-        self.currentDateLabel.text = dateFormatter.stringFromDate(currentDate)
+        //self.currentDateLabel.text = dateFormatter.stringFromDate(currentDate)
         let localDate = dateFormatter.stringFromDate(date!)
         self.eventDate.text = "Event Date: " + localDate
     
@@ -608,7 +611,7 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         switch EKEventStore.authorizationStatusForEntityType(EKEntityTypeEvent) {
         case .Authorized:
             println("authorized")
-            extractEventEntityCalendarsOutOfStore(eventStore)
+            //extractEventEntityCalendarsOutOfStore(eventStore)
             insertEvent(eventStore)
         case .Denied:
             println("Access denied")
@@ -616,7 +619,7 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
             eventStore.requestAccessToEntityType(EKEntityTypeEvent, completion:
                 {[weak self] (granted: Bool, error: NSError!) -> Void in
                     if granted {
-                        self!.extractEventEntityCalendarsOutOfStore(eventStore)
+                        //self!.extractEventEntityCalendarsOutOfStore(eventStore)
                         self!.insertEvent(eventStore)
                     } else {
                         println("Access denied")
@@ -628,33 +631,33 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         
     }
     
-    func extractEventEntityCalendarsOutOfStore(eventStore: EKEventStore){
-        let calendarTypes = [
-        
-            "Local",
-            "CalDAV",
-            "Exchange",
-            "Subscription",
-            "Birthday",
-        ]
-        
-        let calendars = eventStore.calendarsForEntityType(EKEntityTypeEvent) as! [EKCalendar]
-        for calendar in calendars{
-            println("Calendar title = \(calendar.title)")
-            println("Calendar typle = \(calendarTypes[Int(calendar.type.value)])")
-            
-            let color = UIColor(CGColor: calendar.CGColor)
-            println("Calendar color = \(color)")
-            
-            if calendar.allowsContentModifications{
-                println("This Calendar allows modifications")
-            } else{
-                println("This calendar does not allow modifications")
-            }
-            println("------------------------------")
-            }
-        
-    }
+//    func extractEventEntityCalendarsOutOfStore(eventStore: EKEventStore){
+//        let calendarTypes = [
+//        
+//            "Local",
+//            "CalDAV",
+//            "Exchange",
+//            "Subscription",
+//            "Birthday",
+//        ]
+//        
+//        let calendars = eventStore.calendarsForEntityType(EKEntityTypeEvent) as! [EKCalendar]
+//        for calendar in calendars{
+//            println("Calendar title = \(calendar.title)")
+//            println("Calendar typle = \(calendarTypes[Int(calendar.type.value)])")
+//            
+//            let color = UIColor(CGColor: calendar.CGColor)
+//            println("Calendar color = \(color)")
+//            
+//            if calendar.allowsContentModifications{
+//                println("This Calendar allows modifications")
+//            } else{
+//                println("This calendar does not allow modifications")
+//            }
+//            println("------------------------------")
+//            }
+//        
+//    }
     
 //    //-Find an event source with a given type and value
 //    func sourceInEventStore(
@@ -774,7 +777,7 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
         switch(segue.identifier!){
-        case "chooseSchool":
+        case "eventMenu":
             var popoverController = (segue.destinationViewController as? BeGoodPopoverViewController)
             
             let event = fetchedResultsController.objectAtIndexPath(eventIndexPath) as! Events
@@ -785,7 +788,6 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
             //schoolListTC.popoverOniPhone = popoverOniPhoneSwitch.on
             //schoolListTC.popoverOniPhoneLandscape = popoverOniPhoneLandscapeSwitch.on
             //break
-            println("chooseSchool")
             break
         default:
             break

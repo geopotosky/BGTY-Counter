@@ -10,20 +10,18 @@ import UIKit
 
 class BeGoodPickDateViewController: UIViewController {
     
+    //-Class outlets
     @IBOutlet weak var myDatePicker: UIDatePicker!
     @IBOutlet weak var pickDateButton: UIButton!
     @IBOutlet weak var eventDateLabel: UILabel!
     
+    //-Global variables
     var timeAtPress = NSDate()
-    var currentDateWithOffset = NSDate()
-    
+    var currentEventDate: NSDate!
     var eventText: String!
     
     //-Flag passed to determine editing function (add or edit). This flag allows reuse of the AddEvent view
     var editEventFlag2: Bool!
-    
-    var pickEventDate: NSDate!
-    var currentEventDate: NSDate!
     
     
     override func viewDidLoad() {
@@ -69,6 +67,7 @@ class BeGoodPickDateViewController: UIViewController {
         
     }
     
+    //-Date Picker function
     @IBAction func datePickerAction(sender: AnyObject) {
         
         var dateFormatter = NSDateFormatter()
@@ -91,24 +90,12 @@ class BeGoodPickDateViewController: UIViewController {
         self.eventDateLabel.text = strDate
         self.currentEventDate = myDatePicker.date
         
-        let elapsedTime = pickerDate.timeIntervalSinceDate(timeAtPress)  //* Event Date in seconds raw
-        let durationSeconds = Int(elapsedTime)
-        let durationMinutes = durationSeconds / 60
-        let durationHours = (durationSeconds / 60) / 60
-        let durationDays = ((durationSeconds / 60) / 60) / 24
-        let durationWeeks = (((durationSeconds / 60) / 60) / 24) / 7
-        
     }
     
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    
+    //-Choose the popViewController level (1 or 2) based on whether the user is adding a new event or editing an
+    //-existing event
     @IBAction func pickEventDate(sender: UIButton) {
-        println("pickEventDate Button selected")
         
         if editEventFlag2 == true {
             let controller = self.navigationController!.viewControllers[2] as! BeGoodAddEventViewController

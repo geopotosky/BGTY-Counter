@@ -18,6 +18,9 @@ class BeGoodFlickrViewController: UIViewController {
     
     var tapRecognizer: UITapGestureRecognizer? = nil
     
+    //-set the textfield delegates
+    let flickrTextDelegate = FlickrTextDelegate()
+    
     //-Get the app delegate
     var appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
@@ -45,6 +48,9 @@ class BeGoodFlickrViewController: UIViewController {
         //searchButtonLabel.text = "Search"
         pickImageButton.hidden = true
         flickrActivityIndicator.hidden = true
+        
+        //-Textfield delegate values
+        self.phraseTextField.delegate = flickrTextDelegate
         
     }
     

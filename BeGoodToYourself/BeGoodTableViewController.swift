@@ -33,16 +33,9 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
         
         
         //-Manage Top and Bottom bar colors
-        //-Blue Bars
-        //self.navigationController!.navigationBar.barTintColor = UIColor(red:0.69,green:0.85,blue:0.95,alpha:1.0)
-        //self.tabBarController?.tabBar.barTintColor = UIColor(red:0.69,green:0.85,blue:0.95,alpha:1.0)
         //-Green Bars
         self.navigationController!.navigationBar.barTintColor = UIColor(red:0.66,green:0.97,blue:0.59,alpha:1.0)
         self.tabBarController?.tabBar.barTintColor = UIColor(red:0.66,green:0.97,blue:0.59,alpha:1.0)
-        //-Orange Bars
-        //self.navigationController!.navigationBar.barTintColor = UIColor(red:1.0,green:0.7,blue:0.43,alpha:1.0)
-        //self.tabBarController?.tabBar.barTintColor = UIColor(red:1.0,green:0.7,blue:0.43,alpha:1.0)
-        
         
         fetchedResultsController.performFetch(nil)
         
@@ -80,6 +73,7 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
        
     }
     
+    //-Set Table Editing
     override func setEditing(editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
         self.tableView.setEditing(editing, animated: animated)
@@ -88,7 +82,6 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
     
     
     //-Reset the Table Edit view when the view disappears
-        
     func resetEditing(editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
         self.tableView.setEditing(editing, animated: animated)
@@ -142,8 +135,8 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
         cell.detailTextLabel!.text = dateFormatter.stringFromDate(event.eventDate!)
         cell.imageView!.image = finalImage
         
-        //-Lock the table image size to 40x40
-        var itemSize: CGSize = CGSizeMake(40, 40)
+        //-Lock the table image size to 50x50
+        var itemSize: CGSize = CGSizeMake(50, 50)
         UIGraphicsBeginImageContextWithOptions(itemSize, false, CGFloat())
         var imageRect: CGRect = CGRectMake(0.0, 0.0, itemSize.width, itemSize.height)
         cell.imageView!.image!.drawInRect(imageRect)
@@ -226,7 +219,7 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
                 sharedContext.deleteObject(event)
                 CoreDataStackManager.sharedInstance().saveContext()
 
-                //-Archive the graph any time this list of events is displayed.
+                //-Update the Archive any time this list of events is displayed.
                 NSKeyedArchiver.archiveRootObject(self.events, toFile: eventsFilePath)
                 
             default:

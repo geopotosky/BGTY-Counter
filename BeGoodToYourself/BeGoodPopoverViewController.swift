@@ -83,8 +83,8 @@ class BeGoodPopoverViewController: UITableViewController, UIPopoverPresentationC
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
         //selected a school
-        let schoolName = tableView.cellForRowAtIndexPath(indexPath)!.textLabel!.text
-        if schoolName == "To Do List" {
+        let eventMenu = tableView.cellForRowAtIndexPath(indexPath)!.textLabel!.text
+        if eventMenu == "To Do List" {
             
 //            let storyboard = self.storyboard
             let controller = self.storyboard?.instantiateViewControllerWithIdentifier("TodoTableViewController") as! TodoTableViewController
@@ -99,8 +99,7 @@ class BeGoodPopoverViewController: UITableViewController, UIPopoverPresentationC
             self.presentViewController(navController, animated: true, completion: nil)
             
             
-        } else if schoolName == "Budget Sheet" {
-            println("did select school: \(schoolName)")
+        } else if eventMenu == "Budget Sheet" {
             let controller = self.storyboard?.instantiateViewControllerWithIdentifier("BudgetTableViewController") as! BudgetTableViewController
             
             let event = fetchedResultsController.objectAtIndexPath(eventIndexPath2) as! Events
