@@ -40,6 +40,9 @@ class BeGoodFlickrViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //-Set Navbar Title
+        self.navigationItem.title = "Flicker Picker"
+        
         //-Initialize the tapRecognizer in viewDidLoad
         tapRecognizer = UITapGestureRecognizer(target: self, action: "handleSingleTap:")
         tapRecognizer?.numberOfTapsRequired = 1

@@ -296,7 +296,7 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
         
         let fetchRequest = NSFetchRequest(entityName: "Events")
         //fetchRequest.predicate = NSPredicate(format: "pins == %@", self.pins);
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "eventDate", ascending: true)]
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "textEvent", ascending: true)]
         //fetchRequest.sortDescriptors = []
         
         let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.sharedContext, sectionNameKeyPath: nil, cacheName: nil)

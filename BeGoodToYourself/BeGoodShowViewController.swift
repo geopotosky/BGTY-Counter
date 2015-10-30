@@ -200,29 +200,29 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         case 0:
             let tempText1 = numberFormatter.stringFromNumber(self.durationWeeks)!
             //let tempText1 = String(stringInterpolationSegment: self.durationWeeks)
-            untilEventText2.text = ("Only \(tempText1) Weeks")
+            untilEventText2.text = ("Only \(tempText1) Weeks +")
         case 1:
             let tempText1 = numberFormatter.stringFromNumber(self.durationDays)!
             //let tempText1 = String(stringInterpolationSegment: self.durationDays)
             
             if self.durationDays < 2 {
-                untilEventText2.text = ("Only \(tempText1) Day")
+                untilEventText2.text = ("Only \(tempText1) Day +")
             }
             else {
-                untilEventText2.text = ("Only \(tempText1) Days")
+                untilEventText2.text = ("Only \(tempText1) Days +")
             }
         case 2:
             let tempText1 = numberFormatter.stringFromNumber(self.durationHours)!
             //let tempText1 = String(stringInterpolationSegment: self.durationHours)
-            untilEventText2.text = ("Only \(tempText1) Hours")
+            untilEventText2.text = ("Only \(tempText1) Hours +")
         case 3:
             let tempText1 = numberFormatter.stringFromNumber(self.durationMinutes)!
             //let tempText1 = String(stringInterpolationSegment: self.durationMinutes)
-            untilEventText2.text = ("Only \(tempText1) Minutes")
+            untilEventText2.text = ("Only \(tempText1) Minutes +")
         case 4:
             let tempText1 = numberFormatter.stringFromNumber(self.durationSeconds)!
             //let tempText1 = String(stringInterpolationSegment: self.durationSeconds)
-            untilEventText2.text = ("Only \(tempText1) Seconds")
+            untilEventText2.text = ("Only \(tempText1) Seconds +")
         default:
             println("Less than 1 day left")
 
@@ -332,41 +332,41 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
             let tempText1 = numberFormatter.stringFromNumber(self.durationWeeks)!
             //let tempText1 = String(stringInterpolationSegment: self.durationWeeks)
             if self.durationWeeks < 2 {
-                untilEventText2.text = ("Only \(tempText1) Week")
+                untilEventText2.text = ("Only \(tempText1) Week +")
             } else {
-                untilEventText2.text = ("Only \(tempText1) Weeks")
+                untilEventText2.text = ("Only \(tempText1) Weeks +")
             }
         case 1:
             let tempText1 = numberFormatter.stringFromNumber(self.durationDays)!
             //let tempText1 = String(stringInterpolationSegment: self.durationDays)
             if self.durationDays < 2 {
-                untilEventText2.text = ("Only \(tempText1) Day")
+                untilEventText2.text = ("Only \(tempText1) Day +")
             } else {
-                untilEventText2.text = ("Only \(tempText1) Days")
+                untilEventText2.text = ("Only \(tempText1) Days +")
             }
         case 2:
             let tempText1 = numberFormatter.stringFromNumber(self.durationHours)!
             //let tempText1 = String(stringInterpolationSegment: self.durationHours)
             if self.durationHours < 2 {
-                untilEventText2.text = ("Only \(tempText1) Hour")
+                untilEventText2.text = ("Only \(tempText1) Hour +")
             } else {
-                untilEventText2.text = ("Only \(tempText1) Hours")
+                untilEventText2.text = ("Only \(tempText1) Hours +")
             }
         case 3:
             let tempText1 = numberFormatter.stringFromNumber(self.durationMinutes)!
             //let tempText1 = String(stringInterpolationSegment: self.durationMinutes)
             if self.durationMinutes < 2 {
-                untilEventText2.text = ("Only \(tempText1) Minute")
+                untilEventText2.text = ("Only \(tempText1) Minute +")
             } else {
-                untilEventText2.text = ("Only \(tempText1) Minutes")
+                untilEventText2.text = ("Only \(tempText1) Minutes +")
             }
         case 4:
             let tempText1 = numberFormatter.stringFromNumber(self.durationSeconds)!
             //let tempText1 = String(stringInterpolationSegment: self.durationSeconds)
             if self.durationSeconds < 2 {
-                untilEventText2.text = ("Only \(tempText1) Second")
+                untilEventText2.text = ("Only \(tempText1) Second +")
             } else {
-                untilEventText2.text = ("Only \(tempText1) Seconds")
+                untilEventText2.text = ("Only \(tempText1) Seconds +")
             }
         default:
             println("Less than 1 day left")

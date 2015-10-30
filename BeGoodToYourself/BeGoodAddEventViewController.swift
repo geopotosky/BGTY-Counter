@@ -50,7 +50,9 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //-Create buttons
+        //-Set Navbar Title
+        self.navigationItem.title = "Event Creator"
+        //-Create Navbar Buttons
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Save, target: self, action: "saveEvent")
         self.toolbarObject?.backgroundColor = UIColor.greenColor()
         

@@ -27,6 +27,9 @@ class BeGoodPickDateViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //-Set Navbar Title
+        self.navigationItem.title = "Date Picker"
+        
         //-Preset the event date is editing an existing event
         //-Otherwise set the current date
         if editEventFlag2 == true {
