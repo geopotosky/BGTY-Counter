@@ -12,72 +12,22 @@ import CoreData
 
 class BudgetTableViewController: UITableViewController, NSFetchedResultsControllerDelegate {
     
+    //-View Outlets
     @IBOutlet weak var totalLabel: UILabel!
     
+    //-Global objects, properties & variables
     var events: Events!
     var eventIndexPath2: NSIndexPath!
-    var eventIndex: Int!
+    //var eventIndex: Int!
     
     
-    //var tableData = ["iPhone 6 Plus Gold 128 GB", "iPhone 6 Plus Gold 64 GB", "iPhone 6 Plus Gold 16 GB", "iPhone 6 Gold 128 GB", "iPhone 6 Gold 64 GB", "iPhone 6 Gold 16 GB"]
-    //var tableData = ["iPhone 6 Plus Gold 128 GB", "iPhone 6 Plus Gold 64 GB", "iPhone 6 Plus Gold 16 GB", "Geo Phone 2"]
-    
-    //var detailData = ["$1,079.00", "$949.88", "$811.99", "$909.00", "$846.00", "$736.00"]
-    //var detailNumbers = ["1.10","5.00","3.45", "3"]
-    
-    //var finalValue: Double! = 0.0
-    
-    @IBAction func editToTableData(segue:UIStoryboardSegue) {
-        
-        let detailViewController = segue.sourceViewController as! BudgetEditTableViewController
-        
-        //let editedData = detailViewController.dataString
-        
-        //let changedPrice = String.localizedStringWithFormat("$%.2f", detailViewController.priceString!)
-        //let changedPrice = detailViewController.priceString
-        
-        //let index = detailViewController.index
-        
-        //tableData[index!] = editedData!
-        
-        //detailData[index!] = changedPrice!
-        //detailNumbers[index!] = changedPrice!
-        
-        let budget = fetchedResultsController.objectAtIndexPath(tableView.indexPathForSelectedRow()!) as! Budget
-        budget.itemBudgetText = detailViewController.dataString!
-        budget.priceBudgetText = detailViewController.priceString!
-        self.sharedContext.refreshObject(budget, mergeChanges: true)
-        CoreDataStackManager.sharedInstance().saveContext()
-        
-        tableView.reloadData()
-    }
-    
-    @IBAction func saveToTableData(segue:UIStoryboardSegue) {
-        
-        let detailViewController = segue.sourceViewController as! BudgetAddTableViewController
-        
-        let editedData = detailViewController.dataString
-        let changedPrice = detailViewController.priceString
-        println("saving....")
-//        tableData.append(editedData!)
-//        detailNumbers.append(changedPrice!)
-        
-        let budget = Budget(itemBudgetText:  editedData, priceBudgetText: changedPrice, context: self.sharedContext)
-        budget.events = self.events
-        CoreDataStackManager.sharedInstance().saveContext()
-        
-        tableView.reloadData()
-    }
-    
-    
+    //-Perform when view did load
     override func viewDidLoad() {
         super.viewDidLoad()
         
         
-        //-Create buttons
+        //-Create Navbar Buttons
         self.navigationController!.navigationBar.barTintColor = UIColor(red:0.66,green:0.97,blue:0.59,alpha:1.0)
-        
-        //self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Done, target: self, action: "cancelBudgetList")
         let newBackButton = UIBarButtonItem(title: "Event", style: UIBarButtonItemStyle.Plain, target: self, action: "cancelBudgetList")
         self.navigationItem.leftBarButtonItem = newBackButton
         
@@ -92,12 +42,8 @@ class BudgetTableViewController: UITableViewController, NSFetchedResultsControll
         
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
-    
+    //-Perform when view did appear
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -116,7 +62,6 @@ class BudgetTableViewController: UITableViewController, NSFetchedResultsControll
         let yourBudgetTotal = String.localizedStringWithFormat("%@ $%.2f", totals, finalValue)
         totalLabel.text = yourBudgetTotal
         
-        
     }
     
     
@@ -126,6 +71,7 @@ class BudgetTableViewController: UITableViewController, NSFetchedResultsControll
         resetEditing(false, animated: false)
         
     }
+    
     
     //-Force set editing toggle (delete line items)
     override func setEditing(editing: Bool, animated: Bool) {
@@ -141,6 +87,7 @@ class BudgetTableViewController: UITableViewController, NSFetchedResultsControll
     }
     
     
+    //-Add the "sharedContext" convenience property
     var sharedContext: NSManagedObjectContext {
         return CoreDataStackManager.sharedInstance().managedObjectContext!
     }
@@ -175,12 +122,6 @@ class BudgetTableViewController: UITableViewController, NSFetchedResultsControll
         let sectionInfo = self.fetchedResultsController.sections![section] as! NSFetchedResultsSectionInfo
         return sectionInfo.numberOfObjects
     }
-    
-//    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        // #warning Incomplete method implementation.
-//        // Return the number of rows in the section.
-//        return tableData.count
-//    }
     
     
     override func tableView(tableView: UITableView,
@@ -253,10 +194,7 @@ class BudgetTableViewController: UITableViewController, NSFetchedResultsControll
             }
     }
     
-    //
-    // This is the most interesting method. Take particular note of way the that newIndexPath
-    // parameter gets unwrapped and put into an array literal: [newIndexPath!]
-    //
+
     func controller(controller: NSFetchedResultsController,
         didChangeObject anObject: AnyObject,
         atIndexPath indexPath: NSIndexPath?,
@@ -284,14 +222,14 @@ class BudgetTableViewController: UITableViewController, NSFetchedResultsControll
             }
     }
     
+    
     func controllerDidChangeContent(controller: NSFetchedResultsController) {
         self.tableView.endUpdates()
     }
     
     
+    //- Display Budget data in table scene
     func configureCell(cell: UITableViewCell, withList budget: Budget) {
-        
-        //cell.detailTextLabel?.text = detailData[indexPath.row]
         
         cell.textLabel?.text = budget.itemBudgetText
         let newValue = NSNumberFormatter().numberFromString(budget.priceBudgetText!)?.floatValue
@@ -300,6 +238,34 @@ class BudgetTableViewController: UITableViewController, NSFetchedResultsControll
     }
 
     
+    //- Save edited Budget sheet data
+    @IBAction func editToTableData(segue:UIStoryboardSegue) {
+        
+        let detailViewController = segue.sourceViewController as! BudgetEditTableViewController
+        
+        let budget = fetchedResultsController.objectAtIndexPath(tableView.indexPathForSelectedRow()!) as! Budget
+        budget.itemBudgetText = detailViewController.dataString!
+        budget.priceBudgetText = detailViewController.priceString!
+        self.sharedContext.refreshObject(budget, mergeChanges: true)
+        CoreDataStackManager.sharedInstance().saveContext()
+        
+        tableView.reloadData()
+    }
+    
+    //- Save new Budge sheet data
+    @IBAction func saveToTableData(segue:UIStoryboardSegue) {
+        
+        let detailViewController = segue.sourceViewController as! BudgetAddTableViewController
+        
+        let editedData = detailViewController.dataString
+        let changedPrice = detailViewController.priceString
+        
+        let budget = Budget(itemBudgetText:  editedData, priceBudgetText: changedPrice, context: self.sharedContext)
+        budget.events = self.events
+        CoreDataStackManager.sharedInstance().saveContext()
+        
+        tableView.reloadData()
+    }
     
     
     //-Navigation
@@ -316,11 +282,11 @@ class BudgetTableViewController: UITableViewController, NSFetchedResultsControll
             
             detailViewController.events = self.events
             detailViewController.budgetIndexPath = path
-            detailViewController.budgetIndex = path?.row
-            
+            //detailViewController.budgetIndex = path?.row
         }
         
     }
+    
     
     //-Add Budget item function
     func addBudgetList(){
@@ -330,6 +296,7 @@ class BudgetTableViewController: UITableViewController, NSFetchedResultsControll
         let controller = self.storyboard?.instantiateViewControllerWithIdentifier("BudgetAddTableViewController") as! BudgetAddTableViewController
         self.navigationController!.pushViewController(controller, animated: true)
     }
+    
     
     //-Cancel Budget List item function
     func cancelBudgetList(){

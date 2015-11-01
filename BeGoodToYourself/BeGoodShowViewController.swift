@@ -14,6 +14,7 @@ import EventKit
 
 class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDelegate {
     
+    //-View Outlets
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var eventDate: UILabel!
     @IBOutlet weak var textFieldEvent: UILabel!
@@ -27,7 +28,6 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
     @IBOutlet weak var shareEventButton: UIToolbar!
     @IBOutlet weak var eventCalendarButton: UIButton!
     @IBOutlet weak var toolbarObject: UIToolbar!
-    
     @IBOutlet weak var secondsTickerLabel: UILabel!
     @IBOutlet weak var secondsWordLabel: UILabel!
     @IBOutlet weak var minutesTickerLabel: UILabel!
@@ -36,16 +36,17 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
     @IBOutlet weak var hoursWordLabel: UILabel!
     @IBOutlet weak var daysTickerLabel: UILabel!
     @IBOutlet weak var daysWordLabel: UILabel!
-    
     @IBOutlet weak var untilEventText2: UITextField!
     
     
+    //-Global objects, properties & variables
     var events: [Events]!
 
     var eventIndex:Int!
     var eventIndexPath: NSIndexPath!
     var editEventFlag: Bool!
     var mgFactorValue: Int! = 0
+    var shareEventImage: UIImage!
     
     var timeAtPress = NSDate()
     var currentDateWithOffset = NSDate()
@@ -62,8 +63,6 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
     var durationWeeks: Int!
     var durationMonths: Int!
     
-    var shareEventImage: UIImage!
-    
     //* - Alert variable
     var alertMessage: String!
     var alertTitle: String!
@@ -77,6 +76,7 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
     ]
     
     
+    //Perform when view did load
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -110,18 +110,17 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         durationHours = (durationSeconds / 60) / 60
         durationDays = ((durationSeconds / 60) / 60) / 24
         durationWeeks = (((durationSeconds / 60) / 60) / 24) / 7
-        println("didLoad: \(durationDays)")
         
         //-Call the "Until Date" selector method
         segmentPicked(untilEventSelector)
         
     }
     
-    //Perform when view appears
+    //Perform when view will appear
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        //-UnHider the main ticker
+        //-UnHide the main ticker
         secondsTickerLabel.hidden = false
         secondsWordLabel.hidden = false
         minutesTickerLabel.hidden = false
@@ -145,15 +144,12 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         let timeZone = NSTimeZone(name: "Local")
         dateFormatter.timeZone = timeZone
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        
         let dateNew = dateFormatter.stringFromDate(date!)
-        
-        
         dateFormatter.timeStyle = NSDateFormatterStyle.NoStyle
         dateFormatter.dateStyle = NSDateFormatterStyle.LongStyle //Set date style
         dateFormatter.timeZone = NSTimeZone()
-        println(dateFormatter.timeZone)
         
-        //self.currentDateLabel.text = dateFormatter.stringFromDate(currentDate)
         let localDate = dateFormatter.stringFromDate(date!)
         self.eventDate.text = "Event Date: " + localDate
     
@@ -189,6 +185,7 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         
         }()
     
+    
     //-Set the "until" dynamic text based on segment selection
     @IBAction func segmentPicked(sender: UISegmentedControl) {
         
@@ -199,30 +196,25 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
 
         case 0:
             let tempText1 = numberFormatter.stringFromNumber(self.durationWeeks)!
-            //let tempText1 = String(stringInterpolationSegment: self.durationWeeks)
-            untilEventText2.text = ("Only \(tempText1) Weeks +")
+            untilEventText2.text = ("Only \(tempText1) + Weeks")
         case 1:
             let tempText1 = numberFormatter.stringFromNumber(self.durationDays)!
-            //let tempText1 = String(stringInterpolationSegment: self.durationDays)
             
             if self.durationDays < 2 {
-                untilEventText2.text = ("Only \(tempText1) Day +")
+                untilEventText2.text = ("Only \(tempText1) + Day")
             }
             else {
-                untilEventText2.text = ("Only \(tempText1) Days +")
+                untilEventText2.text = ("Only \(tempText1) + Days")
             }
         case 2:
             let tempText1 = numberFormatter.stringFromNumber(self.durationHours)!
-            //let tempText1 = String(stringInterpolationSegment: self.durationHours)
-            untilEventText2.text = ("Only \(tempText1) Hours +")
+            untilEventText2.text = ("Only \(tempText1) + Hours")
         case 3:
             let tempText1 = numberFormatter.stringFromNumber(self.durationMinutes)!
-            //let tempText1 = String(stringInterpolationSegment: self.durationMinutes)
-            untilEventText2.text = ("Only \(tempText1) Minutes +")
+            untilEventText2.text = ("Only \(tempText1) + Minutes")
         case 4:
             let tempText1 = numberFormatter.stringFromNumber(self.durationSeconds)!
-            //let tempText1 = String(stringInterpolationSegment: self.durationSeconds)
-            untilEventText2.text = ("Only \(tempText1) Seconds +")
+            untilEventText2.text = ("Only \(tempText1) Seconds")
         default:
             println("Less than 1 day left")
 
@@ -235,27 +227,29 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
     
     //-Edit the selected event
     @IBAction func editEvent(sender: AnyObject) {
-        println("Getting ready to edit the Event")
         let storyboard = self.storyboard
         let controller = self.storyboard?.instantiateViewControllerWithIdentifier("BeGoodAddEventViewController") as! BeGoodAddEventViewController
 
         controller.eventIndexPath2 = eventIndexPath
         controller.eventIndex2 = eventIndex
         controller.editEventFlag = true
-        
 
         self.navigationController!.pushViewController(controller, animated: true)
-//
     }
     
     
     //-Delete the selected event
     @IBAction func deleteEvent(sender: UIBarButtonItem) {
         
-        println("delete button pushed.")
-        
         //-Create the AlertController
         let actionSheetController: UIAlertController = UIAlertController(title: "Warning!", message: "Do you really want to Delete the Event?", preferredStyle: .Alert)
+        
+        //-Update alert colors and attributes
+        actionSheetController.view.tintColor = UIColor.blueColor()
+        let subview = actionSheetController.view.subviews.first! as! UIView
+        let alertContentView = subview.subviews.first! as! UIView
+        alertContentView.backgroundColor = UIColor(red:0.66,green:0.97,blue:0.59,alpha:1.0)
+        alertContentView.layer.cornerRadius = 5;
         
         //-Create and add the Cancel action
         let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .Cancel) { action -> Void in
@@ -265,13 +259,11 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         
         //-Create and add the Delete Event action
         let deleteAction: UIAlertAction = UIAlertAction(title: "Delete Event", style: .Default) { action -> Void in
-            let object = UIApplication.sharedApplication().delegate
-            let appDelegate = object as! AppDelegate
-            println(self.eventIndex)
+//            let object = UIApplication.sharedApplication().delegate
+//            let appDelegate = object as! AppDelegate
             
             let event = self.fetchedResultsController.objectAtIndexPath(self.eventIndexPath) as! Events
             self.sharedContext.deleteObject(event)
-            
             CoreDataStackManager.sharedInstance().saveContext()
 
             self.navigationController!.popViewControllerAnimated(true)
@@ -283,7 +275,7 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
     }
     
     
-    //-Countdown Time Viewer
+    //-Update Countdown Time Viewer
     func update() {
         
         if(count > 0)
@@ -299,7 +291,6 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
             
             let timerOutput = String(format: "%5d Days %2d:%2d:%02d", days, hours, minutes2, seconds) as String
             countDownLabel.text = timerOutput as String
-            //CountDownDescription.text = eventText
             
             secondsTickerLabel.text = String(format: "%02d", seconds)
             minutesTickerLabel.text = String(format: "%02d", minutes2)
@@ -330,43 +321,38 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
             
         case 0:
             let tempText1 = numberFormatter.stringFromNumber(self.durationWeeks)!
-            //let tempText1 = String(stringInterpolationSegment: self.durationWeeks)
             if self.durationWeeks < 2 {
-                untilEventText2.text = ("Only \(tempText1) Week +")
+                untilEventText2.text = ("Only \(tempText1) + Week")
             } else {
-                untilEventText2.text = ("Only \(tempText1) Weeks +")
+                untilEventText2.text = ("Only \(tempText1) + Weeks")
             }
         case 1:
             let tempText1 = numberFormatter.stringFromNumber(self.durationDays)!
-            //let tempText1 = String(stringInterpolationSegment: self.durationDays)
             if self.durationDays < 2 {
-                untilEventText2.text = ("Only \(tempText1) Day +")
+                untilEventText2.text = ("Only \(tempText1) + Day")
             } else {
-                untilEventText2.text = ("Only \(tempText1) Days +")
+                untilEventText2.text = ("Only \(tempText1) + Days")
             }
         case 2:
             let tempText1 = numberFormatter.stringFromNumber(self.durationHours)!
-            //let tempText1 = String(stringInterpolationSegment: self.durationHours)
             if self.durationHours < 2 {
-                untilEventText2.text = ("Only \(tempText1) Hour +")
+                untilEventText2.text = ("Only \(tempText1) + Hour")
             } else {
-                untilEventText2.text = ("Only \(tempText1) Hours +")
+                untilEventText2.text = ("Only \(tempText1) + Hours")
             }
         case 3:
             let tempText1 = numberFormatter.stringFromNumber(self.durationMinutes)!
-            //let tempText1 = String(stringInterpolationSegment: self.durationMinutes)
             if self.durationMinutes < 2 {
-                untilEventText2.text = ("Only \(tempText1) Minute +")
+                untilEventText2.text = ("Only \(tempText1) + Minute")
             } else {
-                untilEventText2.text = ("Only \(tempText1) Minutes +")
+                untilEventText2.text = ("Only \(tempText1) + Minutes")
             }
         case 4:
             let tempText1 = numberFormatter.stringFromNumber(self.durationSeconds)!
-            //let tempText1 = String(stringInterpolationSegment: self.durationSeconds)
             if self.durationSeconds < 2 {
-                untilEventText2.text = ("Only \(tempText1) Second +")
+                untilEventText2.text = ("Only \(tempText1) Second")
             } else {
-                untilEventText2.text = ("Only \(tempText1) Seconds +")
+                untilEventText2.text = ("Only \(tempText1) Seconds")
             }
         default:
             println("Less than 1 day left")
@@ -376,21 +362,6 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         
     }
     
-    //-Update the "untils" as the countdown advances
-    func untilCounterUpdate(){
-        
-        let event = fetchedResultsController.objectAtIndexPath(eventIndexPath) as! Events
-        
-        let pickerDate = event.eventDate
-        let elapsedTime = pickerDate!.timeIntervalSinceDate(timeAtPress)  //* Event Date in seconds raw
-        durationSeconds = Int(elapsedTime)
-        durationSeconds = count
-        durationMinutes = count / 60
-        durationHours = (count / 60) / 60
-        durationDays = ((count / 60) / 60) / 24
-        durationWeeks = (((count / 60) / 60) / 24) / 7
-        
-    }
     
     //-Setup the "untils" based on the current date and event date for the first time
     func untilCounterStart(){
@@ -442,6 +413,23 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
     }
     
     
+    //-Update the "untils" as the countdown advances
+    func untilCounterUpdate(){
+        
+        let event = fetchedResultsController.objectAtIndexPath(eventIndexPath) as! Events
+        
+        let pickerDate = event.eventDate
+        let elapsedTime = pickerDate!.timeIntervalSinceDate(timeAtPress)  //* Event Date in seconds raw
+        durationSeconds = Int(elapsedTime)
+        durationSeconds = count
+        durationMinutes = count / 60
+        durationHours = (count / 60) / 60
+        durationDays = ((count / 60) / 60) / 24
+        durationWeeks = (((count / 60) / 60) / 24) / 7
+        
+    }
+    
+    
     //-MG Factor is a special function which removes 1 days from the front of the vacation
     //-and 1 day from the back. After all, does anybody really count those days when your planning? :-)
     @IBAction func mgFactor(sender: UIButton) {
@@ -470,6 +458,200 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
 
     }
 
+    
+//    //-Generate the Event Image to share
+//    func generateEventImage() -> UIImage {
+//        
+//        //-Hide toolbar
+//        toolbarObject.hidden = true
+//        
+//        //-Render view to an image
+//        UIGraphicsBeginImageContext(self.view.frame.size)
+//        self.view.drawViewHierarchyInRect(self.view.frame,
+//            afterScreenUpdates: true)
+//        let shareEventImage : UIImage =
+//        UIGraphicsGetImageFromCurrentImageContext()
+//        UIGraphicsEndImageContext()
+//        
+//        //-UnHide toolbar
+//        toolbarObject.hidden = false
+//        
+//        return shareEventImage
+//    }
+//    
+//    
+//    //-Share the generated event image with other apps
+//    @IBAction func shareEvent(sender: UIBarButtonItem) {
+//        
+//        //-Create a event image, pass it to the activity view controller.
+//        self.shareEventImage = generateEventImage()
+//        
+//        let activityVC = UIActivityViewController(activityItems: [self.shareEventImage!], applicationActivities: nil)
+//        
+//        activityVC.excludedActivityTypes =  [
+//            UIActivityTypeSaveToCameraRoll
+////            UIActivityTypePostToTwitter,
+////            UIActivityTypePostToFacebook,
+////            UIActivityTypePostToWeibo,
+////            UIActivityTypeMessage,
+////            UIActivityTypeMail,
+////            UIActivityTypePrint,
+////            UIActivityTypeCopyToPasteboard,
+////            UIActivityTypeAssignToContact,
+////            UIActivityTypeSaveToCameraRoll,
+////            UIActivityTypeAddToReadingList,
+////            UIActivityTypePostToFlickr,
+////            UIActivityTypePostToVimeo,
+////            UIActivityTypePostToTencentWeibo
+//        ]
+//        
+//        activityVC.completionWithItemsHandler = {
+//            activity, completed, items, error in
+//            if completed {
+//                self.dismissViewControllerAnimated(true, completion: nil)
+//            }
+//        }
+//        
+//        self.presentViewController(activityVC, animated: true, completion: nil)
+//    }
+//    
+//    
+//    //-Authorize Calendar Event
+//    @IBAction func addCalendarEvent(sender: UIButton) {
+//
+//        let eventStore = EKEventStore()
+//        
+//        switch EKEventStore.authorizationStatusForEntityType(EKEntityTypeEvent) {
+//        case .Authorized:
+//            println("authorized")
+//            //extractEventEntityCalendarsOutOfStore(eventStore)
+//            insertEvent(eventStore)
+//        case .Denied:
+//            println("Access denied")
+//        case .NotDetermined:
+//            eventStore.requestAccessToEntityType(EKEntityTypeEvent, completion:
+//                {[weak self] (granted: Bool, error: NSError!) -> Void in
+//                    if granted {
+//                        //self!.extractEventEntityCalendarsOutOfStore(eventStore)
+//                        self!.insertEvent(eventStore)
+//                    } else {
+//                        println("Access denied")
+//                    }
+//                })
+//        default:
+//            println("Case Default")
+//        }
+//        
+//    }
+//
+//    
+//    //-Insert a new Calendar Event
+//    func insertEvent(store: EKEventStore) {
+//        
+//        let calendars = store.calendarsForEntityType(EKEntityTypeEvent)
+//            as! [EKCalendar]
+//        
+//        println(calendars)
+//        
+//        for calendar in calendars {
+//            if calendar.title == "Calendar" {
+//
+//                let event = fetchedResultsController.objectAtIndexPath(eventIndexPath) as! Events
+//                
+//                //-Set the selected event start date & time
+//                let startDate = event.eventDate
+//                println("calendar start: \(startDate)")
+//                //-2 hours ahead for endtime
+//                let endDate = startDate!.dateByAddingTimeInterval(2 * 60 * 60)
+//                
+//                //-Create Calendar Event
+//                var calendarEvent = EKEvent(eventStore: store)
+//                calendarEvent.calendar = calendar
+//                
+//                calendarEvent.title = event.textEvent
+//                calendarEvent.startDate = startDate
+//                calendarEvent.endDate = endDate
+//                
+//                //-Set alert for 2 hours prior to Event
+//                let alarm = EKAlarm(relativeOffset: -3600.0)
+//                calendarEvent.addAlarm(alarm)
+//                
+//                //-Save Event in Calendar
+//                var error: NSError?
+//                let result = store.saveEvent(calendarEvent, span: EKSpanThisEvent, error: &error)
+//                
+//                //-Create Calendar Alert View
+//                if result == true {
+//                    //-Call Alert message
+//                    self.alertTitle = "SUCCESS!"
+//                    self.alertMessage = "Event added to your Calendar"
+//                    self.calendarAlertMessage()
+//                }
+//                else {
+//                    if let theError = error {
+//                        //-Call Alert message
+//                        self.alertTitle = "ALERT"
+//                        self.alertMessage = "One of your Calendars may be restricted. Please check to see if your Calendar is updated or allow access to add events."
+//                        self.calendarAlertMessage()
+//                        println("An error occured \(theError)")
+//                    }
+//                }
+//            }
+//        }
+//        
+//        func addAlarmToCalendarWithStore(store: EKEventStore, calendar: EKCalendar){
+//
+//            let event = fetchedResultsController.objectAtIndexPath(eventIndexPath) as! Events
+//            
+//            //-Set the selected event start date & time
+//            let startDate = event.eventDate
+//            let endDate = startDate?.dateByAddingTimeInterval(20.0)
+//        }
+//    }
+// 
+//    
+//    //-Alert Message function
+//    func calendarAlertMessage(){
+//        dispatch_async(dispatch_get_main_queue()) {
+//            let actionSheetController = UIAlertController(title: "\(self.alertTitle)", message: "\(self.alertMessage)", preferredStyle: .Alert)
+//            
+//            //-Update alert colors and attributes
+//            actionSheetController.view.tintColor = UIColor.blueColor()
+//            let subview = actionSheetController.view.subviews.first! as! UIView
+//            let alertContentView = subview.subviews.first! as! UIView
+//            alertContentView.backgroundColor = UIColor(red:0.66,green:0.97,blue:0.59,alpha:1.0)
+//            alertContentView.layer.cornerRadius = 5;
+//            
+//            //-Create and add the OK action
+//            let okAction: UIAlertAction = UIAlertAction(title: "OK", style: .Default) { action -> Void in
+//                
+//            }
+//            actionSheetController.addAction(okAction)
+//            
+//            //-Present the AlertController
+//            self.presentViewController(actionSheetController, animated: true, completion: nil)
+//        }
+//    }
+    
+    
+    //-Call the Popover Menu
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
+        switch(segue.identifier!){
+        case "eventMenu":
+            var popoverController = (segue.destinationViewController as? BeGoodPopoverViewController)
+            let event = fetchedResultsController.objectAtIndexPath(eventIndexPath) as! Events
+            popoverController!.eventIndexPath2 = eventIndexPath
+            popoverController!.events = event
+            break
+        default:
+            break
+        }
+    }
+}
+
+//- Separate the Sharing and Calendar Method to better organize the code
+
+extension BeGoodShowViewController : NSFetchedResultsControllerDelegate {
     
     //-Generate the Event Image to share
     func generateEventImage() -> UIImage {
@@ -502,19 +684,19 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         
         activityVC.excludedActivityTypes =  [
             UIActivityTypeSaveToCameraRoll
-//            UIActivityTypePostToTwitter,
-//            UIActivityTypePostToFacebook,
-//            UIActivityTypePostToWeibo,
-//            UIActivityTypeMessage,
-//            UIActivityTypeMail,
-//            UIActivityTypePrint,
-//            UIActivityTypeCopyToPasteboard,
-//            UIActivityTypeAssignToContact,
-//            UIActivityTypeSaveToCameraRoll,
-//            UIActivityTypeAddToReadingList,
-//            UIActivityTypePostToFlickr,
-//            UIActivityTypePostToVimeo,
-//            UIActivityTypePostToTencentWeibo
+            //            UIActivityTypePostToTwitter,
+            //            UIActivityTypePostToFacebook,
+            //            UIActivityTypePostToWeibo,
+            //            UIActivityTypeMessage,
+            //            UIActivityTypeMail,
+            //            UIActivityTypePrint,
+            //            UIActivityTypeCopyToPasteboard,
+            //            UIActivityTypeAssignToContact,
+            //            UIActivityTypeSaveToCameraRoll,
+            //            UIActivityTypeAddToReadingList,
+            //            UIActivityTypePostToFlickr,
+            //            UIActivityTypePostToVimeo,
+            //            UIActivityTypePostToTencentWeibo
         ]
         
         activityVC.completionWithItemsHandler = {
@@ -527,9 +709,10 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         self.presentViewController(activityVC, animated: true, completion: nil)
     }
     
-    //-
+    
+    //-Authorize Calendar Event
     @IBAction func addCalendarEvent(sender: UIButton) {
-
+        
         let eventStore = EKEventStore()
         
         switch EKEventStore.authorizationStatusForEntityType(EKEntityTypeEvent) {
@@ -554,8 +737,9 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         }
         
     }
-
     
+    
+    //-Insert a new Calendar Event
     func insertEvent(store: EKEventStore) {
         
         let calendars = store.calendarsForEntityType(EKEntityTypeEvent)
@@ -565,7 +749,7 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         
         for calendar in calendars {
             if calendar.title == "Calendar" {
-
+                
                 let event = fetchedResultsController.objectAtIndexPath(eventIndexPath) as! Events
                 
                 //-Set the selected event start date & time
@@ -582,23 +766,24 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
                 calendarEvent.startDate = startDate
                 calendarEvent.endDate = endDate
                 
+                //-Set alert for 2 hours prior to Event
                 let alarm = EKAlarm(relativeOffset: -3600.0)
                 calendarEvent.addAlarm(alarm)
                 
-
                 //-Save Event in Calendar
                 var error: NSError?
                 let result = store.saveEvent(calendarEvent, span: EKSpanThisEvent, error: &error)
                 
+                //-Create Calendar Alert View
                 if result == true {
-                    //* - Call Alert message
+                    //-Call Alert message
                     self.alertTitle = "SUCCESS!"
                     self.alertMessage = "Event added to your Calendar"
                     self.calendarAlertMessage()
                 }
                 else {
                     if let theError = error {
-                        //* - Call Alert message
+                        //-Call Alert message
                         self.alertTitle = "ALERT"
                         self.alertMessage = "One of your Calendars may be restricted. Please check to see if your Calendar is updated or allow access to add events."
                         self.calendarAlertMessage()
@@ -609,7 +794,7 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         }
         
         func addAlarmToCalendarWithStore(store: EKEventStore, calendar: EKCalendar){
-
+            
             let event = fetchedResultsController.objectAtIndexPath(eventIndexPath) as! Events
             
             //-Set the selected event start date & time
@@ -617,7 +802,7 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
             let endDate = startDate?.dateByAddingTimeInterval(20.0)
         }
     }
- 
+    
     
     //-Alert Message function
     func calendarAlertMessage(){
@@ -639,19 +824,6 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
             
             //-Present the AlertController
             self.presentViewController(actionSheetController, animated: true, completion: nil)
-        }
-    }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
-        switch(segue.identifier!){
-        case "eventMenu":
-            var popoverController = (segue.destinationViewController as? BeGoodPopoverViewController)
-            let event = fetchedResultsController.objectAtIndexPath(eventIndexPath) as! Events
-            popoverController!.eventIndexPath2 = eventIndexPath
-            popoverController!.events = event
-            break
-        default:
-            break
         }
     }
 }

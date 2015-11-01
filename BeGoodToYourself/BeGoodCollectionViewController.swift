@@ -13,13 +13,11 @@ import CoreData
 
 class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSource, NSFetchedResultsControllerDelegate {
     
-    //-Scene outlets
+    //-View Outlets
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var bottomButton: UIButton!
     
-    
-    //-Event variables
-    
+    //-Global objects, properties & variables
     var events = [Events]()
     var eventIndex: Int!
     
@@ -28,8 +26,8 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
     var editButtonFlag: Bool!
     
     //-Tab Bar variables
-    var tabBarItemONE: UITabBarItem = UITabBarItem()
-    var tabBarItemTWO: UITabBarItem = UITabBarItem()
+//    var tabBarItemONE: UITabBarItem = UITabBarItem()
+//    var tabBarItemTWO: UITabBarItem = UITabBarItem()
     
     
     // The selected indexes array keeps all of the indexPaths for cells that are "selected". The array is
@@ -42,11 +40,12 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
     var deletedIndexPaths: [NSIndexPath]!
     var updatedIndexPaths: [NSIndexPath]!
     
-    var cancelButton: UIBarButtonItem!
+    //var cancelButton: UIBarButtonItem!
     
-    var sharedContext = CoreDataStackManager.sharedInstance().managedObjectContext!
+//    var sharedContext = CoreDataStackManager.sharedInstance().managedObjectContext!
     
     
+    //-Perform when view loads
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -76,12 +75,10 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
         self.events = NSKeyedUnarchiver.unarchiveObjectWithFile(eventsFilePath) as? [Events] ?? [Events]()
         println("self.events: \(self.events)")
         
-        
     }
     
     
     //-Layout the collection view cells
-    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
@@ -102,7 +99,7 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
     }
     
     
-    //-Perform when view appears
+    //-Perform when view will appear
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -113,11 +110,15 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
         self.tabBarController?.tabBar.hidden = false
         
         editButtonFlag = true
+    }
+    
+    
+    //-Perform when view did appear
+    override func viewDidAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         
         //-Brute Force Reload the scene to view collection updates
         self.collectionView.reloadData()
-        
-        
     }
     
     
@@ -130,24 +131,21 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
         bottomButton.hidden = true
         editButtonFlag = true
         
-        
         var index : Int = 0
         for item in selectedIndexes{
             selectedIndexes.removeAtIndex(index)
         }
-        
-        
     }
     
     
-    //    //-Add the "sharedContext" convenience property
-    //    lazy var sharedContext: NSManagedObjectContext = {
-    //        return CoreDataStackManager.sharedInstance().managedObjectContext!
-    //        }()
+    //-Add the "sharedContext" convenience property
+    lazy var sharedContext: NSManagedObjectContext = {
+        return CoreDataStackManager.sharedInstance().managedObjectContext!
+        }()
     
     
+    //-Edit Events button function
     func editButton(){
-        println("Hello Edit Button")
         
         if self.navigationItem.leftBarButtonItem?.title == "Done" {
             
@@ -168,7 +166,6 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
             
             bottomButton.hidden = false
             editButtonFlag = false
-            //updateBottomButton()
         }
     }
     
@@ -239,12 +236,8 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
                 selectedIndexes.append(indexPath)
             }
             
-            // Then reconfigure the cell
+            //-Then reconfigure the cell
             configureCell(cell, atIndexPath: indexPath)
-            
-            
-            //-And update the buttom button
-            //updateBottomButton()
             
         } else {
             
@@ -276,12 +269,12 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
         dateFormatter.timeZone = NSTimeZone()
         
         cell.eventDateCellLabel!.text = dateFormatter.stringFromDate(event.eventDate!)
-        println(cell.eventDateCellLabel!.text)
         
         let eventImage2 = event.eventImage
         let finalImage = UIImage(data: eventImage2!)
         cell.eventImageView!.image = finalImage
         
+        //-Change cell appearance based on selection for deletion
         if let index = find(self.selectedIndexes, indexPath) {
             cell.eventImageView!.alpha = 0.5
         } else {
@@ -295,9 +288,7 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
     lazy var fetchedResultsController: NSFetchedResultsController = {
         
         let fetchRequest = NSFetchRequest(entityName: "Events")
-        //fetchRequest.predicate = NSPredicate(format: "pins == %@", self.pins);
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "textEvent", ascending: true)]
-        //fetchRequest.sortDescriptors = []
         
         let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.sharedContext, sectionNameKeyPath: nil, cacheName: nil)
         fetchedResultsController.delegate = self
@@ -308,47 +299,31 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
     
     //-Fetched Results Controller Delegate
     
-    // Whenever changes are made to Core Data the following three methods are invoked. This first method is used to
-    // create three fresh arrays to record the index paths that will be changed.
+    //-Whenever changes are made to Core Data the following three methods are invoked. This first method is used to
+    //-create three fresh arrays to record the index paths that will be changed.
     func controllerWillChangeContent(controller: NSFetchedResultsController) {
         // We are about to handle some new changes. Start out with empty arrays for each change type
         insertedIndexPaths = [NSIndexPath]()
         deletedIndexPaths = [NSIndexPath]()
         updatedIndexPaths = [NSIndexPath]()
-        
-        //println("in controllerWillChangeContent")
     }
     
-    // The second method may be called multiple times, once for each picture object that is added, deleted, or changed.
-    // We store the index paths into the three arrays.
+    //-The second method may be called multiple times, once for each picture object that is added, deleted, or changed.
+    //-We store the index paths into the three arrays.
     func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
         
         switch type{
             
         case .Insert:
-            //println("Insert an item")
-            // Here we are noting that a new picture instance has been added to Core Data. We remember its index path
-            // so that we can add a cell in "controllerDidChangeContent". Note that the "newIndexPath" parameter has
-            // the index path that we want in this case
             insertedIndexPaths.append(newIndexPath!)
             break
         case .Delete:
-            //println("Delete an item")
-            // Here we are noting that a picture instance has been deleted from Core Data. We keep remember its index
-            // path so that we can remove the corresponding cell in "controllerDidChangeContent". The "indexPath"
-            // parameter has value that we want in this case.
             deletedIndexPaths.append(indexPath!)
             break
         case .Update:
-            //println("Update an item.")
-            // We don't expect picture instances to change after they are created. But Core Data would
-            // notify us of changes if any occured. This can be useful if you want to respond to changes
-            // that come about after data is downloaded. For example, when an images is downloaded from
-            // Flickr in the Virtual Tourist app
             updatedIndexPaths.append(indexPath!)
             break
         case .Move:
-            //println("Move an item. We don't expect to see this in this app.")
             break
         default:
             break
@@ -362,8 +337,6 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
     // The most interesting thing about the method is the collection view's "performBatchUpdates" method.
     // Notice that all of the changes are performed inside a closure that is handed to the collection view.
     func controllerDidChangeContent(controller: NSFetchedResultsController) {
-        
-        //println("in controllerDidChangeContent. changes.count: \(insertedIndexPaths.count + deletedIndexPaths.count)")
         
         collectionView.performBatchUpdates({() -> Void in
             
@@ -383,30 +356,26 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
     }
     
     
-    //* - Click Button Decision function
-    
+    //-Click Button Decision function
     @IBAction func buttonButtonClicked() {
         
         deleteSelectedEvents()
 
     }
     
-    //* - Delete All Pictures before adding new pictures function
     
+    //-Delete All Pictures before adding new pictures function
     func deleteAllEvents() {
         
         for event in self.fetchedResultsController.fetchedObjects as! [Events] {
-            
             self.sharedContext.deleteObject(event)
         }
-        
     }
     
-    //* - Delete Selected Picture function
-    
+    //-Delete Selected Picture function
     func deleteSelectedEvents() {
-        var eventsToDelete = [Events]()
         
+        var eventsToDelete = [Events]()
         for indexPath in selectedIndexes {
             eventsToDelete.append(fetchedResultsController.objectAtIndexPath(indexPath) as! Events)
             
@@ -417,6 +386,7 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
         }
         
         selectedIndexes = [NSIndexPath]()
+        //-Save Object
         CoreDataStackManager.sharedInstance().saveContext()
         
         //-Archive the graph any time this list of events changes
@@ -424,28 +394,9 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
     }
     
     
-    //* - Update the button label based on selection criteria
-    
-//    func updateBottomButton() {
-//        if selectedIndexes.count > 0 {
-//            //bottomButton.title = "Remove Selected Pictures"
-//            bottomButton.titleLabel?.text = "Remove Selected Events"
-//            
-//            
-//        } else {
-//            //bottomButton.title = "New Collection"
-//            bottomButton.titleLabel?.text = "Clear All Events"
-//        }
-//    }
-
-    
-    
-    
-    //Button Function - Create a New Event
-    //@IBAction func addEventButton(sender: UIBarButtonItem) {
+    //-Create a New Event
     func addEvent() {
         
-        //let storyboard = self.storyboard
         let controller = self.storyboard?.instantiateViewControllerWithIdentifier("BeGoodAddEventViewController") as! BeGoodAddEventViewController
         controller.editEventFlag = false
         self.navigationController!.pushViewController(controller, animated: true)
@@ -454,7 +405,6 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
     
     
     //-Saving the array. Helper.
-    
     var eventsFilePath : String {
         let manager = NSFileManager.defaultManager()
         let url = manager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first as! NSURL

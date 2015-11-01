@@ -13,29 +13,28 @@ import CoreData
 
 class TodoAddTableViewController: UITableViewController {
     
+    //-View Outlet
     @IBOutlet weak var editModelTextField: UITextField!
     
-//    var index:Int?
-//    
-//    var modelArray:[String]!
+    //-Global objects, properties & variables
     var events: Events!
-    
     var editedModel:String?
     
+    
+    //-Perform when view did load
     override func viewDidLoad() {
         super.viewDidLoad()
 
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
+//    override func didReceiveMemoryWarning() {
+//        super.didReceiveMemoryWarning()
+//        // Dispose of any resources that can be recreated.
+//    }
 
     
     //-Table view data source
     
-    // This one is also fairly easy. You can get the actor in the same way as cellForRowAtIndexPath above.
     override func tableView(tableView: UITableView,
         didSelectRowAtIndexPath indexPath: NSIndexPath) {
             if indexPath.section == 0 && indexPath.row == 0 {

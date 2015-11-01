@@ -11,29 +11,22 @@ import CoreData
 
 class BudgetEditTableViewController: UITableViewController, UITextFieldDelegate, NSFetchedResultsControllerDelegate {
     
-    
-    var events: Events!
-    
-    var budgetIndexPath: NSIndexPath!
-    var budgetIndex: Int!
-    
-    
-    //var data:[String]!
-    
-    //var price:[String]!
-    
-    //var index:Int?
-    
-    var dataString:String?
-    var priceString:String?
-    
+    //-View outlets
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var priceTextField: UITextField!
     
-    //set the textfield delegates
+    //-Global objects, properties & variables
+    var events: Events!
+    var budgetIndexPath: NSIndexPath!
+    //var budgetIndex: Int!
+    var dataString:String?
+    var priceString:String?
+    
+    //-Set the textfield delegates
     let priceTextDelegate = PriceTextDelegate()
     
     
+    //-Perform when view did load
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -46,26 +39,22 @@ class BudgetEditTableViewController: UITableViewController, UITextFieldDelegate,
         let budget = fetchedResultsController.objectAtIndexPath(budgetIndexPath) as! Budget
         textField.text = budget.itemBudgetText
         priceTextField.text = budget.priceBudgetText
-        
-//        var item = data[index!]
-//        textField.text = item
-//        
-//        var amount = price[index!]
-//        priceTextField.text = amount
 
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
+//    override func didReceiveMemoryWarning() {
+//        super.didReceiveMemoryWarning()
+//        // Dispose of any resources that can be recreated.
+//    }
     
     
+    //-Add the "sharedContext" convenience property
     var sharedContext: NSManagedObjectContext {
         return CoreDataStackManager.sharedInstance().managedObjectContext!
     }
     
     
+    //-Fetch Budget data
     lazy var fetchedResultsController: NSFetchedResultsController = {
         
         let fetchRequest = NSFetchRequest(entityName: "Budget")
@@ -83,6 +72,7 @@ class BudgetEditTableViewController: UITableViewController, UITextFieldDelegate,
         }()
     
     
+    //-Table view data source
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.section == 0 && indexPath.row == 0 {
@@ -106,9 +96,7 @@ class BudgetEditTableViewController: UITableViewController, UITextFieldDelegate,
         }
 //        dataString = textField.text
 //        priceString = priceTextField.text
-        
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
+
     }
     
     

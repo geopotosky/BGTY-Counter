@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		E511C9241BC47FA1000B26B7 /* MGButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E511C9231BC47FA1000B26B7 /* MGButton.swift */; };
 		E52C7FE51BCB0D0E007ABC05 /* Budget.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52C7FE41BCB0D0E007ABC05 /* Budget.swift */; };
-		E53286601BC6DC040081C7F7 /* BG_Placeholder_Image.png in Resources */ = {isa = PBXBuildFile; fileRef = E532865F1BC6DC040081C7F7 /* BG_Placeholder_Image.png */; };
 		E53286621BC6F3960081C7F7 /* CornerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53286611BC6F3960081C7F7 /* CornerButton.swift */; };
 		E5748B5E1BE06394007A0971 /* FlickrTextDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5748B5D1BE06394007A0971 /* FlickrTextDelegate.swift */; };
 		E5748B601BE14CC5007A0971 /* RoundButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5748B5F1BE14CC5007A0971 /* RoundButton.swift */; };
@@ -21,6 +20,7 @@
 		E5B92CBF1BCFD5A10051CA09 /* BeGoodPickDateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B92CBE1BCFD5A10051CA09 /* BeGoodPickDateViewController.swift */; };
 		E5B92CC11BCFF2AD0051CA09 /* BeGoodPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B92CC01BCFF2AD0051CA09 /* BeGoodPopoverViewController.swift */; };
 		E5B9AB301BE309F400F6B8CF /* timer_blue.png in Resources */ = {isa = PBXBuildFile; fileRef = E5B9AB2F1BE309F400F6B8CF /* timer_blue.png */; };
+		E5B9AB321BE51D5E00F6B8CF /* BG_Placeholder_Image.png in Resources */ = {isa = PBXBuildFile; fileRef = E5B9AB311BE51D5E00F6B8CF /* BG_Placeholder_Image.png */; };
 		E5C961AB1BB7032C006D20C8 /* BGClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C961AA1BB7032C006D20C8 /* BGClient.swift */; };
 		E5C961AD1BB70390006D20C8 /* BGConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C961AC1BB70390006D20C8 /* BGConstants.swift */; };
 		E5C961AF1BB70A54006D20C8 /* BeGoodFlickrViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C961AE1BB70A54006D20C8 /* BeGoodFlickrViewController.swift */; };
@@ -56,7 +56,6 @@
 /* Begin PBXFileReference section */
 		E511C9231BC47FA1000B26B7 /* MGButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MGButton.swift; sourceTree = "<group>"; };
 		E52C7FE41BCB0D0E007ABC05 /* Budget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Budget.swift; sourceTree = "<group>"; };
-		E532865F1BC6DC040081C7F7 /* BG_Placeholder_Image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BG_Placeholder_Image.png; sourceTree = "<group>"; };
 		E53286611BC6F3960081C7F7 /* CornerButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CornerButton.swift; sourceTree = "<group>"; };
 		E5748B5D1BE06394007A0971 /* FlickrTextDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrTextDelegate.swift; sourceTree = "<group>"; };
 		E5748B5F1BE14CC5007A0971 /* RoundButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundButton.swift; sourceTree = "<group>"; };
@@ -68,6 +67,7 @@
 		E5B92CBE1BCFD5A10051CA09 /* BeGoodPickDateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BeGoodPickDateViewController.swift; path = ../BeGoodPickDateViewController.swift; sourceTree = "<group>"; };
 		E5B92CC01BCFF2AD0051CA09 /* BeGoodPopoverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeGoodPopoverViewController.swift; sourceTree = "<group>"; };
 		E5B9AB2F1BE309F400F6B8CF /* timer_blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = timer_blue.png; sourceTree = "<group>"; };
+		E5B9AB311BE51D5E00F6B8CF /* BG_Placeholder_Image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BG_Placeholder_Image.png; sourceTree = "<group>"; };
 		E5C961AA1BB7032C006D20C8 /* BGClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BGClient.swift; sourceTree = "<group>"; };
 		E5C961AC1BB70390006D20C8 /* BGConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BGConstants.swift; sourceTree = "<group>"; };
 		E5C961AE1BB70A54006D20C8 /* BeGoodFlickrViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeGoodFlickrViewController.swift; sourceTree = "<group>"; };
@@ -118,8 +118,8 @@
 				E511C9231BC47FA1000B26B7 /* MGButton.swift */,
 				E53286611BC6F3960081C7F7 /* CornerButton.swift */,
 				E5748B5F1BE14CC5007A0971 /* RoundButton.swift */,
+				E5B9AB311BE51D5E00F6B8CF /* BG_Placeholder_Image.png */,
 				E5B9AB2F1BE309F400F6B8CF /* timer_blue.png */,
-				E532865F1BC6DC040081C7F7 /* BG_Placeholder_Image.png */,
 			);
 			name = Custom;
 			sourceTree = "<group>";
@@ -316,9 +316,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E53286601BC6DC040081C7F7 /* BG_Placeholder_Image.png in Resources */,
 				E5D00EE11BADFF4300971CC6 /* Main.storyboard in Resources */,
 				E5D00EE61BADFF4300971CC6 /* LaunchScreen.xib in Resources */,
+				E5B9AB321BE51D5E00F6B8CF /* BG_Placeholder_Image.png in Resources */,
 				E5D00EE31BADFF4300971CC6 /* Images.xcassets in Resources */,
 				E5B9AB301BE309F400F6B8CF /* timer_blue.png in Resources */,
 			);

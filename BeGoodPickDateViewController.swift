@@ -15,7 +15,7 @@ class BeGoodPickDateViewController: UIViewController {
     @IBOutlet weak var pickDateButton: UIButton!
     @IBOutlet weak var eventDateLabel: UILabel!
     
-    //-Global variables
+    //-Global objects, properties & variables
     var timeAtPress = NSDate()
     var currentEventDate: NSDate!
     var eventText: String!

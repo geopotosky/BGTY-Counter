@@ -12,21 +12,22 @@ import CoreData
 
 class TodoEditTableViewController: UITableViewController, NSFetchedResultsControllerDelegate {
     
-    
+    //-View Outlets
     @IBOutlet weak var editModelTextField: UITextField!
     
+    //-Global objects, properties & variables
     var events: Events!
-    
     var todosIndexPath: NSIndexPath!
-    var todosIndex: Int!
-    
+    //var todosIndex: Int!
     var editedModel:String?
     
+    
+    //-Perform when view did load
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //-Call Fetch method
         fetchedResultsController.performFetch(nil)
-        
         fetchedResultsController.delegate = self
         
         let todos = fetchedResultsController.objectAtIndexPath(todosIndexPath) as! TodoList
@@ -35,17 +36,19 @@ class TodoEditTableViewController: UITableViewController, NSFetchedResultsContro
     }
     
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
+//    override func didReceiveMemoryWarning() {
+//        super.didReceiveMemoryWarning()
+//        // Dispose of any resources that can be recreated.
+//    }
     
     
+    //-Add the "sharedContext" convenience property
     var sharedContext: NSManagedObjectContext {
         return CoreDataStackManager.sharedInstance().managedObjectContext!
     }
     
     
+    //-Fetch Todo List data
     lazy var fetchedResultsController: NSFetchedResultsController = {
         
         let fetchRequest = NSFetchRequest(entityName: "TodoList")
@@ -84,9 +87,7 @@ class TodoEditTableViewController: UITableViewController, NSFetchedResultsContro
             println(editedModel)
         }
         //editedModel = editModelTextField.text
-        
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
+
     }
     
     

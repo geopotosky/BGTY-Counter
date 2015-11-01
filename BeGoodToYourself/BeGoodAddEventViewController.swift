@@ -12,8 +12,7 @@ import CoreData
 
 class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, NSFetchedResultsControllerDelegate{
     
-    //-Add/Edit Screen outlets
-    @IBOutlet weak var currentDate: UILabel!
+    //-View Outlets
     @IBOutlet weak var datePickerLable: UILabel!
     @IBOutlet weak var datePickerButton: UIButton!
     @IBOutlet weak var imageViewPicker: UIImageView!
@@ -25,16 +24,11 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
     //-Set the textfield delegates
     let eventTextDelegate = EventTextDelegate()
     
-    //-Global Variables
+    //-Global objects, properties & variables
     var events: Events!
-    
-    //    var eventImage : UIImage!
     var eventIndex2:Int!
     var eventIndexPath2: NSIndexPath!
-    //    var eventImage2: NSData!
-    
     var todaysDate: NSDate!
-    //
     var editEventFlag: Bool!
     var currentEventDate: NSDate!
     var flickrImageURL: String!
@@ -46,7 +40,7 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
     var tapRecognizer: UITapGestureRecognizer? = nil
     
     
-    //-Perform when view loads
+    //-Perform when view did load
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -72,11 +66,6 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
         tapRecognizer?.numberOfTapsRequired = 1
         
         
-        //        var pinchGestureRecognizer: UIPinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: "pinchGestureDetected:")
-        //        pinchGestureRecognizer.setDelegate(self)
-        //        imageView.addGestureRecognizer(pinchGestureRecognizer)
-        
-        
         //-Date Picker Formatting -----------------------------------------------------
         
         var dateFormatter = NSDateFormatter()
@@ -95,7 +84,6 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
         println(dateFormatter.timeZone)
         
         let localDate = dateFormatter.stringFromDate(date)
-        self.currentDate.text = localDate
         
         //-----------------------------------------------------------------------------
         
@@ -148,9 +136,6 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
         //-Add tap recognizer to dismiss keyboard
         self.addKeyboardDismissRecognizer()
         
-        //-Subscribe to the Keyboard notification
-        self.subscribeToKeyboardNotifications()  //make the call to subscribe to keyboard notifications
-        
         //-Recognize the Flickr image request
         if imageFlag == 3 {
             
@@ -181,9 +166,7 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
         
         //-Remove tap recognizer
         self.removeKeyboardDismissRecognizer()
-        
-        //-Unsubscribe from the keyboard notifications
-        self.unsubscribeFromKeyboardNotifications() //make the call to unsubscribe to keyboard notifications
+
     }
     
     
@@ -220,24 +203,15 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
     
     //-Pan Gesture method
     @IBAction func panImage(recognizer: UIPanGestureRecognizer) {
-        //var state: UIGestureRecognizerState = recognizer.state
-        //if state == UIGestureRecognizerStateBegan || state == UIGestureRecognizerStateChanged {
             var translation: CGPoint = recognizer.translationInView(recognizer.view!)
-            //recognizer.view.setTransform(CGAffineTransformTranslate(recognizer.view!.transform, translation.x, translation.y))
             recognizer.view!.transform = CGAffineTransformTranslate(recognizer.view!.transform, translation.x, translation.y)
             recognizer.setTranslation(CGPointZero, inView: recognizer.view)
-        //}
     }
 
     
     //-Pick Event Date
     @IBAction func pickEventDate(sender: UIButton) {
-        println("pickEventDate")
         
-        //datePickerButton.titleLabel?.adjustsFontSizeToFitWidth = true
-        //datePickerButton.titleLabel?.textAlignment = NSTextAlignment.Center
-        
-        //let storyboard = self.storyboard
         let controller = self.storyboard?.instantiateViewControllerWithIdentifier("BeGoodPickDateViewController") as! BeGoodPickDateViewController
         controller.editEventFlag2 = editEventFlag
         controller.currentEventDate = self.currentEventDate
@@ -297,42 +271,7 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
         self.navigationController!.pushViewController(controller, animated: true)
         
     }
-    
-    
-    //-Subscribe to Keyboard appearing and hiding notifications
-    func subscribeToKeyboardNotifications() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:"    , name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:"    , name: UIKeyboardWillHideNotification, object: nil)
-    }
-    
-    //-Move screen up to prevent keyboard overlap
-    func keyboardWillShow(notification: NSNotification) {
-        if textFieldEvent.isFirstResponder(){
-            //            self.view.frame.origin.y -= getKeyboardHeight(notification)
-        }
-    }
-    
-    //-Move screen back down after done using keyboard
-    func keyboardWillHide(notification: NSNotification) {
-        if textFieldEvent.isFirstResponder(){
-            //            self.view.frame.origin.y += getKeyboardHeight(notification)
-        }
-    }
-    
-    //-Calculate the keyboard height and place in variable
-    func getKeyboardHeight(notification: NSNotification) -> CGFloat {
-        let userInfo = notification.userInfo
-        let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue // of CGRect
-        return keyboardSize.CGRectValue().height
-    }
-    
-    //Unsubscribe from Keyboard Appearing and hiding notifications
-    func unsubscribeFromKeyboardNotifications() {
-        NSNotificationCenter.defaultCenter().removeObserver(self, name:
-            UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name:
-            UIKeyboardWillHideNotification, object: nil)
-    }
+
     
     //-Dismissing the keyboard
     func addKeyboardDismissRecognizer() {

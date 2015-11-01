@@ -12,18 +12,20 @@ import CoreData
 
 class BudgetAddTableViewController: UITableViewController, UITextFieldDelegate {
     
-    var events: Events!
-    
-    var dataString:String?
-    var priceString:String?
-    
+    //-View Outlets
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var priceTextField: UITextField!
+    
+    //-Global objects, properties & variables
+    var events: Events!
+    var dataString:String?
+    var priceString:String?
     
     //set the textfield delegates
     let priceTextDelegate = PriceTextDelegate()
     
     
+    //-Perform when view did load
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -31,10 +33,10 @@ class BudgetAddTableViewController: UITableViewController, UITextFieldDelegate {
         self.priceTextField.delegate = priceTextDelegate
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
+//    override func didReceiveMemoryWarning() {
+//        super.didReceiveMemoryWarning()
+//        // Dispose of any resources that can be recreated.
+//    }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.section == 0 && indexPath.row == 0 {

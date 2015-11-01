@@ -10,12 +10,21 @@ import UIKit
 
 class BeGoodFlickrViewController: UIViewController {
     
+    //-View Outlets
     @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var phraseTextField: UITextField!
     @IBOutlet weak var searchButton: UIButton!
     @IBOutlet weak var pickImageButton: UIButton!
     @IBOutlet weak var flickrActivityIndicator: UIActivityIndicatorView!
     
+    //-Global objects, properties & variables
+    var events: [Events]!
+    var editEventFlag2: Bool!
+    var searchFlag: Bool!
+    var flickrImageURL: String!
+    var eventIndexPath2: NSIndexPath!
+    var eventImage2: NSData!
+    var currentImage: UIImage!
     var tapRecognizer: UITapGestureRecognizer? = nil
     
     //-set the textfield delegates
@@ -24,19 +33,11 @@ class BeGoodFlickrViewController: UIViewController {
     //-Get the app delegate
     var appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
-    var events: [Events]!
-    
     //-Alert variable
     var alertMessage: String!
     
-    var editEventFlag2: Bool!
-    var searchFlag: Bool!
-    var flickrImageURL: String!
-    var eventIndexPath2: NSIndexPath!
-    var eventImage2: NSData!
-    var currentImage: UIImage!
     
-    
+    //-Perform when view did load
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -57,14 +58,13 @@ class BeGoodFlickrViewController: UIViewController {
         
     }
     
+    
+    //-Perform when view will appear
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
         //-Add tap recognizer to dismiss keyboard
         self.addKeyboardDismissRecognizer()
-        
-        //-Subscribe to keyboard events so we can adjust the view to show hidden controls
-        self.subscribeToKeyboardNotifications()
         
         if editEventFlag2 == false {
             self.photoImageView.image = UIImage(named: "BG_Placeholder_Image.png")
@@ -73,18 +73,18 @@ class BeGoodFlickrViewController: UIViewController {
         }
     }
     
+    
+    //-Perform when view will disappear
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         
         //-Remove tap recognizer
         self.removeKeyboardDismissRecognizer()
-        
-        //-Unsubscribe to all keyboard events
-        self.unsubscribeToKeyboardNotifications()
+
     }
 
     
-    
+    //-Call the Flicker Search API
     @IBAction func searchFlicker(sender: UIButton) {
         
         println("search button pushed")
@@ -103,9 +103,6 @@ class BeGoodFlickrViewController: UIViewController {
         //-Verify Phrase Textfield in NOT Empty
         if !self.phraseTextField.text.isEmpty {
             
-            //-Update Search button text
-            //self.updateSearchButton()
-            
             //-Call the Get Flickr Images function
             BGClient.sharedInstance().getFlickrData(self) { (success, pictureURL, errorString) in
                 
@@ -116,7 +113,7 @@ class BeGoodFlickrViewController: UIViewController {
                     println("Success! Found Image")
                     let imageURL = NSURL(string: pictureURL!)
                     
-                    /* If an image exists at the url, set the image and title */
+                    //-If an image exists at the url, set the image and title
                     if let imageData = NSData(contentsOfURL: imageURL!) {
                         //let finalImage = UIImage(data: imageData)
                         self.eventImage2 = imageData
@@ -129,28 +126,25 @@ class BeGoodFlickrViewController: UIViewController {
                             self.flickrActivityIndicator.stopAnimating()
                             
                         })
-                        //* - Save to local file
-                        //self.storeImage(finalImage, withIdentifier: pictureURL!)
                         
                     } else {
                         dispatch_async(dispatch_get_main_queue(), {
-                            //self.photoTitleLabel.text = "No Photos Found. Search Again."
-                            //self.defaultLabel.alpha = 1.0
                             self.photoImageView.image = UIImage(named: "BG_Placeholder_Image.png")
                         })
                     }
                     
                 } else {
-                    //* - Call Alert message
+                    //-Call Alert message
                     self.alertMessage = "Flickr Error Message! \(errorString)"
                     self.errorAlertMessage()
-                } // End success
+                } //-End success
             
-            } // End VTClient method
+            } //-End VTClient method
         
         } else {
-            /* If Phrase is empty, display Empty message */
-            //self.photoTitleLabel.text = "Phrase Empty."
+            self.flickrActivityIndicator.hidden = true
+            self.flickrActivityIndicator.stopAnimating()
+            //-If Phrase is empty, display Empty message
             self.alertMessage = "Search Phrase is Missing"
             self.errorAlertMessage()
         }
@@ -162,7 +156,7 @@ class BeGoodFlickrViewController: UIViewController {
         
         if editEventFlag2 == true {
             let controller = self.navigationController!.viewControllers[2] as! BeGoodAddEventViewController
-            //* - Forward selected event date to previous view
+            //-Forward selected event date to previous view
             controller.flickrImageURL = self.flickrImageURL
             controller.flickrImage = self.photoImageView.image
             println(self.flickrImageURL)
@@ -172,7 +166,7 @@ class BeGoodFlickrViewController: UIViewController {
             
         } else {
             let controller = self.navigationController!.viewControllers[1] as! BeGoodAddEventViewController
-            //* - Forward selected event date to previous view
+            //-Forward selected event date to previous view
             controller.flickrImageURL = self.flickrImageURL
             controller.flickrImage = self.photoImageView.image
             println(self.flickrImageURL)
@@ -200,48 +194,19 @@ class BeGoodFlickrViewController: UIViewController {
         self.view.endEditing(true)
     }
     
-    /* Shifting the keyboard so it does not hide controls */
-    func subscribeToKeyboardNotifications() {
-        /* Subscribe to the KeyboardWillShow and KeyboardWillHide notifications */
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
-    }
-    
-    func unsubscribeToKeyboardNotifications() {
-        /* Unsubscribe to the KeyboardWillShow and KeyboardWillHide notifications */
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
-    }
-    
-    func keyboardWillShow(notification: NSNotification) {
-        /* Shift the view's frame up so that controls are shown */
-        if self.photoImageView.image != nil {
-            //self.defaultLabel.alpha = 0.0
-            println("No Photo found")
-        }
-//        self.view.frame.origin.y -= self.getKeyboardHeight(notification) / 2
-    }
-    
-    func keyboardWillHide(notification: NSNotification) {
-        /* Shift the view's frame down so that the view is back to its original placement */
-        if self.photoImageView.image == nil {
-            //self.defaultLabel.alpha = 1.0
-            println("No Photo Found")
-        }
-//        self.view.frame.origin.y += self.getKeyboardHeight(notification) / 2
-    }
-    
-    func getKeyboardHeight(notification: NSNotification) -> CGFloat {
-        /* Get and return the keyboard's height from the notification */
-        let userInfo = notification.userInfo
-        let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue // of CGRect
-        return keyboardSize.CGRectValue().height
-    }
-    
     
     //-Alert Message function
     func errorAlertMessage(){
         dispatch_async(dispatch_get_main_queue()) {
             let actionSheetController: UIAlertController = UIAlertController(title: "Alert!", message: "\(self.alertMessage)", preferredStyle: .Alert)
+            
+            //-Update alert colors and attributes
+            actionSheetController.view.tintColor = UIColor.blueColor()
+            let subview = actionSheetController.view.subviews.first! as! UIView
+            let alertContentView = subview.subviews.first! as! UIView
+            alertContentView.backgroundColor = UIColor(red:0.66,green:0.97,blue:0.59,alpha:1.0)
+            alertContentView.layer.cornerRadius = 5;
+            
             //-Create and add the OK action
             let okAction: UIAlertAction = UIAlertAction(title: "OK", style: .Default) { action -> Void in
             }
@@ -254,7 +219,7 @@ class BeGoodFlickrViewController: UIViewController {
     
 }
 
-//-This extension was added as a fix based on student comments */
+//-This extension was added as a fix based on student comments
 extension BeGoodFlickrViewController {
     func dismissAnyVisibleKeyboards() {
         if phraseTextField.isFirstResponder() {

@@ -12,12 +12,12 @@ import CoreData
 
 class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetchedResultsControllerDelegate {
     
-    
+    //-View Outlets
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var eventImageView: UIImageView!
     
+    //-Global objects, properties & variables
     var events = [Events]()
-    
     var eventIndex: Int!
     var eventIndexPath: NSIndexPath!
     
@@ -28,6 +28,7 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //-Create Navbar Buttons
         self.navigationItem.leftBarButtonItem = self.editButtonItem()
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "addEvent")
         
@@ -50,7 +51,7 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
     }
     
     
-    //-Perform when view appears
+    //-Perform when view will appear
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         

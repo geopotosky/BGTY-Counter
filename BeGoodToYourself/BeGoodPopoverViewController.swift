@@ -10,11 +10,13 @@
 import UIKit
 import CoreData
 
+
 enum AdaptiveMode{
     case Default
     case LandscapePopover
     case AlwaysPopover
 }
+
 
 class BeGoodPopoverViewController: UITableViewController, UIPopoverPresentationControllerDelegate, NSFetchedResultsControllerDelegate {
     
@@ -22,7 +24,7 @@ class BeGoodPopoverViewController: UITableViewController, UIPopoverPresentationC
     @IBInspectable var popoverOniPhone:Bool = false
     @IBInspectable var popoverOniPhoneLandscape:Bool = true
     
-    //var events: [Events]!
+    //-Global objects, properties & variables
     var events: Events!
     //var eventIndex:Int!
     var eventIndexPath2: NSIndexPath!
@@ -31,21 +33,23 @@ class BeGoodPopoverViewController: UITableViewController, UIPopoverPresentationC
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
-        //cancel button
+        //-Cancel button
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Cancel, target: self, action: "tapCancel:")
         
-        // popover settings
+        //-Popover settings
         modalPresentationStyle = .Popover
         popoverPresentationController!.delegate = self
-        
         self.preferredContentSize = CGSize(width:200,height:100)
     }
     
+    
     func tapCancel(_ : UIBarButtonItem) {
-        //tap cancel
+        //-tap cancel
         dismissViewControllerAnimated(true, completion:nil);
     }
     
+    
+    //-Perform when view did load
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -55,9 +59,8 @@ class BeGoodPopoverViewController: UITableViewController, UIPopoverPresentationC
         
         // Set the view controller as the delegate
         fetchedResultsController.delegate = self
-
-        
     }
+    
     
     //-Add the "sharedContext" convenience property
     lazy var sharedContext: NSManagedObjectContext = {
