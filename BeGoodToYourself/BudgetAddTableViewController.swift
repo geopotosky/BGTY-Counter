@@ -33,10 +33,6 @@ class BudgetAddTableViewController: UITableViewController, UITextFieldDelegate {
         self.priceTextField.delegate = priceTextDelegate
     }
     
-//    override func didReceiveMemoryWarning() {
-//        super.didReceiveMemoryWarning()
-//        // Dispose of any resources that can be recreated.
-//    }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.section == 0 && indexPath.row == 0 {
@@ -57,10 +53,7 @@ class BudgetAddTableViewController: UITableViewController, UITextFieldDelegate {
             dataString = textField.text
             priceString = priceTextField.text
         }
-
-        
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
+        println("Segue Error")
     }
 
     

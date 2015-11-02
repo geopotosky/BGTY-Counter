@@ -13,8 +13,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     
-    //var events: [Events]!
-    //var events = [Events]()
+    //-Text Phrase for Flickr API search
     var phraseText: String!
 
 

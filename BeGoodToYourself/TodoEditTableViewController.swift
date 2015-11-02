@@ -36,12 +36,6 @@ class TodoEditTableViewController: UITableViewController, NSFetchedResultsContro
     }
     
     
-//    override func didReceiveMemoryWarning() {
-//        super.didReceiveMemoryWarning()
-//        // Dispose of any resources that can be recreated.
-//    }
-    
-    
     //-Add the "sharedContext" convenience property
     var sharedContext: NSManagedObjectContext {
         return CoreDataStackManager.sharedInstance().managedObjectContext!
@@ -83,10 +77,8 @@ class TodoEditTableViewController: UITableViewController, NSFetchedResultsContro
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "saveDataEdit" {
             editedModel = editModelTextField.text
-            println("Edit Save button pushed.")
-            println(editedModel)
         }
-        //editedModel = editModelTextField.text
+        println("Segue Error")
 
     }
     

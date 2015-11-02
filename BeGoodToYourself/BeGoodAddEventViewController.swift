@@ -34,6 +34,9 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
     var flickrImageURL: String!
     var flickrImage: UIImage!
     
+    //* - Alert variable
+    var alertMessage: String!
+    
     //-Disney image based on flag (0-no pic, 1-library, 2-camera, 3-Flickr)
     var imageFlag: Int! = 0
     
@@ -273,7 +276,8 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
     }
 
     
-    //-Dismissing the keyboard
+    //-Dismissing the keyboard methods
+    
     func addKeyboardDismissRecognizer() {
         //-Add the recognizer to dismiss the keyboard
         self.view.addGestureRecognizer(tapRecognizer!)
@@ -297,38 +301,69 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
         
         if editEventFlag == true {
             
-            //-Update selected event
-            println("Update Selected Event")
-            let event = self.fetchedResultsController.objectAtIndexPath(self.eventIndexPath2) as! Events
-            event.eventDate = self.currentEventDate
-            event.textEvent = textFieldEvent.text!
-            event.eventImage = eventImage
-            self.sharedContext.refreshObject(event, mergeChanges: true)
-            CoreDataStackManager.sharedInstance().saveContext()
+            if textFieldEvent.text == "" {
+                self.alertMessage = "Please Add an Event Description"
+                self.textAlertMessage()
+            } else {
+                
+                //-Update selected event
+                let event = self.fetchedResultsController.objectAtIndexPath(self.eventIndexPath2) as! Events
+                event.eventDate = self.currentEventDate
+                event.textEvent = textFieldEvent.text!
+                event.eventImage = eventImage
+                self.sharedContext.refreshObject(event, mergeChanges: true)
+                CoreDataStackManager.sharedInstance().saveContext()
             
-            //-Pass event index info to Show scene
-            let controller = self.navigationController!.viewControllers[1] as! BeGoodShowViewController
-            controller.editEventFlag = true
-            controller.eventIndexPath = self.eventIndexPath2
-            controller.eventIndex = self.eventIndex2
+                //-Pass event index info to Show scene
+                let controller = self.navigationController!.viewControllers[1] as! BeGoodShowViewController
+                controller.editEventFlag = true
+                controller.eventIndexPath = self.eventIndexPath2
+                controller.eventIndex = self.eventIndex2
             
-            self.navigationController?.popViewControllerAnimated(true)
-            
+                self.navigationController?.popViewControllerAnimated(true)
+            }
             
         } else {
+            if textFieldEvent.text == "" {
+                self.alertMessage = "Please Add an Event Description"
+                self.textAlertMessage()
+            } else {
+                
+                //-Save new event
+                let eventToBeAdded = Events(eventDate: self.currentEventDate, textEvent: textFieldEvent.text!, eventImage: eventImage, context: sharedContext)
             
-            //-Save new event
-            println("Save New Event")
-            let eventToBeAdded = Events(eventDate: self.currentEventDate, textEvent: textFieldEvent.text!, eventImage: eventImage, context: sharedContext)
+                //-Save the shared context, using the convenience method in the CoreDataStackManager
+                CoreDataStackManager.sharedInstance().saveContext()
             
-            //-Save the shared context, using the convenience method in the CoreDataStackManager
-            CoreDataStackManager.sharedInstance().saveContext()
-            
-            self.navigationController?.popViewControllerAnimated(true)
+                self.navigationController?.popViewControllerAnimated(true)
+            }
         }
         
     }
     
+    
+    //-Alert Message function
+    func textAlertMessage(){
+        dispatch_async(dispatch_get_main_queue()) {
+            let actionSheetController = UIAlertController(title: "Alert!", message: "\(self.alertMessage)", preferredStyle: .Alert)
+            
+            //-Update alert colors and attributes
+            actionSheetController.view.tintColor = UIColor.blueColor()
+            let subview = actionSheetController.view.subviews.first! as! UIView
+            let alertContentView = subview.subviews.first! as! UIView
+            alertContentView.backgroundColor = UIColor(red:0.66,green:0.97,blue:0.59,alpha:1.0)
+            alertContentView.layer.cornerRadius = 5;
+            
+            //-Create and add the OK action
+            let okAction: UIAlertAction = UIAlertAction(title: "OK", style: .Default) { action -> Void in
+                
+            }
+            actionSheetController.addAction(okAction)
+            
+            //-Present the AlertController
+            self.presentViewController(actionSheetController, animated: true, completion: nil)
+        }
+    }
     
     
     //-Saving the array Helper.

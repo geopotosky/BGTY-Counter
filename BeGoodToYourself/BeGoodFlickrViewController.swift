@@ -30,7 +30,7 @@ class BeGoodFlickrViewController: UIViewController {
     //-set the textfield delegates
     let flickrTextDelegate = FlickrTextDelegate()
     
-    //-Get the app delegate
+    //-Get the app delegate (used for Flickr API)
     var appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
     //-Alert variable
@@ -94,8 +94,8 @@ class BeGoodFlickrViewController: UIViewController {
         self.flickrActivityIndicator.hidden = false
         self.flickrActivityIndicator.startAnimating()
         
+        //-Set the Flickr Text Phrase for API search
         appDelegate.phraseText = self.phraseTextField.text
-        println(appDelegate.phraseText)
         
         //-Added from student request -- hides keyboard after searching
         self.dismissAnyVisibleKeyboards()
@@ -178,7 +178,8 @@ class BeGoodFlickrViewController: UIViewController {
     }
 
     
-    //-Dismissing the keyboard
+    //-Dismissing the keyboard methods
+    
     func addKeyboardDismissRecognizer() {
         //-Add the recognizer to dismiss the keyboard
         self.view.addGestureRecognizer(tapRecognizer!)

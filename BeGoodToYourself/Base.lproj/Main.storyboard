@@ -542,11 +542,11 @@
                                     </barButtonItem>
                                 </items>
                             </toolbar>
-                            <view alpha="0.74999999999999978" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dFA-LE-xwP" customClass="CornerButton" customModule="BeGoodToYourself" customModuleProvider="target">
+                            <view alpha="0.79999999999999982" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dFA-LE-xwP" customClass="CornerButton" customModule="BeGoodToYourself" customModuleProvider="target">
                                 <rect key="frame" x="5" y="444" width="587" height="94"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
-                            <view alpha="0.74999999999999978" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pag-7z-TUf" customClass="CornerButton" customModule="BeGoodToYourself" customModuleProvider="target">
+                            <view alpha="0.79999999999999982" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pag-7z-TUf" customClass="CornerButton" customModule="BeGoodToYourself" customModuleProvider="target">
                                 <rect key="frame" x="5" y="403" width="587" height="27"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>

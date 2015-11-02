@@ -110,6 +110,9 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
         self.tabBarController?.tabBar.hidden = false
         
         editButtonFlag = true
+        
+        //-Brute Force Reload the scene to view collection updates
+        self.collectionView.reloadData()
     }
     
     

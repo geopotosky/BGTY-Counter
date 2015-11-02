@@ -26,11 +26,6 @@ class TodoAddTableViewController: UITableViewController {
         super.viewDidLoad()
 
     }
-    
-//    override func didReceiveMemoryWarning() {
-//        super.didReceiveMemoryWarning()
-//        // Dispose of any resources that can be recreated.
-//    }
 
     
     //-Table view data source
@@ -48,10 +43,10 @@ class TodoAddTableViewController: UITableViewController {
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "save" {
+        if segue.identifier == "saveDataAdd" {
             editedModel = editModelTextField.text
         }
-        editedModel = editModelTextField.text
+        println("Segue Error")
 
     }
     

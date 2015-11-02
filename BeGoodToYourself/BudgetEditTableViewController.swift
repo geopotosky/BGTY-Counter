@@ -42,11 +42,6 @@ class BudgetEditTableViewController: UITableViewController, UITextFieldDelegate,
 
     }
     
-//    override func didReceiveMemoryWarning() {
-//        super.didReceiveMemoryWarning()
-//        // Dispose of any resources that can be recreated.
-//    }
-    
     
     //-Add the "sharedContext" convenience property
     var sharedContext: NSManagedObjectContext {
@@ -94,8 +89,7 @@ class BudgetEditTableViewController: UITableViewController, UITextFieldDelegate,
             dataString = textField.text
             priceString = priceTextField.text
         }
-//        dataString = textField.text
-//        priceString = priceTextField.text
+        println("Segue Error")
 
     }
     
