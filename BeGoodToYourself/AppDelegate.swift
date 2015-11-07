@@ -21,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         //-Add Splash screen delay
-        NSThread.sleepForTimeInterval(3)
+        NSThread.sleepForTimeInterval(1)
         
         return true
     }

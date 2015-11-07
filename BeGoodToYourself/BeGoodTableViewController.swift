@@ -48,6 +48,9 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
         self.events = NSKeyedUnarchiver.unarchiveObjectWithFile(eventsFilePath) as? [Events] ?? [Events]()
         println("self.events: \(self.events)")
         
+        //-Call the Welcome Alert
+        welcomeAlertMessage()
+        
     }
     
     
@@ -153,27 +156,6 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let sectionInfo = self.fetchedResultsController.sections![section] as! NSFetchedResultsSectionInfo
         
-        //-Check to see if you have any events. If not, go directly to the Add Event Screen.
-        if sectionInfo.numberOfObjects == 0 {
-            
-            let actionSheetController: UIAlertController = UIAlertController(title: "Zippo!", message: "No Events. Tap the '+' symbol to create an Event", preferredStyle: .Alert)
-            
-            //-Update alert colors and attributes
-            actionSheetController.view.tintColor = UIColor.blueColor()
-            let subview = actionSheetController.view.subviews.first! as! UIView
-            let alertContentView = subview.subviews.first! as! UIView
-            alertContentView.backgroundColor = UIColor(red:0.66,green:0.97,blue:0.59,alpha:1.0)
-            alertContentView.layer.cornerRadius = 5;
-            
-            let okAction: UIAlertAction = UIAlertAction(title: "OK", style: .Default) { action -> Void in
-            }
-            actionSheetController.addAction(okAction)
-            
-            //-Present the AlertController
-            self.presentViewController(actionSheetController, animated: true, completion: nil)
-            
-        }
-        
         return sectionInfo.numberOfObjects
         
     }
@@ -223,6 +205,7 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
 
                 //-Update the Archive any time this list of events is displayed.
                 NSKeyedArchiver.archiveRootObject(self.events, toFile: eventsFilePath)
+                println("object deleted")
                 
             default:
                 break
@@ -302,5 +285,26 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
         return url.URLByAppendingPathComponent("events").path!
     }
     
+    
+    //-Alert Message function
+    func welcomeAlertMessage(){
+        dispatch_async(dispatch_get_main_queue()) {
+            let actionSheetController: UIAlertController = UIAlertController(title: "Welcome!", message: "Tap the '+' symbol to create Events", preferredStyle: .Alert)
+            
+            //-Update alert colors and attributes
+            actionSheetController.view.tintColor = UIColor.blueColor()
+            let subview = actionSheetController.view.subviews.first! as! UIView
+            let alertContentView = subview.subviews.first! as! UIView
+            alertContentView.backgroundColor = UIColor(red:0.66,green:0.97,blue:0.59,alpha:1.0)
+            alertContentView.layer.cornerRadius = 5;
+            
+            let okAction: UIAlertAction = UIAlertAction(title: "OK", style: .Default) { action -> Void in
+            }
+            actionSheetController.addAction(okAction)
+            
+            //-Present the AlertController
+            self.presentViewController(actionSheetController, animated: true, completion: nil)
+        }
+    }
 }
 

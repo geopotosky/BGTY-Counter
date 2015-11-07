@@ -102,6 +102,8 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
+        println("CVC-viewWillAppear")
+        
         //-Archive the graph any time this list of events is displayed.
         NSKeyedArchiver.archiveRootObject(self.events, toFile: eventsFilePath)
         
@@ -133,6 +135,7 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
         self.navigationItem.hidesBackButton = true
         let newBackButton = UIBarButtonItem(title: "Edit", style: UIBarButtonItemStyle.Plain, target: self, action: "editButton")
         self.navigationItem.leftBarButtonItem = newBackButton
+        
         bottomButton.hidden = true
         editButtonFlag = true
         
@@ -196,30 +199,6 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let sectionInfo = self.fetchedResultsController.sections![section] as! NSFetchedResultsSectionInfo
         
-//        //-Check to see if you have any events. If not, go directly to the Add Event Screen.
-//        if sectionInfo.numberOfObjects == 0 {
-//            
-//            self.navigationItem.hidesBackButton = true
-//            let newBackButton = UIBarButtonItem(title: "Edit", style: UIBarButtonItemStyle.Plain, target: self, action: "editButton")
-//            self.navigationItem.leftBarButtonItem = newBackButton
-//            bottomButton.hidden = true
-//            
-//            let actionSheetController: UIAlertController = UIAlertController(title: "Zip!", message: "No Events. Press OK to create an Event", preferredStyle: .Alert)
-//            
-//            let okAction: UIAlertAction = UIAlertAction(title: "OK", style: .Default) { action -> Void in
-//                
-//                //let storyboard = self.storyboard
-//                let controller = self.storyboard?.instantiateViewControllerWithIdentifier("BeGoodAddEventViewController") as! BeGoodAddEventViewController
-//                controller.editEventFlag = false
-//                self.navigationController!.pushViewController(controller, animated: true)
-//            }
-//            actionSheetController.addAction(okAction)
-//            
-//            //-Present the AlertController
-//            self.presentViewController(actionSheetController, animated: true, completion: nil)
-//            
-//        }
-        
         return sectionInfo.numberOfObjects
     }
     
@@ -255,7 +234,7 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
             
         } else {
             
-            println("editButtonFlag: \(editButtonFlag)")
+            println("editButtonFlag2: \(editButtonFlag)")
             
             let controller =
             storyboard!.instantiateViewControllerWithIdentifier("BeGoodShowViewController") as! BeGoodShowViewController
@@ -266,6 +245,7 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
             controller.eventIndex = indexPath.row
             
             self.navigationController!.pushViewController(controller, animated: true)
+            //self.presentViewController(controller, animated: true, completion: nil)
             
         }
         
@@ -391,6 +371,8 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
     //-Delete Selected Picture function
     func deleteSelectedEvents() {
         
+        println("Delete event.")
+        
         var eventsToDelete = [Events]()
         for indexPath in selectedIndexes {
             eventsToDelete.append(fetchedResultsController.objectAtIndexPath(indexPath) as! Events)
@@ -408,6 +390,7 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
         
         //-Archive the graph any time this list of events changes
         NSKeyedArchiver.archiveRootObject(self.events, toFile: eventsFilePath)
+
     }
     
     
@@ -418,6 +401,11 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
         controller.editEventFlag = false
         self.navigationController!.pushViewController(controller, animated: true)
         
+    }
+    
+    
+    func cancelButton(){
+        println("cancel")
     }
     
     
