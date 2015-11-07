@@ -16,6 +16,7 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
     //-View Outlets
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var bottomButton: UIButton!
+    @IBOutlet weak var SelectEventLabel: UILabel!
     
     //-Global objects, properties & variables
     var events = [Events]()
@@ -58,8 +59,6 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
         //-Manage Top and Bottom bar colors
         self.navigationController!.navigationBar.barTintColor = UIColor(red:0.66,green:0.97,blue:0.59,alpha:1.0)
         self.tabBarController?.tabBar.barTintColor = UIColor(red:0.66,green:0.97,blue:0.59,alpha:1.0)
-        
-        bottomButton.hidden = true
         
         //-Start the fetched results controller
         var error: NSError?
@@ -109,6 +108,9 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
         //-Hide the tab bar
         self.tabBarController?.tabBar.hidden = false
         
+        bottomButton.hidden = true
+        SelectEventLabel.hidden = true
+        
         editButtonFlag = true
         
         //-Brute Force Reload the scene to view collection updates
@@ -157,8 +159,19 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
             self.navigationItem.hidesBackButton = true
             let newBackButton = UIBarButtonItem(title: "Edit", style: UIBarButtonItemStyle.Plain, target: self, action: "editButton")
             self.navigationItem.leftBarButtonItem = newBackButton
-            bottomButton.hidden = true
             editButtonFlag = true
+            //-Hide the bottom text and button
+            bottomButton.hidden = true
+            SelectEventLabel.hidden = true
+            
+            //-Reset the collection view cells
+            var index : Int = 0
+            for item in selectedIndexes{
+                selectedIndexes.removeAtIndex(index)
+            }
+            //-Brute Force Reload the scene to view collection updates
+            self.collectionView.reloadData()
+            
             
         } else {
             
@@ -166,9 +179,9 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
             self.navigationItem.hidesBackButton = true
             let newBackButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: "editButton")
             self.navigationItem.leftBarButtonItem = newBackButton
-            
-            bottomButton.hidden = false
             editButtonFlag = false
+            //-Make bottom text visible
+            SelectEventLabel.hidden = false
         }
     }
     
@@ -191,9 +204,7 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
 //            self.navigationItem.leftBarButtonItem = newBackButton
 //            bottomButton.hidden = true
 //            
-//            println("Collection Empty")
-//            
-//            let actionSheetController: UIAlertController = UIAlertController(title: "Zippo!", message: "No Events. Press OK to create an Event", preferredStyle: .Alert)
+//            let actionSheetController: UIAlertController = UIAlertController(title: "Zip!", message: "No Events. Press OK to create an Event", preferredStyle: .Alert)
 //            
 //            let okAction: UIAlertAction = UIAlertAction(title: "OK", style: .Default) { action -> Void in
 //                
@@ -280,6 +291,8 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
         //-Change cell appearance based on selection for deletion
         if let index = find(self.selectedIndexes, indexPath) {
             cell.eventImageView!.alpha = 0.5
+            bottomButton.hidden = false
+            SelectEventLabel.hidden = true
         } else {
             cell.eventImageView!.alpha = 1.0
         }
@@ -391,6 +404,7 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
         selectedIndexes = [NSIndexPath]()
         //-Save Object
         CoreDataStackManager.sharedInstance().saveContext()
+        bottomButton.hidden = true
         
         //-Archive the graph any time this list of events changes
         NSKeyedArchiver.archiveRootObject(self.events, toFile: eventsFilePath)

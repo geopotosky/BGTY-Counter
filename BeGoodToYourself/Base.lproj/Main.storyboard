@@ -128,15 +128,26 @@
                                     <action selector="buttonButtonClicked" destination="tJv-VY-X6r" eventType="touchUpInside" id="riu-Iq-gRl"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.79999999999999982" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap Picture to Select for Removal" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fuW-9b-BMF" userLabel="Tap to Select for Removal">
+                                <rect key="frame" x="165" y="494" width="271" height="39"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.47409017609999998" blue="0.81467177830000004" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="fuW-9b-BMF" firstAttribute="leading" secondItem="WA7-Bf-IeR" secondAttribute="leading" id="1Vd-Jz-K07"/>
                             <constraint firstItem="KAC-4a-Boz" firstAttribute="top" secondItem="WA7-Bf-IeR" secondAttribute="bottom" constant="18" id="EtW-qs-tB9"/>
+                            <constraint firstItem="fuW-9b-BMF" firstAttribute="trailing" secondItem="WA7-Bf-IeR" secondAttribute="trailing" id="FK7-u7-5Np"/>
                             <constraint firstItem="2VK-6E-nqj" firstAttribute="top" secondItem="sWz-cI-NRr" secondAttribute="top" id="FXr-yp-36c"/>
+                            <constraint firstItem="fuW-9b-BMF" firstAttribute="top" secondItem="WA7-Bf-IeR" secondAttribute="top" id="PTM-XT-SnB"/>
                             <constraint firstItem="2VK-6E-nqj" firstAttribute="leading" secondItem="sWz-cI-NRr" secondAttribute="leading" id="RRZ-o1-QhJ"/>
                             <constraint firstItem="2VK-6E-nqj" firstAttribute="bottom" secondItem="KAC-4a-Boz" secondAttribute="top" id="Zud-MX-Bfj"/>
                             <constraint firstItem="WA7-Bf-IeR" firstAttribute="centerX" secondItem="2VK-6E-nqj" secondAttribute="centerX" id="eI8-eS-3JK"/>
                             <constraint firstAttribute="trailing" secondItem="2VK-6E-nqj" secondAttribute="trailing" id="gZF-7D-x23"/>
+                            <constraint firstItem="fuW-9b-BMF" firstAttribute="bottom" secondItem="WA7-Bf-IeR" secondAttribute="bottom" id="phD-RM-3Uc"/>
                         </constraints>
                         <variation key="widthClass=compact">
                             <mask key="subviews">
@@ -147,6 +158,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="My Events" id="ikW-JA-cdX"/>
                     <connections>
+                        <outlet property="SelectEventLabel" destination="fuW-9b-BMF" id="aiS-It-70S"/>
                         <outlet property="bottomButton" destination="WA7-Bf-IeR" id="lU3-z8-Tjq"/>
                         <outlet property="collectionView" destination="2VK-6E-nqj" id="yEU-AW-frb"/>
                     </connections>

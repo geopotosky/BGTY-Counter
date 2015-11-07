@@ -153,25 +153,26 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let sectionInfo = self.fetchedResultsController.sections![section] as! NSFetchedResultsSectionInfo
         
-//        //-Check to see if you have any events. If not, go directly to the Add Event Screen.
-//        if sectionInfo.numberOfObjects == 0 {
-//            
-//            let actionSheetController: UIAlertController = UIAlertController(title: "Zippo!", message: "No Events. Press OK to create an Event", preferredStyle: .Alert)
-//            
-//            let okAction: UIAlertAction = UIAlertAction(title: "OK", style: .Default) { action -> Void in
-//                
-//                //let storyboard = self.storyboard
-//                let controller = self.storyboard?.instantiateViewControllerWithIdentifier("BeGoodAddEventViewController") as! BeGoodAddEventViewController
-//                controller.editEventFlag = false
-//                //self.presentViewController(controller, animated: true, completion: nil)
-//                self.navigationController!.pushViewController(controller, animated: true)
-//            }
-//            actionSheetController.addAction(okAction)
-//            
-//            //-Present the AlertController
-//            self.presentViewController(actionSheetController, animated: true, completion: nil)
-//            
-//        }
+        //-Check to see if you have any events. If not, go directly to the Add Event Screen.
+        if sectionInfo.numberOfObjects == 0 {
+            
+            let actionSheetController: UIAlertController = UIAlertController(title: "Zippo!", message: "No Events. Tap the '+' symbol to create an Event", preferredStyle: .Alert)
+            
+            //-Update alert colors and attributes
+            actionSheetController.view.tintColor = UIColor.blueColor()
+            let subview = actionSheetController.view.subviews.first! as! UIView
+            let alertContentView = subview.subviews.first! as! UIView
+            alertContentView.backgroundColor = UIColor(red:0.66,green:0.97,blue:0.59,alpha:1.0)
+            alertContentView.layer.cornerRadius = 5;
+            
+            let okAction: UIAlertAction = UIAlertAction(title: "OK", style: .Default) { action -> Void in
+            }
+            actionSheetController.addAction(okAction)
+            
+            //-Present the AlertController
+            self.presentViewController(actionSheetController, animated: true, completion: nil)
+            
+        }
         
         return sectionInfo.numberOfObjects
         
