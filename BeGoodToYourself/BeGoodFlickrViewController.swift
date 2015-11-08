@@ -87,7 +87,6 @@ class BeGoodFlickrViewController: UIViewController {
     //-Call the Flicker Search API
     @IBAction func searchFlicker(sender: UIButton) {
         
-        println("search button pushed")
         searchFlag = true
         pickImageButton.hidden = true
         
@@ -109,8 +108,6 @@ class BeGoodFlickrViewController: UIViewController {
                 if success {
                     
                     self.flickrImageURL = pictureURL
-                    
-                    println("Success! Found Image")
                     let imageURL = NSURL(string: pictureURL!)
                     
                     //-If an image exists at the url, set the image and title
@@ -159,7 +156,6 @@ class BeGoodFlickrViewController: UIViewController {
             //-Forward selected event date to previous view
             controller.flickrImageURL = self.flickrImageURL
             controller.flickrImage = self.photoImageView.image
-            println(self.flickrImageURL)
             controller.imageFlag = 3
 
             self.navigationController?.popViewControllerAnimated(true)
@@ -169,7 +165,6 @@ class BeGoodFlickrViewController: UIViewController {
             //-Forward selected event date to previous view
             controller.flickrImageURL = self.flickrImageURL
             controller.flickrImage = self.photoImageView.image
-            println(self.flickrImageURL)
             controller.imageFlag = 3
 
             self.navigationController?.popViewControllerAnimated(true)

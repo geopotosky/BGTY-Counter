@@ -80,8 +80,6 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationItem.backBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: "cancelButton")
-        
         //-Change toolbar color
         self.toolbarObject?.backgroundColor = UIColor.greenColor()
         //-Hide the Tab Bar
@@ -121,8 +119,6 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
     //Perform when view will appear
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
-        println("Show viewWillAppear")
         
         //-UnHide the main ticker
         secondsTickerLabel.hidden = false
@@ -467,11 +463,6 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         }
     }
     
-    
-    func cancelButton(){
-        println("Cancel.")
-        self.dismissViewControllerAnimated(true, completion: nil)
-    }
 }
 
 
@@ -572,8 +563,6 @@ extension BeGoodShowViewController : NSFetchedResultsControllerDelegate {
         let calendars = store.calendarsForEntityType(EKEntityTypeEvent)
             as! [EKCalendar]
         
-        println(calendars)
-        
         for calendar in calendars {
             if calendar.title == "Calendar" {
                 
@@ -581,7 +570,7 @@ extension BeGoodShowViewController : NSFetchedResultsControllerDelegate {
                 
                 //-Set the selected event start date & time
                 let startDate = event.eventDate
-                println("calendar start: \(startDate)")
+                
                 //-2 hours ahead for endtime
                 let endDate = startDate!.dateByAddingTimeInterval(2 * 60 * 60)
                 
@@ -614,7 +603,6 @@ extension BeGoodShowViewController : NSFetchedResultsControllerDelegate {
                         self.alertTitle = "ALERT"
                         self.alertMessage = "One of your Calendars may be restricted. Please check to see if your Calendar is updated or allow access to add events."
                         self.calendarAlertMessage()
-                        println("An error occured \(theError)")
                     }
                 }
             }

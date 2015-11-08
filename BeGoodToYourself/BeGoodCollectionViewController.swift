@@ -50,8 +50,6 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        println("Hello Collection View Controller")
-        
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Edit, target: self, action: "editButton")
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "addEvent")
         
@@ -72,7 +70,6 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
         
         // Unarchive the event when the list is first shown
         self.events = NSKeyedUnarchiver.unarchiveObjectWithFile(eventsFilePath) as? [Events] ?? [Events]()
-        println("self.events: \(self.events)")
         
     }
     
@@ -101,8 +98,6 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
     //-Perform when view will appear
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
-        println("CVC-viewWillAppear")
         
         //-Archive the graph any time this list of events is displayed.
         NSKeyedArchiver.archiveRootObject(self.events, toFile: eventsFilePath)
@@ -217,8 +212,6 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
         
         if editButtonFlag == false {
             
-            println("editButtonFlag: \(editButtonFlag)")
-            
             let cell = collectionView.cellForItemAtIndexPath(indexPath) as! BeGoodCollectionViewCell
             
             //-Whenever a cell is tapped we will toggle its presence in the selectedIndexes array
@@ -233,8 +226,6 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
             configureCell(cell, atIndexPath: indexPath)
             
         } else {
-            
-            println("editButtonFlag2: \(editButtonFlag)")
             
             let controller =
             storyboard!.instantiateViewControllerWithIdentifier("BeGoodShowViewController") as! BeGoodShowViewController
@@ -275,6 +266,9 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
             SelectEventLabel.hidden = true
         } else {
             cell.eventImageView!.alpha = 1.0
+            if selectedIndexes.isEmpty {
+                bottomButton.hidden = true
+            }
         }
     }
     
@@ -371,8 +365,6 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
     //-Delete Selected Picture function
     func deleteSelectedEvents() {
         
-        println("Delete event.")
-        
         var eventsToDelete = [Events]()
         for indexPath in selectedIndexes {
             eventsToDelete.append(fetchedResultsController.objectAtIndexPath(indexPath) as! Events)
@@ -401,11 +393,6 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
         controller.editEventFlag = false
         self.navigationController!.pushViewController(controller, animated: true)
         
-    }
-    
-    
-    func cancelButton(){
-        println("cancel")
     }
     
     

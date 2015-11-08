@@ -243,8 +243,7 @@ class TodoTableViewController: UITableViewController, NSFetchedResultsController
     
     //-Add Todo List item function
     func addTodoList(){
-        println("Add to List")
-        
+
         let storyboard = self.storyboard
         let controller = self.storyboard?.instantiateViewControllerWithIdentifier("TodoAddTableViewController") as! TodoAddTableViewController
         self.navigationController!.pushViewController(controller, animated: true)
@@ -253,12 +252,10 @@ class TodoTableViewController: UITableViewController, NSFetchedResultsController
     
     //-Cancel Todo List item function
     func cancelTodoList(){
-        println("Cancel Todo List")
-        
+
         var tmpController :UIViewController! = self.presentingViewController;
         
         self.dismissViewControllerAnimated(false, completion: {()->Void in
-            println("done");
             tmpController.dismissViewControllerAnimated(false, completion: nil);
         });
         

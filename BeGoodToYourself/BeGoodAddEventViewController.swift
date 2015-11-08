@@ -84,7 +84,6 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
         dateFormatter.timeStyle = NSDateFormatterStyle.MediumStyle //Set time style
         dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle //Set date style
         dateFormatter.timeZone = NSTimeZone()
-        println(dateFormatter.timeZone)
         
         let localDate = dateFormatter.stringFromDate(date)
         
@@ -153,7 +152,6 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
         dateFormatter.timeZone = NSTimeZone()
         if currentEventDate != nil {
             let strDate = dateFormatter.stringFromDate(currentEventDate)
-            println("New Date2 String: \(strDate)")
             datePickerLable.text = strDate
             
         }
@@ -265,7 +263,6 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
     
     @IBAction func getFlickrImage(sender: UIButton) {
         
-        println("Get Flickr Image")
         let storyboard = self.storyboard
         let controller = self.storyboard?.instantiateViewControllerWithIdentifier("BeGoodFlickrViewController") as! BeGoodFlickrViewController
         controller.editEventFlag2 = editEventFlag

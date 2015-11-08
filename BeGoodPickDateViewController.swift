@@ -86,7 +86,6 @@ class BeGoodPickDateViewController: UIViewController {
         dateFormatter.timeStyle = NSDateFormatterStyle.MediumStyle //Set time style
         dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle //Set date style
         dateFormatter.timeZone = NSTimeZone()
-        println(dateFormatter.timeZone)
         
         let localDate = dateFormatter.stringFromDate(date)
         let strDate = dateFormatter.stringFromDate(myDatePicker.date)

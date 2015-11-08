@@ -78,8 +78,6 @@ class BGClient : NSObject {
     //-Function makes first request to get a random page, then it makes a request to get an image with the random page
     func getImageFromFlickrBySearch(methodArguments: [String : AnyObject], completionHandler: (success: Bool, pageNumber: Int, errorString: String?) -> Void) {
         
-        println("getImageFromFlickrBySearch")
-        
         //-Get the Shared NSURLSession to facilitate Network Activity
         let session = NSURLSession.sharedSession()
         //-Create the NSURLRequest using properly escaped URL

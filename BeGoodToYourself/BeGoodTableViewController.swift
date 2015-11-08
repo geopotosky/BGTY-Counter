@@ -46,7 +46,6 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
         
         //-Unarchive the event when the list is first shown
         self.events = NSKeyedUnarchiver.unarchiveObjectWithFile(eventsFilePath) as? [Events] ?? [Events]()
-        println("self.events: \(self.events)")
         
         //-Call the Welcome Alert
         welcomeAlertMessage()
@@ -65,7 +64,6 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
         
         //-Brute Force Reload the scene to view table updates
         self.tableView.reloadData()
-
         
     }
     
@@ -81,7 +79,6 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
     override func setEditing(editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
         self.tableView.setEditing(editing, animated: animated)
-        println("Edit pushed")
     }
     
     
@@ -92,17 +89,10 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
     }
 
     
-    
     //-Add the "sharedContext" convenience property
     lazy var sharedContext: NSManagedObjectContext = {
         return CoreDataStackManager.sharedInstance().managedObjectContext!
         }()
-    
-//    func layoutSubviews(){
-//        super .layoutsubviews()
-//        self.imageView.frame = CGRectMake(0,0,32,32)
-//    }
-    
     
     
     //-Fetched Results Controller
@@ -205,7 +195,6 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
 
                 //-Update the Archive any time this list of events is displayed.
                 NSKeyedArchiver.archiveRootObject(self.events, toFile: eventsFilePath)
-                println("object deleted")
                 
             default:
                 break
