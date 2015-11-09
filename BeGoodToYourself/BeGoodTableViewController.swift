@@ -287,12 +287,14 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
             alertContentView.backgroundColor = UIColor(red:0.66,green:0.97,blue:0.59,alpha:1.0)
             alertContentView.layer.cornerRadius = 5;
             
-            let okAction: UIAlertAction = UIAlertAction(title: "OK", style: .Default) { action -> Void in
-            }
-            actionSheetController.addAction(okAction)
-            
             //-Present the AlertController
             self.presentViewController(actionSheetController, animated: true, completion: nil)
+        }
+        //-After 3 second delay, close the Alert automatically
+        let delayTime = dispatch_time(DISPATCH_TIME_NOW,
+            Int64(3 * Double(NSEC_PER_SEC)))
+        dispatch_after(delayTime, dispatch_get_main_queue()) {
+            self.presentedViewController!.dismissViewControllerAnimated(true, completion: nil);
         }
     }
 }

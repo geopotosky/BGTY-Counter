@@ -133,7 +133,7 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         
         //-Set MG button to OFF
         mgFactorValue = 0
-        mgFactorLabel.text = "MG OFF"
+        mgFactorLabel.text = "OFF"
         
         let event = fetchedResultsController.objectAtIndexPath(eventIndexPath) as! Events
         
@@ -383,10 +383,10 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         
         //-Disable MG button is days < 2
         if durationDays < 2 {
-            mgFactorLabel.enabled = false
+            //mgFactorLabel.enabled = false
             mgFactorButon.enabled = false
         } else {
-            mgFactorLabel.enabled = true
+            //mgFactorLabel.enabled = true
             mgFactorButon.enabled = true
         }
         
@@ -426,11 +426,11 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         //-Set the MG Factor (172800 = 2 days in seconds) and update the button label
         if mgFactorValue == 0 {
             mgFactorValue = 172800
-            mgFactorLabel.text = "MG ON"
+            mgFactorLabel.text = "ON"
         }
         else {
             mgFactorValue = 0
-            mgFactorLabel.text = "MG OFF"
+            mgFactorLabel.text = "OFF"
         }
         
         let event = fetchedResultsController.objectAtIndexPath(eventIndexPath) as! Events
