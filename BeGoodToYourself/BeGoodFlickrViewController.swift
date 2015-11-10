@@ -82,7 +82,7 @@ class BeGoodFlickrViewController: UIViewController {
         self.removeKeyboardDismissRecognizer()
 
     }
-
+    
     
     //-Call the Flicker Search API
     @IBAction func searchFlicker(sender: UIButton) {

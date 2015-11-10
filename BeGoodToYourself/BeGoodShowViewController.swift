@@ -37,6 +37,7 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
     @IBOutlet weak var daysTickerLabel: UILabel!
     @IBOutlet weak var daysWordLabel: UILabel!
     @IBOutlet weak var untilEventText2: UITextField!
+
     
     
     //-Global objects, properties & variables

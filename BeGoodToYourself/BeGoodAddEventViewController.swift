@@ -194,20 +194,6 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
         return fetchedResultsController
         
         }()
-    
-    
-    //-Pinch Gesture method
-    @IBAction func scaleImage(recognizer: UIPinchGestureRecognizer) {
-        recognizer.view!.transform = CGAffineTransformScale(recognizer.view!.transform, recognizer.scale, recognizer.scale)
-        recognizer.scale = 1
-    }
-    
-    //-Pan Gesture method
-    @IBAction func panImage(recognizer: UIPanGestureRecognizer) {
-            var translation: CGPoint = recognizer.translationInView(recognizer.view!)
-            recognizer.view!.transform = CGAffineTransformTranslate(recognizer.view!.transform, translation.x, translation.y)
-            recognizer.setTranslation(CGPointZero, inView: recognizer.view)
-    }
 
     
     //-Pick Event Date

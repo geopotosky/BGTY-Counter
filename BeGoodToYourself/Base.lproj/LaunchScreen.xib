@@ -13,50 +13,49 @@
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="  Copyright (c) 2015 GeoWorld. All rights reserved." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="8ie-xW-0ye">
                     <rect key="frame" x="20" y="439" width="441" height="21"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="21" id="s8L-2z-wDj"/>
+                        <constraint firstAttribute="height" constant="21" id="yQ0-ps-eTI"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" red="0.0" green="0.47409017609999998" blue="0.81467177830000004" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="textColor" red="0.52941179279999995" green="0.14509804549999999" blue="0.98039221759999995" alpha="1" colorSpace="deviceRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Be Good To Yourself" textAlignment="center" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="kId-c2-rCX">
                     <rect key="frame" x="23" y="86" width="441" height="43"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="43" id="YhT-h6-vhi"/>
+                        <constraint firstAttribute="height" constant="43" id="rSv-8x-vP1"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="35"/>
-                    <color key="textColor" red="0.0" green="0.47409017609999998" blue="0.81467177830000004" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="textColor" red="0.52941179275512695" green="0.14509804546833038" blue="0.9803922176361084" alpha="1" colorSpace="deviceRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Event Tracking and Counter" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gx7-XR-hix">
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BGYT2.png" translatesAutoresizingMaskIntoConstraints="NO" id="ewq-qu-eju">
+                    <rect key="frame" x="106" y="179" width="268" height="225"/>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Event Counter and Tracker" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gx7-XR-hix">
                     <rect key="frame" x="106" y="131" width="268" height="26"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="26" id="OzK-iL-gkX"/>
+                        <constraint firstAttribute="width" constant="268" id="ZJK-Lg-ZTc"/>
+                        <constraint firstAttribute="height" constant="26" id="i1D-Ci-xj9"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="21"/>
-                    <color key="textColor" red="0.0" green="0.47409017609999998" blue="0.81467177830000004" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="textColor" red="0.52941179279999995" green="0.14509804549999999" blue="0.98039221759999995" alpha="1" colorSpace="deviceRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="timer_blue.png" translatesAutoresizingMaskIntoConstraints="NO" id="ewq-qu-eju">
-                    <rect key="frame" x="163" y="223" width="155" height="149"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="155" id="yjc-Qe-k5J"/>
-                    </constraints>
-                </imageView>
             </subviews>
             <color key="backgroundColor" red="0.60000002379999995" green="1" blue="0.60000002379999995" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="kId-c2-rCX" secondAttribute="trailing" constant="16" id="6pz-Js-NAD"/>
-                <constraint firstItem="8ie-xW-0ye" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="K4J-Sc-hik"/>
-                <constraint firstAttribute="bottom" secondItem="8ie-xW-0ye" secondAttribute="bottom" constant="20" id="OyS-CN-EUo"/>
-                <constraint firstItem="ewq-qu-eju" firstAttribute="centerX" secondItem="Gx7-XR-hix" secondAttribute="centerX" id="Q2z-d8-0Mb"/>
-                <constraint firstItem="kId-c2-rCX" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="86" id="ZVs-CP-0rC"/>
-                <constraint firstItem="Gx7-XR-hix" firstAttribute="top" secondItem="kId-c2-rCX" secondAttribute="bottom" constant="2" id="eMU-xx-jgv"/>
-                <constraint firstItem="kId-c2-rCX" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="23" id="fOY-Jb-TrP"/>
-                <constraint firstItem="8ie-xW-0ye" firstAttribute="top" secondItem="ewq-qu-eju" secondAttribute="bottom" constant="67" id="mcj-43-HV5"/>
-                <constraint firstItem="Gx7-XR-hix" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="nuX-CE-jVm"/>
-                <constraint firstItem="ewq-qu-eju" firstAttribute="centerX" secondItem="8ie-xW-0ye" secondAttribute="centerX" id="pC6-CW-9Fp"/>
-                <constraint firstItem="ewq-qu-eju" firstAttribute="top" secondItem="Gx7-XR-hix" secondAttribute="bottom" constant="66" id="sHh-p8-3Mr"/>
+                <constraint firstItem="Gx7-XR-hix" firstAttribute="trailing" secondItem="ewq-qu-eju" secondAttribute="trailing" id="7BO-er-R1q"/>
+                <constraint firstItem="8ie-xW-0ye" firstAttribute="top" secondItem="ewq-qu-eju" secondAttribute="bottom" constant="35" id="H2N-9l-CxK"/>
+                <constraint firstItem="8ie-xW-0ye" firstAttribute="centerX" secondItem="ewq-qu-eju" secondAttribute="centerX" id="JUr-Ia-803"/>
+                <constraint firstItem="Gx7-XR-hix" firstAttribute="top" secondItem="kId-c2-rCX" secondAttribute="bottom" constant="2" id="ODH-GG-9fe"/>
+                <constraint firstItem="kId-c2-rCX" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="23" id="Pbw-Fx-uvM"/>
+                <constraint firstAttribute="trailing" secondItem="kId-c2-rCX" secondAttribute="trailing" constant="16" id="YEJ-4D-70c"/>
+                <constraint firstAttribute="bottom" secondItem="8ie-xW-0ye" secondAttribute="bottom" constant="20" id="iH8-4D-MrG"/>
+                <constraint firstItem="ewq-qu-eju" firstAttribute="leading" secondItem="Gx7-XR-hix" secondAttribute="leading" id="k6i-dy-FbM"/>
+                <constraint firstItem="ewq-qu-eju" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="lCW-3y-hc6"/>
+                <constraint firstItem="8ie-xW-0ye" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="rYg-oB-cpY"/>
+                <constraint firstItem="kId-c2-rCX" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="86" id="sAQ-qc-ccW"/>
+                <constraint firstItem="ewq-qu-eju" firstAttribute="top" secondItem="Gx7-XR-hix" secondAttribute="bottom" constant="22" id="sse-rp-SHo"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
@@ -64,6 +63,6 @@
         </view>
     </objects>
     <resources>
-        <image name="timer_blue.png" width="128" height="128"/>
+        <image name="BGYT2.png" width="512" height="512"/>
     </resources>
 </document>
