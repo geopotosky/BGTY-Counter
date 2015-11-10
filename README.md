@@ -3,7 +3,7 @@ BGTY README
 ===========
 
 
-“Be Good To Yourself” is a straightforward event tracker and countdown App. User can add as many events as they want. Events are automatically saved after they are created/edited.  The app includes the ability to create ToDo lists and budget sheets for each event. Users can add their event to their local calendar and share them with social media apps.  Finally, BGTY includes a special feature called the Magic Wand. Originally called the “MG” Coefficient, the magic wand visually removes 2 days from the overall countdown; the first day, which is the current day and really doesn’t count, and the final day, which also really doesn’t count, especially if you are excited and really to be good to yourself.
+“Be Good To Yourself” is a straightforward event tracker and countdown App. Users can add and manage as many events as they want. Events are automatically saved after they are created/edited.  The app includes the ability to create ToDo lists and budget sheets for each event. Users can add their event to their local calendar and share them with social media apps.  Finally, BGTY includes a special feature called the Magic Wand. Originally called the “MG” Coefficient, the magic wand removes 2 days from the countdown viewing screen; the first day, which is the current day and really doesn’t count, and the final day, which also really doesn’t count, especially if you are excited and really to be good to yourself.
 
 
 ---------------
