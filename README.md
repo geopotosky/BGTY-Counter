@@ -1,16 +1,20 @@
-# BGTY-Final
-
-======
-README
-======
+===========
+BGTY README
+===========
 
 
-“Be Good To Yourself” is a straightforward event tracker and countdown App. User can add as many events as they want. Events are automatically saved after they are created/edited.  The app includes the ability to create ToDo lists and budget sheets for each event. Users can add their event to their local calendar and share them with social media apps.  Finally, BGTY includes a special feature called the “MG” Coefficient, which visually removes 2 days from the overall countdown; the first days, which really doesn’t count, and the final day, which also really doesn’t count, especially if you are excited and really to be good to yourself.
+“Be Good To Yourself” is a straightforward event tracker and countdown App. User can add as many events as they want. Events are automatically saved after they are created/edited.  The app includes the ability to create ToDo lists and budget sheets for each event. Users can add their event to their local calendar and share them with social media apps.  Finally, BGTY includes a special feature called the Magic Wand. Originally called the “MG” Coefficient, the magic wand visually removes 2 days from the overall countdown; the first day, which is the current day and really doesn’t count, and the final day, which also really doesn’t count, especially if you are excited and really to be good to yourself.
 
 
 ---------------
 My Events Scene
 ---------------
+
+Files:
+------
+BeGoodTableViewController.swift
+BeGoodCollectionViewController.swift
+BeGoodCollectionViewCell.swift
 
 The My Events scenes display the list of events currently saved. There are 2 views: Table view and Collection view. Both behave the same way and have similar options.
 
@@ -47,6 +51,10 @@ Tap (if necessary) the Collection icon in the bottom tab bar to view the My Even
 Countdown Scene
 ---------------
 
+Files:
+------
+BeGoodShowViewController.swift
+
 The Countdown scene displays the event in countdown mode. This App centers around the Countdown scene.  It can be accessed by tapping an existing event in the MyEvents scene
 
 How to use the Countdown scene:
@@ -66,33 +74,43 @@ How to use the Countdown scene:
 o	Select To Do List to add/edit your event to do list.
 o	Select Budget Sheet to add/edit your event budget sheet.
 
+
 ----------------
 “Until” display:
 ----------------
 
-Tap one of the time elements (Weeks, Days, Hours, Minutes, Seconds) to change the UNTIL counter based on your selection. Both the main and UNTIL dynamically count down 1 second at a time.
+Tap one of the time elements (Weeks, Days, Hours, Minutes, Seconds) to change the UNTIL counter based on your selection. Both the Main and UNTIL countdown dynamically update 1 second at a time.  Note: If the event date has less than 1 week left, the “Weeks” element will automatically grey out/not be selectable. And so on for each time element.
 
 
-----------------
-“MG” Coefficient
-----------------
+--------------
+The Magic Wand
+--------------
 
-“MG” also known as the MG Coefficient is a very unique countdown element not available in any other countdown App.
+The Magic Wand method, previously known as the MG Coefficient, is a very unique countdown element not available in any other countdown App. This fun method:
+•	removes the 1st day of the event counter. Reasoning is the 1st day has already started and doesn’t really count (as part of the countdown when using the MG Coefficient.
+•	removes the final day of the event counter. Reasoning is the last day is considered part of the event day (as part of countdown when using the MG Coefficient.
 
-Button Values:
+Magic Wand Button Values:
 
-•	MG OFF: Displays the standard countdown values.
+•	Magic Wand OFF: Displays the standard countdown values.
 
-•	MG ON: Take 1 day off the front of the count and 1 day off the end of the count. 
+•	Magic Wand ON: Take 1 day off the front of the count and 1 day off the end of the count. 
 
-If you exit out the scene and go back, MG will be reset to OFF.
+•	NOTE: the Magic Wand button will be automatically disabled if the event date is less than 2 days away from current date.
 
-After all, do we really include those days when we are counting down to a special event? ☺
+If you exit out the scene and go back, the Magic Wand will be reset to OFF.
+
+After all, do we really include those 2 days when we are counting down to a special event? ☺
 
 
 --------------------
 Add/Edit Event Scene
 --------------------
+
+Files:
+------
+BeGoodAddEventViewController.swift
+
 
 The Add/Edit Event scene provides a way to add or edit an Event. The user is presented with a new scene.
 
@@ -113,6 +131,11 @@ How to use the Add/Edit Event scene:
 Event Date Picker Scene:
 ------------------------
 
+Files:
+------
+BeGoodPickDateViewController.swift
+
+
 The current date or the event date will be the default date shown on the picker view.
 
 How to use the Event Date Picker scene:
@@ -128,9 +151,14 @@ How to use the Event Date Picker scene:
 Flickr Picture Selector Scene:
 ------------------------------
 
+Files:
+------
+BeGoodFlickrViewController.swift
+
+
 How to use the Flickr Picture Selector scene:
 
-•	Enter any word or phrase in the text field. Tap the search icon to access Flickr where the word/phrase will be used to search for a picture. If the selected picture is satisfactory, tap the “Use This Picture” button at the bottom of the screen. Or tap the search icon again (as many times as you want) to find a different picture. If a satisfactory picture cannot be found, try changing your search word/phrase.
+•	Enter any word or phrase in the text field. Tap the search icon to access Flickr (via the Flickr Search API) where the word/phrase will be used to search for a picture. A random picture based on the search criteria will be displayed. If the selected picture is satisfactory, tap the “Use This Picture” button at the bottom of the screen. Or tap the search icon again (as many times as you want) to find a different picture. If a satisfactory picture cannot be found, try changing your search word/phrase.
 
 •	Tap the Save button to save your new event or changes. If you are editing an existing event, the countdown view will reappear with the update content.
 
@@ -140,6 +168,13 @@ How to use the Flickr Picture Selector scene:
 -----------------
 To Do List Scene:
 -----------------
+
+Files:
+------
+TodoTableViewController.swift
+TodoEditTableViewController.swift
+TodoAddTableViewController.swift
+
 
 “Be Good To Yourself” allows the user to add a To Do List unique to each event.
 
@@ -159,6 +194,13 @@ Next, tap “To Do List” in the Popover view.
 Budget Sheet Scene:
 -------------------
 
+Files:
+------
+BudgetTableViewController.swift
+BudgetEditTableViewController.swift
+BudgetAddTableViewController.swift
+
+
 “Be Good To Yourself” allows the user to add a budget sheet unique to each event.
 
 From the Countdown view, tap the Menu icon on the top right.
@@ -172,9 +214,52 @@ Next, tap “To Do List” in the Popover view.
 •	Tap “Event” to exit the To Do List view.
 
 
---------
-Comments
---------
+----------------
+Other App Files:
+----------------
 
-Please send any comments/bug reports/suggestions to bgty2015@gmail.com.
+Delegate Files:
+---------------
+
+AppDelegate.swift: Default delegate file
+EventTextDelegate.swift: Text field delegate file
+PriceTextDelegate.swift: Text field delegate file
+FlickrTextDelegate.swift: Text field delegate file
+
+Object Files:
+-------------
+
+Events.swift: 
+•	Primary object for storing event data
+•	One-to-Many relationship with ToDoList object
+•	One-to-Many relationship with Budget object
+
+ToDoList.swift: 
+•	Stores To Do List text list
+•	One-to-One relationship with Events object
+
+Budget.swift
+•	Stores Budget items and price text list
+•	One-to-One relationship with Events object
+
+
+Model Object:
+-------------
+
+BGClient.swift: Class for running the Flickr API
+BGConstants.swift: Shared static values
+
+
+Button Attributes:
+------------------
+
+BGButton.swift
+CornerButton.swift
+RoundButton.swift
+
+
+Images:
+-------
+BG_Placeholder_Image.png
+timer_blue.png
 
