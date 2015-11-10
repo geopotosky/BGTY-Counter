@@ -42,7 +42,7 @@ class TodoEditTableViewController: UITableViewController, NSFetchedResultsContro
     }
     
     
-    //-Fetch Todo List data
+    //-Fetch To Do List data
     lazy var fetchedResultsController: NSFetchedResultsController = {
         
         let fetchRequest = NSFetchRequest(entityName: "TodoList")
@@ -65,7 +65,6 @@ class TodoEditTableViewController: UITableViewController, NSFetchedResultsContro
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.section == 0 && indexPath.row == 0 {
             editModelTextField.becomeFirstResponder()
-            //editTextField.becomeFirstResponder()
         }
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
@@ -73,7 +72,6 @@ class TodoEditTableViewController: UITableViewController, NSFetchedResultsContro
 
     //-Navigation
     
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "saveDataEdit" {
             editedModel = editModelTextField.text

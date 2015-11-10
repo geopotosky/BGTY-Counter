@@ -80,10 +80,8 @@ class BudgetEditTableViewController: UITableViewController, UITextFieldDelegate,
     }
     
     
-    
     //-Navigation
     
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "saveDataEdit" {
             dataString = textField.text

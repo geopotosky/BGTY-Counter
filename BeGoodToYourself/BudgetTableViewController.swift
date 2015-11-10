@@ -112,12 +112,6 @@ class BudgetTableViewController: UITableViewController, NSFetchedResultsControll
     
     //-Table view data source
     
-//    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-//        // #warning Potentially incomplete method implementation.
-//        // Return the number of sections.
-//        return 1
-//    }
-    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let sectionInfo = self.fetchedResultsController.sections![section] as! NSFetchedResultsSectionInfo
         return sectionInfo.numberOfObjects
@@ -176,6 +170,7 @@ class BudgetTableViewController: UITableViewController, NSFetchedResultsControll
     func controllerWillChangeContent(controller: NSFetchedResultsController) {
         self.tableView.beginUpdates()
     }
+    
     
     func controller(controller: NSFetchedResultsController,
         didChangeSection sectionInfo: NSFetchedResultsSectionInfo,
@@ -272,17 +267,15 @@ class BudgetTableViewController: UITableViewController, NSFetchedResultsControll
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
 
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
+        //-Get the new view controller using [segue destinationViewController].
+        //-Pass the selected object to the new view controller.
         
         if segue.identifier == "editBudget" {
             
             var path = tableView.indexPathForSelectedRow()
             var detailViewController = segue.destinationViewController as! BudgetEditTableViewController
-            
             detailViewController.events = self.events
             detailViewController.budgetIndexPath = path
-            //detailViewController.budgetIndex = path?.row
         }
         
     }

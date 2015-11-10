@@ -26,10 +26,6 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
     var editEventFlag: Bool!
     var editButtonFlag: Bool!
     
-    //-Tab Bar variables
-//    var tabBarItemONE: UITabBarItem = UITabBarItem()
-//    var tabBarItemTWO: UITabBarItem = UITabBarItem()
-    
     
     // The selected indexes array keeps all of the indexPaths for cells that are "selected". The array is
     // used inside cellForItemAtIndexPath to lower the alpha of selected cells.  You can see how the array
@@ -41,31 +37,22 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
     var deletedIndexPaths: [NSIndexPath]!
     var updatedIndexPaths: [NSIndexPath]!
     
-    //var cancelButton: UIBarButtonItem!
-    
-//    var sharedContext = CoreDataStackManager.sharedInstance().managedObjectContext!
-    
     
     //-Perform when view loads
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //-Create Navbar Buttons
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Edit, target: self, action: "editButton")
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "addEvent")
-        
-        
+                
         //-Manage Top and Bottom bar colors
         self.navigationController!.navigationBar.barTintColor = UIColor(red:0.66,green:0.97,blue:0.59,alpha:1.0)
         self.tabBarController?.tabBar.barTintColor = UIColor(red:0.66,green:0.97,blue:0.59,alpha:1.0)
         
-        //-Start the fetched results controller
-        var error: NSError?
-        fetchedResultsController.performFetch(&error)
+        fetchedResultsController.performFetch(nil)
         
-        if let error = error {
-            println("Error performing initial fetch: \(error)")
-        }
-        
+        //-Set the view controller as the delegate
         fetchedResultsController.delegate = self
         
         // Unarchive the event when the list is first shown
@@ -153,7 +140,6 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
         if self.navigationItem.leftBarButtonItem?.title == "Done" {
             
             //-Recreate navigation Back button and change name to "Edit"
-            
             self.navigationItem.hidesBackButton = true
             let newBackButton = UIBarButtonItem(title: "Edit", style: UIBarButtonItemStyle.Plain, target: self, action: "editButton")
             self.navigationItem.leftBarButtonItem = newBackButton
@@ -208,6 +194,7 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
         
     }
     
+    
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
         if editButtonFlag == false {
@@ -236,11 +223,10 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
             controller.eventIndex = indexPath.row
             
             self.navigationController!.pushViewController(controller, animated: true)
-            //self.presentViewController(controller, animated: true, completion: nil)
             
         }
-        
     }
+    
     
     //-Configure Cell
     func configureCell(cell: BeGoodCollectionViewCell, atIndexPath indexPath: NSIndexPath) {
@@ -274,7 +260,6 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
     
     
     //-NSFetchedResultsController
-    
     lazy var fetchedResultsController: NSFetchedResultsController = {
         
         let fetchRequest = NSFetchRequest(entityName: "Events")
@@ -320,12 +305,12 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
         }
     }
     
-    // This method is invoked after all of the changed in the current batch have been collected
-    // into the three index path arrays (insert, delete, and upate). We now need to loop through the
-    // arrays and perform the changes.
+    //-This method is invoked after all of the changed in the current batch have been collected
+    //-into the three index path arrays (insert, delete, and upate). We now need to loop through the
+    //-arrays and perform the changes.
     //
-    // The most interesting thing about the method is the collection view's "performBatchUpdates" method.
-    // Notice that all of the changes are performed inside a closure that is handed to the collection view.
+    //-The most interesting thing about the method is the collection view's "performBatchUpdates" method.
+    //-Notice that all of the changes are performed inside a closure that is handed to the collection view.
     func controllerDidChangeContent(controller: NSFetchedResultsController) {
         
         collectionView.performBatchUpdates({() -> Void in
@@ -348,9 +333,7 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
     
     //-Click Button Decision function
     @IBAction func buttonButtonClicked() {
-        
         deleteSelectedEvents()
-
     }
     
     
@@ -362,13 +345,13 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
         }
     }
     
+    
     //-Delete Selected Picture function
     func deleteSelectedEvents() {
         
         var eventsToDelete = [Events]()
         for indexPath in selectedIndexes {
             eventsToDelete.append(fetchedResultsController.objectAtIndexPath(indexPath) as! Events)
-            
         }
         
         for event in eventsToDelete {
@@ -382,17 +365,14 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
         
         //-Archive the graph any time this list of events changes
         NSKeyedArchiver.archiveRootObject(self.events, toFile: eventsFilePath)
-
     }
     
     
     //-Create a New Event
-    func addEvent() {
-        
+    func addEvent() {        
         let controller = self.storyboard?.instantiateViewControllerWithIdentifier("BeGoodAddEventViewController") as! BeGoodAddEventViewController
         controller.editEventFlag = false
         self.navigationController!.pushViewController(controller, animated: true)
-        
     }
     
     

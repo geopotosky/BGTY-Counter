@@ -38,8 +38,6 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
     @IBOutlet weak var daysWordLabel: UILabel!
     @IBOutlet weak var untilEventText2: UITextField!
 
-    
-    
     //-Global objects, properties & variables
     var events: [Events]!
 
@@ -52,8 +50,6 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
     var timeAtPress = NSDate()
     var currentDateWithOffset = NSDate()
     var count: Int!
-    //var count = 180
-    //var eventText: String!
     var pickEventDate: NSDate!
     var tempEventDate: NSDate!
     
@@ -64,7 +60,7 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
     var durationWeeks: Int!
     var durationMonths: Int!
     
-    //* - Alert variable
+    //-Alert variable
     var alertMessage: String!
     var alertTitle: String!
     
@@ -77,7 +73,7 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
     ]
     
     
-    //Perform when view did load
+    //-Perform when view did load
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -94,7 +90,7 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
 
         fetchedResultsController.performFetch(nil)
         
-        // Set the view controller as the delegate
+        //-Set the view controller as the delegate
         fetchedResultsController.delegate = self
         
         
@@ -117,7 +113,7 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         
     }
     
-    //Perform when view will appear
+    //-Perform when view will appear
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -132,7 +128,7 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         daysWordLabel.hidden = false
         countDownLabel.hidden = true
         
-        //-Set MG button to OFF
+        //-Set Magic Wand button to OFF
         mgFactorValue = 0
         mgFactorLabel.text = "OFF"
         
@@ -218,11 +214,7 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
             untilEventText2.text = ("Only \(tempText1) Seconds")
         default:
             println("Less than 1 day left")
-
-            
-            
         }
-
     }
     
     
@@ -260,8 +252,6 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         
         //-Create and add the Delete Event action
         let deleteAction: UIAlertAction = UIAlertAction(title: "Delete Event", style: .Default) { action -> Void in
-//            let object = UIApplication.sharedApplication().delegate
-//            let appDelegate = object as! AppDelegate
             
             let event = self.fetchedResultsController.objectAtIndexPath(self.eventIndexPath) as! Events
             self.sharedContext.deleteObject(event)
@@ -365,8 +355,7 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         durationHours = (count / 60) / 60
         durationDays = ((count / 60) / 60) / 24
         durationWeeks = (((count / 60) / 60) / 24) / 7
-        
-        
+    
     }
     
     
@@ -382,12 +371,12 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         durationDays = ((durationSeconds / 60) / 60) / 24
         durationWeeks = (((durationSeconds / 60) / 60) / 24) / 7
         
-        //-Disable MG button is days < 2
+        //-Disable Magic Wand button is days < 2
         if durationDays < 2 {
-            //mgFactorLabel.enabled = false
+            mgFactorLabel.enabled = false
             mgFactorButon.enabled = false
         } else {
-            //mgFactorLabel.enabled = true
+            mgFactorLabel.enabled = true
             mgFactorButon.enabled = true
         }
         
@@ -420,7 +409,7 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
     }
     
     
-    //-MG Factor is a special function which removes 1 days from the front of the vacation
+    //-The Magic Wand is a special method which removes 1 day from the front of the vacation
     //-and 1 day from the back. After all, does anybody really count those days when your planning? :-)
     @IBAction func mgFactor(sender: UIButton) {
         
@@ -449,7 +438,6 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
     }
 
     
-    
     //-Call the Popover Menu
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
         switch(segue.identifier!){
@@ -464,11 +452,11 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         }
     }
     
-}
+} //- END main class
 
 
 
-//- Separate the Sharing and Calendar Method to better organize the code
+//-Separate the Sharing and Calendar Method to better organize the code
 
 extension BeGoodShowViewController : NSFetchedResultsControllerDelegate {
     
@@ -503,19 +491,19 @@ extension BeGoodShowViewController : NSFetchedResultsControllerDelegate {
         
         activityVC.excludedActivityTypes =  [
             UIActivityTypeSaveToCameraRoll
-            //            UIActivityTypePostToTwitter,
-            //            UIActivityTypePostToFacebook,
-            //            UIActivityTypePostToWeibo,
-            //            UIActivityTypeMessage,
-            //            UIActivityTypeMail,
-            //            UIActivityTypePrint,
-            //            UIActivityTypeCopyToPasteboard,
-            //            UIActivityTypeAssignToContact,
-            //            UIActivityTypeSaveToCameraRoll,
-            //            UIActivityTypeAddToReadingList,
-            //            UIActivityTypePostToFlickr,
-            //            UIActivityTypePostToVimeo,
-            //            UIActivityTypePostToTencentWeibo
+            //UIActivityTypePostToTwitter,
+            //UIActivityTypePostToFacebook,
+            //UIActivityTypePostToWeibo,
+            //UIActivityTypeMessage,
+            //UIActivityTypeMail,
+            //UIActivityTypePrint,
+            //UIActivityTypeCopyToPasteboard,
+            //UIActivityTypeAssignToContact,
+            //UIActivityTypeSaveToCameraRoll,
+            //UIActivityTypeAddToReadingList,
+            //UIActivityTypePostToFlickr,
+            //UIActivityTypePostToVimeo,
+            //UIActivityTypePostToTencentWeibo
         ]
         
         activityVC.completionWithItemsHandler = {
@@ -524,7 +512,6 @@ extension BeGoodShowViewController : NSFetchedResultsControllerDelegate {
                 self.dismissViewControllerAnimated(true, completion: nil)
             }
         }
-        
         self.presentViewController(activityVC, animated: true, completion: nil)
     }
     
@@ -537,7 +524,6 @@ extension BeGoodShowViewController : NSFetchedResultsControllerDelegate {
         switch EKEventStore.authorizationStatusForEntityType(EKEntityTypeEvent) {
         case .Authorized:
             println("authorized")
-            //extractEventEntityCalendarsOutOfStore(eventStore)
             insertEvent(eventStore)
         case .Denied:
             println("Access denied")
@@ -545,7 +531,6 @@ extension BeGoodShowViewController : NSFetchedResultsControllerDelegate {
             eventStore.requestAccessToEntityType(EKEntityTypeEvent, completion:
                 {[weak self] (granted: Bool, error: NSError!) -> Void in
                     if granted {
-                        //self!.extractEventEntityCalendarsOutOfStore(eventStore)
                         self!.insertEvent(eventStore)
                     } else {
                         println("Access denied")
@@ -583,7 +568,7 @@ extension BeGoodShowViewController : NSFetchedResultsControllerDelegate {
                 calendarEvent.startDate = startDate
                 calendarEvent.endDate = endDate
                 
-                //-Set alert for 2 hours prior to Event
+                //-Set alert for 1 hour prior to Event
                 let alarm = EKAlarm(relativeOffset: -3600.0)
                 calendarEvent.addAlarm(alarm)
                 

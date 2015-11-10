@@ -23,7 +23,6 @@ class BGClient : NSObject {
     //-Objects
     var events: Events!
     
-    
     override init() {
         session = NSURLSession.sharedSession()
         super.init()
@@ -35,9 +34,7 @@ class BGClient : NSObject {
         }()
     
     
-    
     //-Get Flickr Pictures Loop
-    
     func getFlickrData(hostViewController: UIViewController, completionHandler: (success: Bool, pictureURL: String?, errorString: String?) -> Void) {
         
         //-Assign Search Phrase shared value
@@ -72,10 +69,8 @@ class BGClient : NSObject {
     }
     
     
-    
-    //* ---------------------------- Flickr API ------------------------- */
-    
-    //-Function makes first request to get a random page, then it makes a request to get an image with the random page
+    //-Flickr API function
+    //-Make first request to get a random page, then makes a request to get an image with the random page
     func getImageFromFlickrBySearch(methodArguments: [String : AnyObject], completionHandler: (success: Bool, pageNumber: Int, errorString: String?) -> Void) {
         
         //-Get the Shared NSURLSession to facilitate Network Activity
@@ -210,10 +205,7 @@ class BGClient : NSObject {
         
         return (!urlVars.isEmpty ? "?" : "") + join("&", urlVars)
     }
-    
-    //------------------------- End Flickr API --------------------------
-    
-    
+        
     
     //-Shared Instance
     

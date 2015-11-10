@@ -32,7 +32,6 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
         self.navigationItem.leftBarButtonItem = self.editButtonItem()
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "addEvent")
         
-        
         //-Manage Top and Bottom bar colors
         //-Green Bars
         self.navigationController!.navigationBar.barTintColor = UIColor(red:0.66,green:0.97,blue:0.59,alpha:1.0)
@@ -42,7 +41,6 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
         
         //-Set the view controller as the delegate
         fetchedResultsController.delegate = self
-        
         
         //-Unarchive the event when the list is first shown
         self.events = NSKeyedUnarchiver.unarchiveObjectWithFile(eventsFilePath) as? [Events] ?? [Events]()
@@ -70,10 +68,9 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
     
     //-Reset the Table Edit view when the view disappears
     override func viewWillDisappear(animated: Bool) {
-        
         resetEditing(false, animated: false)
-       
     }
+    
     
     //-Set Table Editing
     override func setEditing(editing: Bool, animated: Bool) {
@@ -113,7 +110,6 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
     
     
     //-Configure Cell
-    
     func configureCell(cell: UITableViewCell, withEvent event: Events) {
         
         //-Format the Date for the cell
@@ -140,12 +136,10 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
     }
     
     
-    
     //-Table View Data Source
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let sectionInfo = self.fetchedResultsController.sections![section] as! NSFetchedResultsSectionInfo
-        
         return sectionInfo.numberOfObjects
         
     }
@@ -222,10 +216,8 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
                 return
             }
     }
-    //
-    // This is the most interesting method. Take particular note of way the that newIndexPath
-    // parameter gets unwrapped and put into an array literal: [newIndexPath!]
-    //
+
+    
     func controller(controller: NSFetchedResultsController,
         didChangeObject anObject: AnyObject,
         atIndexPath indexPath: NSIndexPath?,
@@ -252,6 +244,8 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
                 return
             }
     }
+ 
+    
     func controllerDidChangeContent(controller: NSFetchedResultsController) {
         self.tableView.endUpdates()
     }

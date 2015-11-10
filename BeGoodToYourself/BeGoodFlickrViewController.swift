@@ -148,9 +148,10 @@ class BeGoodFlickrViewController: UIViewController {
 
     }
 
-    
+    //-Pick the selected image button
     @IBAction func pickFlickrImage(sender: UIButton) {
         
+        //-If edit event flag is set to true, then prep for return to Add VC for existing event
         if editEventFlag2 == true {
             let controller = self.navigationController!.viewControllers[2] as! BeGoodAddEventViewController
             //-Forward selected event date to previous view
@@ -160,6 +161,7 @@ class BeGoodFlickrViewController: UIViewController {
 
             self.navigationController?.popViewControllerAnimated(true)
             
+        //-If edit event flag is set to false, then prep for return to Add VC for new event
         } else {
             let controller = self.navigationController!.viewControllers[1] as! BeGoodAddEventViewController
             //-Forward selected event date to previous view

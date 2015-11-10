@@ -60,19 +60,13 @@ class TodoTableViewController: UITableViewController, NSFetchedResultsController
     
     //-Table view data source
     
-//    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-//        // #warning Potentially incomplete method implementation.
-//        // Return the number of sections.
-//        return 1
-//    }
-    
     
     //-Add the "sharedContext" convenience property
     var sharedContext: NSManagedObjectContext {
         return CoreDataStackManager.sharedInstance().managedObjectContext!
     }
     
-    //-Fetch the Todo List data
+    //-Fetch the To Do List data
     lazy var fetchedResultsController: NSFetchedResultsController = {
         
         let fetchRequest = NSFetchRequest(entityName: "TodoList")
@@ -120,7 +114,7 @@ class TodoTableViewController: UITableViewController, NSFetchedResultsController
             switch (editingStyle) {
             case .Delete:
                 
-                //-Here we get the Todo List item, then delete it from core data
+                //-Here we get the To Do List item, then delete it from Core Data
                 let todos = fetchedResultsController.objectAtIndexPath(indexPath) as! TodoList
                 sharedContext.deleteObject(todos)
                 CoreDataStackManager.sharedInstance().saveContext()
@@ -188,13 +182,13 @@ class TodoTableViewController: UITableViewController, NSFetchedResultsController
     }
     
     
-    //- Display Todo List data in table scene
+    //-Display To Do List data in table scene
     func configureCell(cell: UITableViewCell, withList todos: TodoList) {
         cell.textLabel?.text = todos.todoListText
     }
     
     
-    //-Save edited Todo List data
+    //-Save edited To Do List data
     @IBAction func editToMainViewController (segue:UIStoryboardSegue) {
         
         let detailViewController = segue.sourceViewController as! TodoEditTableViewController
@@ -209,7 +203,7 @@ class TodoTableViewController: UITableViewController, NSFetchedResultsController
     }
     
     
-    //- Save New Todo List data
+    //-Save New To Do List data
     @IBAction func saveToMainViewController (segue:UIStoryboardSegue) {
         
         let detailViewController = segue.sourceViewController as! TodoAddTableViewController
@@ -232,16 +226,14 @@ class TodoTableViewController: UITableViewController, NSFetchedResultsController
             
             var path = tableView.indexPathForSelectedRow()
             var detailViewController = segue.destinationViewController as! TodoEditTableViewController
-            
             detailViewController.events = self.events
             detailViewController.todosIndexPath = path
-            //detailViewController.todosIndex = path?.row
             
         }
     }
     
     
-    //-Add Todo List item function
+    //-Add To Do List item function
     func addTodoList(){
 
         let storyboard = self.storyboard
@@ -250,7 +242,7 @@ class TodoTableViewController: UITableViewController, NSFetchedResultsController
     }
     
     
-    //-Cancel Todo List item function
+    //-Cancel To Do List item function
     func cancelTodoList(){
 
         var tmpController :UIViewController! = self.presentingViewController;

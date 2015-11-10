@@ -247,6 +247,7 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
     }
     
     
+    //-Call the Flickr VC
     @IBAction func getFlickrImage(sender: UIButton) {
         
         let storyboard = self.storyboard
@@ -255,7 +256,6 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
         controller.eventIndexPath2 = self.eventIndexPath2
         controller.currentImage = imageViewPicker.image
         self.navigationController!.pushViewController(controller, animated: true)
-        
     }
 
     
@@ -277,11 +277,12 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
     }
     
     
-    //-Save the Event
+    //-Save the Event method
     func saveEvent() {
         
         let eventImage = UIImageJPEGRepresentation(imageViewPicker.image, 100)
         
+        //-If the edit event flag is set to true, save a existing event
         if editEventFlag == true {
             
             if textFieldEvent.text == "" {
@@ -306,6 +307,7 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
                 self.navigationController?.popViewControllerAnimated(true)
             }
             
+        //-If the edit event flag is set to false, save a new event
         } else {
             if textFieldEvent.text == "" {
                 self.alertMessage = "Please Add an Event Description"
