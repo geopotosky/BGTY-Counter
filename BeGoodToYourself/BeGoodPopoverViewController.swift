@@ -57,7 +57,7 @@ class BeGoodPopoverViewController: UITableViewController, UIPopoverPresentationC
         
         fetchedResultsController.performFetch(nil)
         
-        // Set the view controller as the delegate
+        //-Set the view controller as the delegate
         fetchedResultsController.delegate = self
     }
     
@@ -89,7 +89,6 @@ class BeGoodPopoverViewController: UITableViewController, UIPopoverPresentationC
         let eventMenu = tableView.cellForRowAtIndexPath(indexPath)!.textLabel!.text
         if eventMenu == "To Do List" {
             
-//            let storyboard = self.storyboard
             let controller = self.storyboard?.instantiateViewControllerWithIdentifier("TodoTableViewController") as! TodoTableViewController
             
             let event = fetchedResultsController.objectAtIndexPath(eventIndexPath2) as! Events
@@ -118,8 +117,8 @@ class BeGoodPopoverViewController: UITableViewController, UIPopoverPresentationC
         
     }
     
-    // popover settings, adaptive for horizontal compact trait
-    // #pragma mark - UIPopoverPresentationControllerDelegate
+    //-popover settings, adaptive for horizontal compact trait
+    //-#pragma mark - UIPopoverPresentationControllerDelegate
     
     func adaptivePresentationStyleForPresentationController(PC: UIPresentationController) -> UIModalPresentationStyle{
         
