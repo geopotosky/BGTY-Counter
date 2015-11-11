@@ -11,7 +11,7 @@ import UIKit
 
 //* - Create custom button
 class CornerButton: UIButton {
-    required init(coder Decoder: NSCoder) {
+    required init?(coder Decoder: NSCoder) {
         super.init(coder: Decoder)
         //let borderColor = UIColor(red:0.6,green:1.0,blue:0.6,alpha:1.0)
         let borderColor = UIColor.clearColor()

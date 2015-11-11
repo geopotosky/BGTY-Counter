@@ -71,21 +71,21 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
         
         //-Date Picker Formatting -----------------------------------------------------
         
-        var dateFormatter = NSDateFormatter()
+        let dateFormatter = NSDateFormatter()
         
         self.todaysDate = NSDate()
-        let date = NSDate()
+        //let date = NSDate()
         let timeZone = NSTimeZone(name: "Local")
         
         dateFormatter.timeZone = timeZone
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        let dateNew = dateFormatter.stringFromDate(date)
+        //let dateNew = dateFormatter.stringFromDate(date)
         
         dateFormatter.timeStyle = NSDateFormatterStyle.MediumStyle //Set time style
         dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle //Set date style
         dateFormatter.timeZone = NSTimeZone()
         
-        let localDate = dateFormatter.stringFromDate(date)
+        //let localDate = dateFormatter.stringFromDate(date)
         
         //-----------------------------------------------------------------------------
         
@@ -98,7 +98,10 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
         self.textFieldEvent.delegate = eventTextDelegate
         
         
-        fetchedResultsController.performFetch(nil)
+        do {
+            try fetchedResultsController.performFetch()
+        } catch _ {
+        }
         
         //-Set the view controller as the delegate
         fetchedResultsController.delegate = self
@@ -118,7 +121,7 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
             imageViewPicker.image = UIImage(data: event.eventImage!)
             currentEventDate = event.eventDate
             
-            var dateFormatter = NSDateFormatter()
+            let dateFormatter = NSDateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
             dateFormatter.timeStyle = NSDateFormatterStyle.MediumStyle //Set time style
             dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle //Set date style
@@ -145,7 +148,7 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
             self.imageViewPicker.image = flickrImage
         }
         
-        var dateFormatter = NSDateFormatter()
+        let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         dateFormatter.timeStyle = NSDateFormatterStyle.MediumStyle //Set time style
         dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle //Set date style
@@ -218,7 +221,7 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
     
     //-Select an image for the Event from your Camera Roll
     func imagePickerController(imagePicker: UIImagePickerController,
-        didFinishPickingMediaWithInfo info: [NSObject : AnyObject]){
+        didFinishPickingMediaWithInfo info: [String : AnyObject]){
             
             if let eventImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
                 self.imageViewPicker.image = eventImage
@@ -249,8 +252,7 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
     
     //-Call the Flickr VC
     @IBAction func getFlickrImage(sender: UIButton) {
-        
-        let storyboard = self.storyboard
+
         let controller = self.storyboard?.instantiateViewControllerWithIdentifier("BeGoodFlickrViewController") as! BeGoodFlickrViewController
         controller.editEventFlag2 = editEventFlag
         controller.eventIndexPath2 = self.eventIndexPath2
@@ -280,7 +282,7 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
     //-Save the Event method
     func saveEvent() {
         
-        let eventImage = UIImageJPEGRepresentation(imageViewPicker.image, 100)
+        let eventImage = UIImageJPEGRepresentation(imageViewPicker.image!, 100)
         
         //-If the edit event flag is set to true, save a existing event
         if editEventFlag == true {
@@ -315,7 +317,8 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
             } else {
                 
                 //-Save new event
-                let eventToBeAdded = Events(eventDate: self.currentEventDate, textEvent: textFieldEvent.text!, eventImage: eventImage, context: sharedContext)
+                let _ = Events(eventDate: self.currentEventDate, textEvent: textFieldEvent.text!, eventImage: eventImage, context: sharedContext)
+                //let eventToBeAdded = Events(eventDate: self.currentEventDate, textEvent: textFieldEvent.text!, eventImage: eventImage, context: sharedContext)
             
                 //-Save the shared context, using the convenience method in the CoreDataStackManager
                 CoreDataStackManager.sharedInstance().saveContext()
@@ -334,8 +337,8 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
             
             //-Update alert colors and attributes
             actionSheetController.view.tintColor = UIColor.blueColor()
-            let subview = actionSheetController.view.subviews.first! as! UIView
-            let alertContentView = subview.subviews.first! as! UIView
+            let subview = actionSheetController.view.subviews.first! 
+            let alertContentView = subview.subviews.first! 
             alertContentView.backgroundColor = UIColor(red:0.66,green:0.97,blue:0.59,alpha:1.0)
             alertContentView.layer.cornerRadius = 5;
             
@@ -354,8 +357,8 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
     //-Saving the array Helper.
     var eventsFilePath : String {
         let manager = NSFileManager.defaultManager()
-        let url = manager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first as! NSURL
-        println(url.URLByAppendingPathComponent("events").path!)
+        let url = manager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first! as NSURL
+        print(url.URLByAppendingPathComponent("events").path!)
         return url.URLByAppendingPathComponent("events").path!
     }
     

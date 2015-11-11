@@ -34,36 +34,36 @@ class BeGoodPickDateViewController: UIViewController {
         //-Otherwise set the current date
         if editEventFlag2 == true {
             
-            var dateFormatter = NSDateFormatter()
+            let dateFormatter = NSDateFormatter()
             
             //-Set the selected event date
             myDatePicker.date = currentEventDate
             
-            let date = NSDate()
+            //let date = NSDate()
             let timeZone = NSTimeZone(name: "Local")
             dateFormatter.timeZone = timeZone
             dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-            let dateNew = dateFormatter.stringFromDate(date)
+            //let dateNew = dateFormatter.stringFromDate(date)
             dateFormatter.timeStyle = NSDateFormatterStyle.MediumStyle //Set time style
             dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle //Set date style
             dateFormatter.timeZone = NSTimeZone()
-            let localDate = dateFormatter.stringFromDate(date)
+            //let localDate = dateFormatter.stringFromDate(date)
             let strDate = dateFormatter.stringFromDate(myDatePicker.date)
             self.eventDateLabel.text = strDate
         }
         else {
-            var dateFormatter = NSDateFormatter()
+            let dateFormatter = NSDateFormatter()
             
             let date = NSDate()
             let timeZone = NSTimeZone(name: "Local")
             dateFormatter.timeZone = timeZone
             dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-            let dateNew = dateFormatter.stringFromDate(date)
+            //let dateNew = dateFormatter.stringFromDate(date)
             dateFormatter.timeStyle = NSDateFormatterStyle.MediumStyle //Set time style
             dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle //Set date style
             dateFormatter.timeZone = NSTimeZone()
             let localDate = dateFormatter.stringFromDate(date)
-            let strDate = dateFormatter.stringFromDate(myDatePicker.date)
+            //let strDate = dateFormatter.stringFromDate(myDatePicker.date)
             self.eventDateLabel.text = localDate
         }
         
@@ -73,21 +73,21 @@ class BeGoodPickDateViewController: UIViewController {
     //-Date Picker function
     @IBAction func datePickerAction(sender: AnyObject) {
         
-        var dateFormatter = NSDateFormatter()
+        let dateFormatter = NSDateFormatter()
         
-        let pickerDate = myDatePicker.date
+        //let pickerDate = myDatePicker.date
         
-        let date = NSDate()
+        //let date = NSDate()
         let timeZone = NSTimeZone(name: "Local")
         dateFormatter.timeZone = timeZone
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        let dateNew = dateFormatter.stringFromDate(date)
+        //let dateNew = dateFormatter.stringFromDate(date)
         //-To prevent displaying either date or time, set the desired style to NoStyle.
         dateFormatter.timeStyle = NSDateFormatterStyle.MediumStyle //Set time style
         dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle //Set date style
         dateFormatter.timeZone = NSTimeZone()
         
-        let localDate = dateFormatter.stringFromDate(date)
+        //let localDate = dateFormatter.stringFromDate(date)
         let strDate = dateFormatter.stringFromDate(myDatePicker.date)
         self.eventDateLabel.text = strDate
         self.currentEventDate = myDatePicker.date

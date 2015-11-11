@@ -86,8 +86,8 @@ class BGClient : NSObject {
                 completionHandler(success: false, pageNumber: 0, errorString: "Could not complete the request \(error)")
             } else {
                 
-                var parsingError: NSError? = nil
-                let parsedResult = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments, error: &parsingError) as! NSDictionary
+                //var parsingError: NSError? = nil
+                let parsedResult = (try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments)) as! NSDictionary
                 
                 //-Get the photos dictionary
                 if let photosDictionary = parsedResult.valueForKey("photos") as? [String:AnyObject] {
@@ -131,8 +131,8 @@ class BGClient : NSObject {
             if let error = downloadError {
                 completionHandler(success: false, pictureURL: nil, errorString: "Could not complete the request \(error)")
             } else {
-                var parsingError: NSError? = nil
-                let parsedResult = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments, error: &parsingError) as! NSDictionary
+                //var parsingError: NSError? = nil
+                let parsedResult = (try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments)) as! NSDictionary
                 
                 //-Get the photos dictionary
                 if let photosDictionary = parsedResult.valueForKey("photos") as? [String:AnyObject] {
@@ -156,12 +156,12 @@ class BGClient : NSObject {
                             let urlRequest = NSURLRequest(URL: imageURL!)
                             let mainQueue = NSOperationQueue()
                             
-                            NSURLConnection.sendAsynchronousRequest(urlRequest, queue: mainQueue, completionHandler:{(response: NSURLResponse!, data: NSData!, error: NSError!) -> Void in
-                                if data.length > 0 && error == nil {
+                            NSURLConnection.sendAsynchronousRequest(urlRequest, queue: mainQueue, completionHandler:{(response: NSURLResponse?, data: NSData?, error: NSError?) -> Void in
+                                if data!.length > 0 && error == nil {
 
                                     completionHandler(success: true, pictureURL: imageUrlString, errorString: nil)
                                 }
-                                else if data.length == 0 && error == nil {
+                                else if data!.length == 0 && error == nil {
                                         completionHandler(success: false, pictureURL: nil, errorString: "Nothing was downloaded")
                                 }
                                 else
@@ -203,7 +203,7 @@ class BGClient : NSObject {
             
         }
         
-        return (!urlVars.isEmpty ? "?" : "") + join("&", urlVars)
+        return (!urlVars.isEmpty ? "?" : "") + urlVars.joinWithSeparator("&")
     }
         
     

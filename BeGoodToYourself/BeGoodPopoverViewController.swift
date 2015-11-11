@@ -31,7 +31,7 @@ class BeGoodPopoverViewController: UITableViewController, UIPopoverPresentationC
     
     
     required init(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+        super.init(coder: aDecoder)!
         
         //-Cancel button
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Cancel, target: self, action: "tapCancel:")
@@ -55,7 +55,10 @@ class BeGoodPopoverViewController: UITableViewController, UIPopoverPresentationC
 
         self.popoverPresentationController?.backgroundColor = UIColor.whiteColor()
         
-        fetchedResultsController.performFetch(nil)
+        do {
+            try fetchedResultsController.performFetch()
+        } catch _ {
+        }
         
         //-Set the view controller as the delegate
         fetchedResultsController.delegate = self

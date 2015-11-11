@@ -12,7 +12,7 @@ import UIKit
 
 //* - Create custom button
 class MGButton: UIButton {
-    required init(coder Decoder: NSCoder) {
+    required init?(coder Decoder: NSCoder) {
         super.init(coder: Decoder)
         //let borderColor = UIColor(red:0.0,green:0.5,blue:0.8,alpha:1.0)
         let borderColor = UIColor.clearColor()

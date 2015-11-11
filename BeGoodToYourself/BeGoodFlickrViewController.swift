@@ -100,7 +100,7 @@ class BeGoodFlickrViewController: UIViewController {
         self.dismissAnyVisibleKeyboards()
         
         //-Verify Phrase Textfield in NOT Empty
-        if !self.phraseTextField.text.isEmpty {
+        if !self.phraseTextField.text!.isEmpty {
             
             //-Call the Get Flickr Images function
             BGClient.sharedInstance().getFlickrData(self) { (success, pictureURL, errorString) in
@@ -200,8 +200,8 @@ class BeGoodFlickrViewController: UIViewController {
             
             //-Update alert colors and attributes
             actionSheetController.view.tintColor = UIColor.blueColor()
-            let subview = actionSheetController.view.subviews.first! as! UIView
-            let alertContentView = subview.subviews.first! as! UIView
+            let subview = actionSheetController.view.subviews.first! 
+            let alertContentView = subview.subviews.first! 
             alertContentView.backgroundColor = UIColor(red:0.66,green:0.97,blue:0.59,alpha:1.0)
             alertContentView.layer.cornerRadius = 5;
             

@@ -37,7 +37,10 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
         self.navigationController!.navigationBar.barTintColor = UIColor(red:0.66,green:0.97,blue:0.59,alpha:1.0)
         self.tabBarController?.tabBar.barTintColor = UIColor(red:0.66,green:0.97,blue:0.59,alpha:1.0)
         
-        fetchedResultsController.performFetch(nil)
+        do {
+            try fetchedResultsController.performFetch()
+        } catch _ {
+        }
         
         //-Set the view controller as the delegate
         fetchedResultsController.delegate = self
@@ -113,7 +116,7 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
     func configureCell(cell: UITableViewCell, withEvent event: Events) {
         
         //-Format the Date for the cell
-        var dateFormatter = NSDateFormatter()
+        let dateFormatter = NSDateFormatter()
         dateFormatter.timeStyle = NSDateFormatterStyle.MediumStyle //Set time style
         dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle //Set date style
         dateFormatter.timeZone = NSTimeZone()
@@ -126,9 +129,9 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
         cell.imageView!.image = finalImage
         
         //-Lock the table image size to 50x50
-        var itemSize: CGSize = CGSizeMake(50, 50)
+        let itemSize: CGSize = CGSizeMake(50, 50)
         UIGraphicsBeginImageContextWithOptions(itemSize, false, CGFloat())
-        var imageRect: CGRect = CGRectMake(0.0, 0.0, itemSize.width, itemSize.height)
+        let imageRect: CGRect = CGRectMake(0.0, 0.0, itemSize.width, itemSize.height)
         cell.imageView!.image!.drawInRect(imageRect)
         cell.imageView!.image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
@@ -139,7 +142,7 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
     //-Table View Data Source
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let sectionInfo = self.fetchedResultsController.sections![section] as! NSFetchedResultsSectionInfo
+        let sectionInfo = self.fetchedResultsController.sections![section] 
         return sectionInfo.numberOfObjects
         
     }
@@ -150,7 +153,7 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
         let CellIdentifier = "BeGoodTableCell"
         
         let event = fetchedResultsController.objectAtIndexPath(indexPath) as! Events
-        let cell = tableView.dequeueReusableCellWithIdentifier(CellIdentifier) as! UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(CellIdentifier)! as UITableViewCell
         
         //-This is the new configureCell method
         configureCell(cell, withEvent: event)
@@ -165,13 +168,12 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
         let controller =
         storyboard!.instantiateViewControllerWithIdentifier("BeGoodShowViewController") as! BeGoodShowViewController
 
-        let event = fetchedResultsController.objectAtIndexPath(indexPath) as! Events
+        //let event = fetchedResultsController.objectAtIndexPath(indexPath) as! Events
 
         controller.eventIndexPath = indexPath
         controller.eventIndex = indexPath.row
         
         self.navigationController!.pushViewController(controller, animated: true)
-        //self.presentViewController(controller, animated: true, completion: nil)
         
     }
     
@@ -217,13 +219,11 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
             }
     }
 
-    
     func controller(controller: NSFetchedResultsController,
         didChangeObject anObject: AnyObject,
         atIndexPath indexPath: NSIndexPath?,
         forChangeType type: NSFetchedResultsChangeType,
         newIndexPath: NSIndexPath?) {
-            
             switch type {
             case .Insert:
                 tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
@@ -240,10 +240,37 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
                 tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
                 tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
                 
-            default:
-                return
+//            default:
+//                return
             }
     }
+    
+//    func controller(controller: NSFetchedResultsController,
+//        didChangeObject anObject: NSManagedObject,
+//        atIndexPath indexPath: NSIndexPath?,
+//        forChangeType type: NSFetchedResultsChangeType,
+//        newIndexPath: NSIndexPath?) {
+//            
+//            switch type {
+//            case .Insert:
+//                tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
+//                
+//            case .Delete:
+//                tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
+//                
+//            case .Update:
+//                let cell = tableView.cellForRowAtIndexPath(indexPath!) as UITableViewCell?
+//                let event = controller.objectAtIndexPath(indexPath!) as! Events
+//                self.configureCell(cell!, withEvent: event)
+//                
+//            case .Move:
+//                tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
+//                tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
+//                
+//            default:
+//                return
+//            }
+//    }
  
     
     func controllerDidChangeContent(controller: NSFetchedResultsController) {
@@ -263,8 +290,8 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
     //-Saving the array Helper.
     var eventsFilePath : String {
         let manager = NSFileManager.defaultManager()
-        let url = manager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first as! NSURL
-        println(url.URLByAppendingPathComponent("events").path!)
+        let url = manager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first! as NSURL
+        print(url.URLByAppendingPathComponent("events").path!)
         return url.URLByAppendingPathComponent("events").path!
     }
     
@@ -276,8 +303,8 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
             
             //-Update alert colors and attributes
             actionSheetController.view.tintColor = UIColor.blueColor()
-            let subview = actionSheetController.view.subviews.first! as! UIView
-            let alertContentView = subview.subviews.first! as! UIView
+            let subview = actionSheetController.view.subviews.first! 
+            let alertContentView = subview.subviews.first! 
             alertContentView.backgroundColor = UIColor(red:0.66,green:0.97,blue:0.59,alpha:1.0)
             alertContentView.layer.cornerRadius = 5;
             

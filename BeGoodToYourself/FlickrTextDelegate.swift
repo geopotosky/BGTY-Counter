@@ -14,7 +14,7 @@ class FlickrTextDelegate: NSObject, UITextFieldDelegate {
     //-Ask the delegate if the textfield should change
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
         
-        var newText: NSString = textField.text
+        var newText: NSString = textField.text!
         newText = newText.stringByReplacingCharactersInRange(range, withString: string)
         return true;
     }

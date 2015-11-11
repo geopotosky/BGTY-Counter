@@ -45,7 +45,7 @@ class TodoAddTableViewController: UITableViewController {
         if segue.identifier == "saveDataAdd" {
             editedModel = editModelTextField.text
         }
-        println("Segue Error")
+        print("Segue Error")
 
     }
     

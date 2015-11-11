@@ -33,7 +33,10 @@ class BudgetEditTableViewController: UITableViewController, UITextFieldDelegate,
         //-Textfield delegate values
         self.priceTextField.delegate = priceTextDelegate
         
-        fetchedResultsController.performFetch(nil)
+        do {
+            try fetchedResultsController.performFetch()
+        } catch _ {
+        }
         fetchedResultsController.delegate = self
         
         let budget = fetchedResultsController.objectAtIndexPath(budgetIndexPath) as! Budget
@@ -87,7 +90,7 @@ class BudgetEditTableViewController: UITableViewController, UITextFieldDelegate,
             dataString = textField.text
             priceString = priceTextField.text
         }
-        println("Segue Error")
+        print("Segue Error")
 
     }
     

@@ -33,11 +33,14 @@ class BudgetTableViewController: UITableViewController, NSFetchedResultsControll
         
         let b1 = self.editButtonItem()
         let b2 = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "addBudgetList")
-        let buttons = [b2, b1] as NSArray
+        //let buttons = [b2, b1] as NSArray
         self.navigationItem.rightBarButtonItems = [b2, b1]
         
         
-        fetchedResultsController.performFetch(nil)
+        do {
+            try fetchedResultsController.performFetch()
+        } catch _ {
+        }
         fetchedResultsController.delegate = self
         
     }
@@ -113,7 +116,7 @@ class BudgetTableViewController: UITableViewController, NSFetchedResultsControll
     //-Table view data source
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let sectionInfo = self.fetchedResultsController.sections![section] as! NSFetchedResultsSectionInfo
+        let sectionInfo = self.fetchedResultsController.sections![section] 
         return sectionInfo.numberOfObjects
     }
     
@@ -124,7 +127,7 @@ class BudgetTableViewController: UITableViewController, NSFetchedResultsControll
             
             let budget = fetchedResultsController.objectAtIndexPath(indexPath) as! Budget
             
-            let cell = tableView.dequeueReusableCellWithIdentifier(CellIdentifier) as!
+            let cell = tableView.dequeueReusableCellWithIdentifier(CellIdentifier)! as
             UITableViewCell
             
             configureCell(cell, withList: budget)
@@ -190,32 +193,57 @@ class BudgetTableViewController: UITableViewController, NSFetchedResultsControll
     }
     
 
-    func controller(controller: NSFetchedResultsController,
-        didChangeObject anObject: AnyObject,
-        atIndexPath indexPath: NSIndexPath?,
-        forChangeType type: NSFetchedResultsChangeType,
-        newIndexPath: NSIndexPath?) {
+    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
+        
+        switch type {
+        case .Insert:
+            tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
             
-            switch type {
-            case .Insert:
-                tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
-                
-            case .Delete:
-                tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
-                
-            case .Update:
-                let cell = tableView.cellForRowAtIndexPath(indexPath!) as UITableViewCell!
-                let budget = controller.objectAtIndexPath(indexPath!) as! Budget
-                self.configureCell(cell, withList: budget)
-                
-            case .Move:
-                tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
-                tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
-                
-            default:
-                return
-            }
+        case .Delete:
+            tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
+            
+        case .Update:
+            let cell = tableView.cellForRowAtIndexPath(indexPath!) as UITableViewCell!
+            let budget = controller.objectAtIndexPath(indexPath!) as! Budget
+            self.configureCell(cell, withList: budget)
+            
+        case .Move:
+            tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
+            tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
+            
+//        default:
+//            return
+        }
+        
     }
+    
+    
+//    func controller(controller: NSFetchedResultsController,
+//        didChangeObject anObject: NSManagedObject,
+//        atIndexPath indexPath: NSIndexPath?,
+//        forChangeType type: NSFetchedResultsChangeType,
+//        newIndexPath: NSIndexPath?) {
+//            
+//            switch type {
+//            case .Insert:
+//                tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
+//                
+//            case .Delete:
+//                tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
+//                
+//            case .Update:
+//                let cell = tableView.cellForRowAtIndexPath(indexPath!) as UITableViewCell!
+//                let budget = controller.objectAtIndexPath(indexPath!) as! Budget
+//                self.configureCell(cell, withList: budget)
+//                
+//            case .Move:
+//                tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
+//                tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
+//                
+//            default:
+//                return
+//            }
+//    }
     
     
     func controllerDidChangeContent(controller: NSFetchedResultsController) {
@@ -238,7 +266,7 @@ class BudgetTableViewController: UITableViewController, NSFetchedResultsControll
         
         let detailViewController = segue.sourceViewController as! BudgetEditTableViewController
         
-        let budget = fetchedResultsController.objectAtIndexPath(tableView.indexPathForSelectedRow()!) as! Budget
+        let budget = fetchedResultsController.objectAtIndexPath(tableView.indexPathForSelectedRow!) as! Budget
         budget.itemBudgetText = detailViewController.dataString!
         budget.priceBudgetText = detailViewController.priceString!
         self.sharedContext.refreshObject(budget, mergeChanges: true)
@@ -272,8 +300,8 @@ class BudgetTableViewController: UITableViewController, NSFetchedResultsControll
         
         if segue.identifier == "editBudget" {
             
-            var path = tableView.indexPathForSelectedRow()
-            var detailViewController = segue.destinationViewController as! BudgetEditTableViewController
+            let path = tableView.indexPathForSelectedRow
+            let detailViewController = segue.destinationViewController as! BudgetEditTableViewController
             detailViewController.events = self.events
             detailViewController.budgetIndexPath = path
         }
@@ -283,8 +311,7 @@ class BudgetTableViewController: UITableViewController, NSFetchedResultsControll
     
     //-Add Budget item function
     func addBudgetList(){
-        
-        let storyboard = self.storyboard
+
         let controller = self.storyboard?.instantiateViewControllerWithIdentifier("BudgetAddTableViewController") as! BudgetAddTableViewController
         self.navigationController!.pushViewController(controller, animated: true)
     }
@@ -293,7 +320,7 @@ class BudgetTableViewController: UITableViewController, NSFetchedResultsControll
     //-Cancel Budget List item function
     func cancelBudgetList(){
 
-        var tmpController :UIViewController! = self.presentingViewController;
+        let tmpController :UIViewController! = self.presentingViewController;
         
         self.dismissViewControllerAnimated(false, completion: {()->Void in
             tmpController.dismissViewControllerAnimated(false, completion: nil);

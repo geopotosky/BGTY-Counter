@@ -28,11 +28,14 @@ class TodoTableViewController: UITableViewController, NSFetchedResultsController
         
         let b1 = self.editButtonItem()
         let b2 = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "addTodoList")
-        let buttons = [b2, b1] as NSArray
+        //let buttons = [b2, b1] as NSArray
         self.navigationItem.rightBarButtonItems = [b2, b1]
         
-        //-Call Fetch method
-        fetchedResultsController.performFetch(nil)
+        do {
+            //-Call Fetch method
+            try fetchedResultsController.performFetch()
+        } catch _ {
+        }
         fetchedResultsController.delegate = self
         
     }
@@ -87,7 +90,7 @@ class TodoTableViewController: UITableViewController, NSFetchedResultsController
     //-Table view data source
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let sectionInfo = self.fetchedResultsController.sections![section] as! NSFetchedResultsSectionInfo
+        let sectionInfo = self.fetchedResultsController.sections![section] 
         return sectionInfo.numberOfObjects
     }
     
@@ -98,7 +101,7 @@ class TodoTableViewController: UITableViewController, NSFetchedResultsController
             
             let todos = fetchedResultsController.objectAtIndexPath(indexPath) as! TodoList
             
-            let cell = tableView.dequeueReusableCellWithIdentifier(CellIdentifier) as!
+            let cell = tableView.dequeueReusableCellWithIdentifier(CellIdentifier)! as
             UITableViewCell
             
             configureCell(cell, withList: todos)
@@ -148,33 +151,54 @@ class TodoTableViewController: UITableViewController, NSFetchedResultsController
             }
     }
     
-    
-    func controller(controller: NSFetchedResultsController,
-        didChangeObject anObject: AnyObject,
-        atIndexPath indexPath: NSIndexPath?,
-        forChangeType type: NSFetchedResultsChangeType,
-        newIndexPath: NSIndexPath?) {
+    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
+        switch type {
+        case .Insert:
+            tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
             
-            switch type {
-            case .Insert:
-                tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
-                
-            case .Delete:
-                tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
-                
-            case .Update:
-                let cell = tableView.cellForRowAtIndexPath(indexPath!) as UITableViewCell!
-                let todos = controller.objectAtIndexPath(indexPath!) as! TodoList
-                self.configureCell(cell, withList: todos)
-                
-            case .Move:
-                tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
-                tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
-                
-            default:
-                return
-            }
+        case .Delete:
+            tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
+            
+        case .Update:
+            let cell = tableView.cellForRowAtIndexPath(indexPath!) as UITableViewCell!
+            let todos = controller.objectAtIndexPath(indexPath!) as! TodoList
+            self.configureCell(cell, withList: todos)
+            
+        case .Move:
+            tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
+            tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
+            
+//        default:
+//            return
+        }
     }
+    
+//    func controller(controller: NSFetchedResultsController,
+//        didChangeObject anObject: NSManagedObject,
+//        atIndexPath indexPath: NSIndexPath?,
+//        forChangeType type: NSFetchedResultsChangeType,
+//        newIndexPath: NSIndexPath?) {
+//            
+//            switch type {
+//            case .Insert:
+//                tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
+//                
+//            case .Delete:
+//                tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
+//                
+//            case .Update:
+//                let cell = tableView.cellForRowAtIndexPath(indexPath!) as UITableViewCell!
+//                let todos = controller.objectAtIndexPath(indexPath!) as! TodoList
+//                self.configureCell(cell, withList: todos)
+//                
+//            case .Move:
+//                tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
+//                tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
+//                
+//            default:
+//                return
+//            }
+//    }
     
     
     func controllerDidChangeContent(controller: NSFetchedResultsController) {
@@ -193,7 +217,7 @@ class TodoTableViewController: UITableViewController, NSFetchedResultsController
         
         let detailViewController = segue.sourceViewController as! TodoEditTableViewController
         
-        let todos = fetchedResultsController.objectAtIndexPath(tableView.indexPathForSelectedRow()!) as! TodoList
+        let todos = fetchedResultsController.objectAtIndexPath(tableView.indexPathForSelectedRow!) as! TodoList
         todos.todoListText = detailViewController.editedModel!
         self.sharedContext.refreshObject(todos, mergeChanges: true)
         CoreDataStackManager.sharedInstance().saveContext()
@@ -224,8 +248,8 @@ class TodoTableViewController: UITableViewController, NSFetchedResultsController
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "edit" {
             
-            var path = tableView.indexPathForSelectedRow()
-            var detailViewController = segue.destinationViewController as! TodoEditTableViewController
+            let path = tableView.indexPathForSelectedRow
+            let detailViewController = segue.destinationViewController as! TodoEditTableViewController
             detailViewController.events = self.events
             detailViewController.todosIndexPath = path
             
@@ -236,7 +260,6 @@ class TodoTableViewController: UITableViewController, NSFetchedResultsController
     //-Add To Do List item function
     func addTodoList(){
 
-        let storyboard = self.storyboard
         let controller = self.storyboard?.instantiateViewControllerWithIdentifier("TodoAddTableViewController") as! TodoAddTableViewController
         self.navigationController!.pushViewController(controller, animated: true)
     }
@@ -245,7 +268,7 @@ class TodoTableViewController: UITableViewController, NSFetchedResultsController
     //-Cancel To Do List item function
     func cancelTodoList(){
 
-        var tmpController :UIViewController! = self.presentingViewController;
+        let tmpController :UIViewController! = self.presentingViewController;
         
         self.dismissViewControllerAnimated(false, completion: {()->Void in
             tmpController.dismissViewControllerAnimated(false, completion: nil);

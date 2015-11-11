@@ -26,8 +26,11 @@ class TodoEditTableViewController: UITableViewController, NSFetchedResultsContro
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //-Call Fetch method
-        fetchedResultsController.performFetch(nil)
+        do {
+            //-Call Fetch method
+            try fetchedResultsController.performFetch()
+        } catch _ {
+        }
         fetchedResultsController.delegate = self
         
         let todos = fetchedResultsController.objectAtIndexPath(todosIndexPath) as! TodoList
@@ -76,7 +79,7 @@ class TodoEditTableViewController: UITableViewController, NSFetchedResultsContro
         if segue.identifier == "saveDataEdit" {
             editedModel = editModelTextField.text
         }
-        println("Segue Error")
+        print("Segue Error")
 
     }
     

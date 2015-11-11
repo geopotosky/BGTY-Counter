@@ -15,7 +15,7 @@ class PriceTextDelegate: NSObject, UITextFieldDelegate {
         
         let newString = textField.text! + string
         
-        let array = Array(newString)
+        let array = Array(newString.characters)
         var pointCount = 0 //-count the decimal separator
         var unitsCount = 0 //-count units
         var decimalCount = 0 //-count decimals
@@ -43,7 +43,7 @@ class PriceTextDelegate: NSObject, UITextFieldDelegate {
                 return true
             }
         default: //-manage delete key
-            let array = Array(string)
+            let array = Array(string.characters)
             if array.count == 0 {
                 return true
             }
