@@ -74,18 +74,13 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
         let dateFormatter = NSDateFormatter()
         
         self.todaysDate = NSDate()
-        //let date = NSDate()
         let timeZone = NSTimeZone(name: "Local")
         
         dateFormatter.timeZone = timeZone
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        //let dateNew = dateFormatter.stringFromDate(date)
-        
         dateFormatter.timeStyle = NSDateFormatterStyle.MediumStyle //Set time style
         dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle //Set date style
         dateFormatter.timeZone = NSTimeZone()
-        
-        //let localDate = dateFormatter.stringFromDate(date)
         
         //-----------------------------------------------------------------------------
         
@@ -318,7 +313,6 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
                 
                 //-Save new event
                 let _ = Events(eventDate: self.currentEventDate, textEvent: textFieldEvent.text!, eventImage: eventImage, context: sharedContext)
-                //let eventToBeAdded = Events(eventDate: self.currentEventDate, textEvent: textFieldEvent.text!, eventImage: eventImage, context: sharedContext)
             
                 //-Save the shared context, using the convenience method in the CoreDataStackManager
                 CoreDataStackManager.sharedInstance().saveContext()

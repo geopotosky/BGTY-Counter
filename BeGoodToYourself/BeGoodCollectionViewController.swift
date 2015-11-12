@@ -303,30 +303,9 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
             break
         case .Move:
             break
-//        default:
-//            break
         }
     }
-    
-//    func controller(controller: NSFetchedResultsController, didChangeObject anObject: NSManagedObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
-//        
-//        switch type{
-//            
-//        case .Insert:
-//            insertedIndexPaths.append(newIndexPath!)
-//            break
-//        case .Delete:
-//            deletedIndexPaths.append(indexPath!)
-//            break
-//        case .Update:
-//            updatedIndexPaths.append(indexPath!)
-//            break
-//        case .Move:
-//            break
-//        default:
-//            break
-//        }
-//    }
+
     
     //-This method is invoked after all of the changed in the current batch have been collected
     //-into the three index path arrays (insert, delete, and upate). We now need to loop through the

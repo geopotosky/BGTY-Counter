@@ -18,7 +18,6 @@ class BudgetTableViewController: UITableViewController, NSFetchedResultsControll
     //-Global objects, properties & variables
     var events: Events!
     var eventIndexPath2: NSIndexPath!
-    //var eventIndex: Int!
     
     
     //-Perform when view did load
@@ -210,40 +209,9 @@ class BudgetTableViewController: UITableViewController, NSFetchedResultsControll
         case .Move:
             tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
             tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
-            
-//        default:
-//            return
         }
         
     }
-    
-    
-//    func controller(controller: NSFetchedResultsController,
-//        didChangeObject anObject: NSManagedObject,
-//        atIndexPath indexPath: NSIndexPath?,
-//        forChangeType type: NSFetchedResultsChangeType,
-//        newIndexPath: NSIndexPath?) {
-//            
-//            switch type {
-//            case .Insert:
-//                tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
-//                
-//            case .Delete:
-//                tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
-//                
-//            case .Update:
-//                let cell = tableView.cellForRowAtIndexPath(indexPath!) as UITableViewCell!
-//                let budget = controller.objectAtIndexPath(indexPath!) as! Budget
-//                self.configureCell(cell, withList: budget)
-//                
-//            case .Move:
-//                tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
-//                tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
-//                
-//            default:
-//                return
-//            }
-//    }
     
     
     func controllerDidChangeContent(controller: NSFetchedResultsController) {

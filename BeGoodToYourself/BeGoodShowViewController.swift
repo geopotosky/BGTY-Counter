@@ -704,15 +704,6 @@ extension BeGoodShowViewController {
                 }
             }
         }
-        
-//        func addAlarmToCalendarWithStore(store: EKEventStore, calendar: EKCalendar){
-//            
-//            let event = fetchedResultsController.objectAtIndexPath(eventIndexPath) as! Events
-//            
-//            //-Set the selected event start date & time
-//            let _ = event.eventDate
-//            //let endDate = startDate?.dateByAddingTimeInterval(20.0)
-//        }
     }
     
     

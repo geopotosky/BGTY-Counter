@@ -125,10 +125,10 @@ class BeGoodPopoverViewController: UITableViewController, UIPopoverPresentationC
     
     func adaptivePresentationStyleForPresentationController(PC: UIPresentationController) -> UIModalPresentationStyle{
         
-        //this methods is only called by System when the screen has compact width
+        //-this method is only called by System when the screen has compact width
         
-        //return .None means we still want popover when adaptive on iPhone
-        //return .FullScreen means we'll get modal presetaion on iPhone
+        //-return .None means we still want popover when adaptive on iPhone
+        //-return .FullScreen means we'll get modal presetaion on iPhone
         
         switch(popoverOniPhone, popoverOniPhoneLandscape){
         case (true, _): // always popover on iPhone

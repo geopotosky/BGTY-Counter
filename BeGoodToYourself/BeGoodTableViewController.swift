@@ -168,8 +168,6 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
         let controller =
         storyboard!.instantiateViewControllerWithIdentifier("BeGoodShowViewController") as! BeGoodShowViewController
 
-        //let event = fetchedResultsController.objectAtIndexPath(indexPath) as! Events
-
         controller.eventIndexPath = indexPath
         controller.eventIndex = indexPath.row
         
@@ -239,38 +237,8 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
             case .Move:
                 tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
                 tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
-                
-//            default:
-//                return
             }
     }
-    
-//    func controller(controller: NSFetchedResultsController,
-//        didChangeObject anObject: NSManagedObject,
-//        atIndexPath indexPath: NSIndexPath?,
-//        forChangeType type: NSFetchedResultsChangeType,
-//        newIndexPath: NSIndexPath?) {
-//            
-//            switch type {
-//            case .Insert:
-//                tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
-//                
-//            case .Delete:
-//                tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
-//                
-//            case .Update:
-//                let cell = tableView.cellForRowAtIndexPath(indexPath!) as UITableViewCell?
-//                let event = controller.objectAtIndexPath(indexPath!) as! Events
-//                self.configureCell(cell!, withEvent: event)
-//                
-//            case .Move:
-//                tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
-//                tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
-//                
-//            default:
-//                return
-//            }
-//    }
  
     
     func controllerDidChangeContent(controller: NSFetchedResultsController) {

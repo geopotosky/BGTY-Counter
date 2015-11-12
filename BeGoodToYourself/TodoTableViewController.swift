@@ -167,38 +167,8 @@ class TodoTableViewController: UITableViewController, NSFetchedResultsController
         case .Move:
             tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
             tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
-            
-//        default:
-//            return
         }
     }
-    
-//    func controller(controller: NSFetchedResultsController,
-//        didChangeObject anObject: NSManagedObject,
-//        atIndexPath indexPath: NSIndexPath?,
-//        forChangeType type: NSFetchedResultsChangeType,
-//        newIndexPath: NSIndexPath?) {
-//            
-//            switch type {
-//            case .Insert:
-//                tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
-//                
-//            case .Delete:
-//                tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
-//                
-//            case .Update:
-//                let cell = tableView.cellForRowAtIndexPath(indexPath!) as UITableViewCell!
-//                let todos = controller.objectAtIndexPath(indexPath!) as! TodoList
-//                self.configureCell(cell, withList: todos)
-//                
-//            case .Move:
-//                tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
-//                tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
-//                
-//            default:
-//                return
-//            }
-//    }
     
     
     func controllerDidChangeContent(controller: NSFetchedResultsController) {
