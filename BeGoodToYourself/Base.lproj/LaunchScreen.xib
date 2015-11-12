@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -13,7 +14,7 @@
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="  Copyright (c) 2015 GeoWorld. All rights reserved." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="8ie-xW-0ye">
                     <rect key="frame" x="20" y="439" width="441" height="21"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="21" id="yQ0-ps-eTI"/>
+                        <constraint firstAttribute="height" constant="21" id="EbY-Rd-z40"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" red="0.52941179279999995" green="0.14509804549999999" blue="0.98039221759999995" alpha="1" colorSpace="deviceRGB"/>
@@ -22,40 +23,42 @@
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Be Good To Yourself" textAlignment="center" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="kId-c2-rCX">
                     <rect key="frame" x="23" y="86" width="441" height="43"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="43" id="rSv-8x-vP1"/>
+                        <constraint firstAttribute="height" constant="43" id="i2p-PE-bFc"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="35"/>
                     <color key="textColor" red="0.52941179275512695" green="0.14509804546833038" blue="0.9803922176361084" alpha="1" colorSpace="deviceRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BGYT2.png" translatesAutoresizingMaskIntoConstraints="NO" id="ewq-qu-eju">
-                    <rect key="frame" x="106" y="179" width="268" height="225"/>
-                </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Event Counter and Tracker" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gx7-XR-hix">
                     <rect key="frame" x="106" y="131" width="268" height="26"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="268" id="ZJK-Lg-ZTc"/>
-                        <constraint firstAttribute="height" constant="26" id="i1D-Ci-xj9"/>
+                        <constraint firstAttribute="width" constant="268" id="6FY-6p-q4P"/>
+                        <constraint firstAttribute="height" constant="26" id="FuT-qR-ZvP"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="21"/>
                     <color key="textColor" red="0.52941179279999995" green="0.14509804549999999" blue="0.98039221759999995" alpha="1" colorSpace="deviceRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BGYT2.png" translatesAutoresizingMaskIntoConstraints="NO" id="dlE-1V-Kat">
+                    <rect key="frame" x="120" y="176" width="240" height="203"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="240" id="XUD-6T-z2w"/>
+                    </constraints>
+                </imageView>
             </subviews>
             <color key="backgroundColor" red="0.60000002379999995" green="1" blue="0.60000002379999995" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstItem="Gx7-XR-hix" firstAttribute="trailing" secondItem="ewq-qu-eju" secondAttribute="trailing" id="7BO-er-R1q"/>
-                <constraint firstItem="8ie-xW-0ye" firstAttribute="top" secondItem="ewq-qu-eju" secondAttribute="bottom" constant="35" id="H2N-9l-CxK"/>
-                <constraint firstItem="8ie-xW-0ye" firstAttribute="centerX" secondItem="ewq-qu-eju" secondAttribute="centerX" id="JUr-Ia-803"/>
-                <constraint firstItem="Gx7-XR-hix" firstAttribute="top" secondItem="kId-c2-rCX" secondAttribute="bottom" constant="2" id="ODH-GG-9fe"/>
-                <constraint firstItem="kId-c2-rCX" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="23" id="Pbw-Fx-uvM"/>
-                <constraint firstAttribute="trailing" secondItem="kId-c2-rCX" secondAttribute="trailing" constant="16" id="YEJ-4D-70c"/>
-                <constraint firstAttribute="bottom" secondItem="8ie-xW-0ye" secondAttribute="bottom" constant="20" id="iH8-4D-MrG"/>
-                <constraint firstItem="ewq-qu-eju" firstAttribute="leading" secondItem="Gx7-XR-hix" secondAttribute="leading" id="k6i-dy-FbM"/>
-                <constraint firstItem="ewq-qu-eju" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="lCW-3y-hc6"/>
-                <constraint firstItem="8ie-xW-0ye" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="rYg-oB-cpY"/>
-                <constraint firstItem="kId-c2-rCX" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="86" id="sAQ-qc-ccW"/>
-                <constraint firstItem="ewq-qu-eju" firstAttribute="top" secondItem="Gx7-XR-hix" secondAttribute="bottom" constant="22" id="sse-rp-SHo"/>
+                <constraint firstItem="dlE-1V-Kat" firstAttribute="centerX" secondItem="Gx7-XR-hix" secondAttribute="centerX" id="GdZ-gy-46h"/>
+                <constraint firstItem="kId-c2-rCX" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="23" id="Nfe-8u-Wlk"/>
+                <constraint firstAttribute="bottom" secondItem="8ie-xW-0ye" secondAttribute="bottom" constant="20" id="ROC-c9-KAR"/>
+                <constraint firstItem="kId-c2-rCX" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="86" id="SqT-aG-gzf"/>
+                <constraint firstItem="Gx7-XR-hix" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="UXw-Kg-q3U"/>
+                <constraint firstItem="Gx7-XR-hix" firstAttribute="top" secondItem="kId-c2-rCX" secondAttribute="bottom" constant="2" id="WrA-ey-xfX"/>
+                <constraint firstItem="Gx7-XR-hix" firstAttribute="centerX" secondItem="8ie-xW-0ye" secondAttribute="centerX" id="XQX-dD-Z1l"/>
+                <constraint firstItem="8ie-xW-0ye" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="tgv-nG-fRD"/>
+                <constraint firstItem="dlE-1V-Kat" firstAttribute="top" secondItem="Gx7-XR-hix" secondAttribute="bottom" constant="19" id="upm-TY-k7c"/>
+                <constraint firstAttribute="trailing" secondItem="kId-c2-rCX" secondAttribute="trailing" constant="16" id="vZl-N2-JWk"/>
+                <constraint firstItem="8ie-xW-0ye" firstAttribute="top" secondItem="dlE-1V-Kat" secondAttribute="bottom" constant="60" id="wdQ-wg-XqC"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
