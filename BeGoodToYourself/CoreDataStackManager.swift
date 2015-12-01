@@ -80,24 +80,43 @@ class CoreDataStackManager {
         
         var error: NSError? = nil
 
+        
         do {
             try coordinator!.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: nil)
         } catch var error1 as NSError {
-            error = error1
             coordinator = nil
-            // Report any error we got.
-            let dict = NSMutableDictionary()
-            dict[NSLocalizedDescriptionKey] = "Failed to initialize the application's saved data"
-            dict[NSLocalizedFailureReasonErrorKey] = "There was an error creating or loading the application's saved data."
-            dict[NSUnderlyingErrorKey] = error
-//            error = NSError(domain: "YOUR_ERROR_DOMAIN", code: 9999, userInfo: dict as [NSObject : AnyObject])
-//
-//            // Left in for development development.
-//            NSLog("Unresolved error \(error), \(error!.userInfo)")
+            let dict: [NSObject: AnyObject] = [
+                NSLocalizedDescriptionKey: "Failed to initialize the application's saved data",
+                NSLocalizedFailureReasonErrorKey: "There was an error creating or loading the application's saved data.",
+                NSUnderlyingErrorKey: error1]
+            let error = NSError(domain: "YOUR_ERROR_DOMAIN", code: 9999, userInfo: dict)
+            
+            // Left in for development.
+            NSLog("Unresolved error \(error), \(error.userInfo)")
             abort()
         } catch {
             fatalError()
         }
+        
+        
+//        do {
+//            try coordinator!.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: nil)
+//        } catch var error1 as NSError {
+//            error = error1
+//            coordinator = nil
+//            // Report any error we got.
+//            let dict = NSMutableDictionary()
+//            dict[NSLocalizedDescriptionKey] = "Failed to initialize the application's saved data"
+//            dict[NSLocalizedFailureReasonErrorKey] = "There was an error creating or loading the application's saved data."
+//            dict[NSUnderlyingErrorKey] = error!
+//            //error = NSError(domain: "YOUR_ERROR_DOMAIN", code: 9999, userInfo: dict as? [NSObject : AnyObject])
+//
+//            // Left in for development development.
+//            NSLog("Unresolved error \(error), \(error!.userInfo)")
+//            abort()
+//        } catch {
+//            fatalError()
+//        }
         
         return coordinator
         }()

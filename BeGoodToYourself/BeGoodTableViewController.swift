@@ -37,6 +37,10 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
         self.navigationController!.navigationBar.barTintColor = UIColor(red:0.66,green:0.97,blue:0.59,alpha:1.0)
         self.tabBarController?.tabBar.barTintColor = UIColor(red:0.66,green:0.97,blue:0.59,alpha:1.0)
         
+        
+        //-Add notification observer
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "refreshList", name: "TodoListShouldRefresh", object: nil)
+        
         do {
             try fetchedResultsController.performFetch()
         } catch _ {
@@ -51,6 +55,15 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
         //-Call the Welcome Alert
         welcomeAlertMessage()
         
+    }
+    
+    //-Only allow 64 events (push notification limitation)
+    func refreshList() {
+        //todoItems = TodoList.sharedInstance.allItems()
+        if (events.count >= 64) {
+            self.navigationItem.rightBarButtonItem!.enabled = false // disable 'add' button
+        }
+        tableView.reloadData()
     }
     
     
@@ -117,7 +130,7 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
         
         //-Format the Date for the cell
         let dateFormatter = NSDateFormatter()
-        dateFormatter.timeStyle = NSDateFormatterStyle.MediumStyle //Set time style
+        dateFormatter.timeStyle = NSDateFormatterStyle.ShortStyle //Set time style
         dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle //Set date style
         dateFormatter.timeZone = NSTimeZone()
         
@@ -125,13 +138,21 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
         let eventImage2 = event.eventImage
         let finalImage = UIImage(data: eventImage2!)
         cell.textLabel!.text = event.textEvent
+        
+        if (event.isOverdue) { // the current time is later than the to-do item's deadline
+            cell.detailTextLabel?.textColor = UIColor.redColor()
+        } else {
+            cell.detailTextLabel?.textColor = UIColor.blackColor() // we need to reset this because a cell with red
+        }
+        
         cell.detailTextLabel!.text = dateFormatter.stringFromDate(event.eventDate!)
         cell.imageView!.image = finalImage
         
         //-Lock the table image size to 50x50
-        let itemSize: CGSize = CGSizeMake(50, 50)
+        let itemSize: CGSize = CGSizeMake(45, 45)
         UIGraphicsBeginImageContextWithOptions(itemSize, false, CGFloat())
         let imageRect: CGRect = CGRectMake(0.0, 0.0, itemSize.width, itemSize.height)
+        cell.imageView!.layer.cornerRadius = 7.0
         cell.imageView!.image!.drawInRect(imageRect)
         cell.imageView!.image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()

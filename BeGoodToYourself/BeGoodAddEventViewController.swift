@@ -294,6 +294,19 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
                 event.eventImage = eventImage
                 self.sharedContext.refreshObject(event, mergeChanges: true)
                 CoreDataStackManager.sharedInstance().saveContext()
+                
+                //-Create a corresponding local notification
+                let dateFormatter = NSDateFormatter()
+                dateFormatter.dateFormat = "MMM dd 'at' h:mm a" // example: "Jan 01 at 12:00 PM"
+
+                let notification = UILocalNotification()
+                notification.alertBody = "Event \(textFieldEvent.text!) - Date \"\(dateFormatter.stringFromDate(self.currentEventDate))\" Is Overdue" // text that will be displayed in the notification
+                notification.alertAction = "open" // text that is displayed after "slide to..." on the lock screen - defaults to "slide to view"
+                notification.fireDate = self.currentEventDate // Event item due date (when notification will be fired)
+                notification.soundName = UILocalNotificationDefaultSoundName // play default sound
+                notification.userInfo = ["title": dateFormatter.stringFromDate(self.currentEventDate)]
+                UIApplication.sharedApplication().scheduleLocalNotification(notification)
+                
             
                 //-Pass event index info to Show scene
                 let controller = self.navigationController!.viewControllers[1] as! BeGoodShowViewController
@@ -316,6 +329,19 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
             
                 //-Save the shared context, using the convenience method in the CoreDataStackManager
                 CoreDataStackManager.sharedInstance().saveContext()
+                
+                //-Create a corresponding local notification
+                let dateFormatter = NSDateFormatter()
+                dateFormatter.dateFormat = "MMM dd 'at' h:mm a" // example: "Jan 01 at 12:00 PM"
+                
+                let notification = UILocalNotification()
+                notification.alertBody = "Event \(textFieldEvent.text!) - Date \"\(dateFormatter.stringFromDate(self.currentEventDate))\" Is Overdue" // text that will be displayed in the notification
+                notification.alertAction = "open" // text that is displayed after "slide to..." on the lock screen - defaults to "slide to view"
+                notification.fireDate = self.currentEventDate // todo item due date (when notification will be fired)
+                notification.soundName = UILocalNotificationDefaultSoundName // play default sound
+                notification.userInfo = ["title": dateFormatter.stringFromDate(self.currentEventDate)]
+                UIApplication.sharedApplication().scheduleLocalNotification(notification)
+                
             
                 self.navigationController?.popViewControllerAnimated(true)
             }

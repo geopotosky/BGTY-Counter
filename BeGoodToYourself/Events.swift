@@ -35,4 +35,7 @@ class Events : NSManagedObject {
         
     }
     
+    var isOverdue: Bool {
+        return (NSDate().compare(self.eventDate!) == NSComparisonResult.OrderedDescending) // deadline is earlier than current date
+    }
 }

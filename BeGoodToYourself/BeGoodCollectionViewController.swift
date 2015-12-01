@@ -61,6 +61,8 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
         // Unarchive the event when the list is first shown
         self.events = NSKeyedUnarchiver.unarchiveObjectWithFile(eventsFilePath) as? [Events] ?? [Events]()
         
+        //-Add notification observer
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "refreshList", name: "TodoListShouldRefresh", object: nil)
     }
     
     
@@ -82,6 +84,16 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
         
         collectionView.collectionViewLayout = layout
         
+    }
+    
+    
+    //-Only allow 64 events (push notification limitation)
+    func refreshList() {
+        //todoItems = TodoList.sharedInstance.allItems()
+        if (events.count >= 64) {
+            self.navigationItem.rightBarButtonItem!.enabled = false // disable 'add' button
+        }
+        collectionView.reloadData()
     }
     
     
@@ -241,6 +253,12 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
         dateFormatter.timeStyle = NSDateFormatterStyle.NoStyle //Set time style
         dateFormatter.dateStyle = NSDateFormatterStyle.ShortStyle //Set date style
         dateFormatter.timeZone = NSTimeZone()
+        
+        if (event.isOverdue) { // the current time is later than the to-do item's deadline
+            cell.eventDateCellLabel?.textColor = UIColor.redColor()
+        } else {
+            cell.eventDateCellLabel?.textColor = UIColor.whiteColor() // we need to reset this because a cell with red
+        }
         
         cell.eventDateCellLabel!.text = dateFormatter.stringFromDate(event.eventDate!)
         

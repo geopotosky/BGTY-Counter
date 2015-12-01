@@ -905,6 +905,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <color key="backgroundColor" red="1" green="0.98545268789999996" blue="0.78796896400000005" alpha="1" colorSpace="calibratedRGB"/>
                                 </tableViewCellContentView>
+                                <color key="backgroundColor" red="1" green="0.98545268789999996" blue="0.78796896400000005" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <segue destination="UVl-Xi-Yfu" kind="show" identifier="edit" id="ste-xX-nX2"/>
                                 </connections>
