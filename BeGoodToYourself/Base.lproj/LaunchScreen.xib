@@ -7,14 +7,14 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="iN0-l3-epB">
+        <view contentMode="scaleAspectFill" id="iN0-l3-epB">
             <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="  Copyright (c) 2015 GeoWorld. All rights reserved." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="8ie-xW-0ye">
                     <rect key="frame" x="20" y="439" width="441" height="21"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="21" id="EbY-Rd-z40"/>
+                        <constraint firstAttribute="height" constant="21" id="cb7-TJ-zRG"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" red="0.52941179279999995" green="0.14509804549999999" blue="0.98039221759999995" alpha="1" colorSpace="deviceRGB"/>
@@ -23,7 +23,7 @@
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Be Good To Yourself" textAlignment="center" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="kId-c2-rCX">
                     <rect key="frame" x="23" y="86" width="441" height="43"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="43" id="i2p-PE-bFc"/>
+                        <constraint firstAttribute="height" constant="43" id="Jg8-kz-6NJ"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="35"/>
                     <color key="textColor" red="0.52941179275512695" green="0.14509804546833038" blue="0.9803922176361084" alpha="1" colorSpace="deviceRGB"/>
@@ -32,33 +32,33 @@
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Event Counter and Tracker" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gx7-XR-hix">
                     <rect key="frame" x="106" y="131" width="268" height="26"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="268" id="6FY-6p-q4P"/>
-                        <constraint firstAttribute="height" constant="26" id="FuT-qR-ZvP"/>
+                        <constraint firstAttribute="height" constant="26" id="H4r-jI-dFC"/>
+                        <constraint firstAttribute="width" constant="268" id="k6i-6l-dfJ"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="21"/>
                     <color key="textColor" red="0.52941179279999995" green="0.14509804549999999" blue="0.98039221759999995" alpha="1" colorSpace="deviceRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BGYT2.png" translatesAutoresizingMaskIntoConstraints="NO" id="dlE-1V-Kat">
-                    <rect key="frame" x="120" y="176" width="240" height="203"/>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BGYT2.png" translatesAutoresizingMaskIntoConstraints="NO" id="UmE-0n-c9D">
+                    <rect key="frame" x="123" y="172" width="240" height="240"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="240" id="XUD-6T-z2w"/>
+                        <constraint firstAttribute="width" constant="240" id="CbC-kv-fA4"/>
                     </constraints>
                 </imageView>
             </subviews>
             <color key="backgroundColor" red="0.60000002379999995" green="1" blue="0.60000002379999995" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstItem="dlE-1V-Kat" firstAttribute="centerX" secondItem="Gx7-XR-hix" secondAttribute="centerX" id="GdZ-gy-46h"/>
-                <constraint firstItem="kId-c2-rCX" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="23" id="Nfe-8u-Wlk"/>
-                <constraint firstAttribute="bottom" secondItem="8ie-xW-0ye" secondAttribute="bottom" constant="20" id="ROC-c9-KAR"/>
-                <constraint firstItem="kId-c2-rCX" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="86" id="SqT-aG-gzf"/>
-                <constraint firstItem="Gx7-XR-hix" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="UXw-Kg-q3U"/>
-                <constraint firstItem="Gx7-XR-hix" firstAttribute="top" secondItem="kId-c2-rCX" secondAttribute="bottom" constant="2" id="WrA-ey-xfX"/>
-                <constraint firstItem="Gx7-XR-hix" firstAttribute="centerX" secondItem="8ie-xW-0ye" secondAttribute="centerX" id="XQX-dD-Z1l"/>
-                <constraint firstItem="8ie-xW-0ye" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="tgv-nG-fRD"/>
-                <constraint firstItem="dlE-1V-Kat" firstAttribute="top" secondItem="Gx7-XR-hix" secondAttribute="bottom" constant="19" id="upm-TY-k7c"/>
-                <constraint firstAttribute="trailing" secondItem="kId-c2-rCX" secondAttribute="trailing" constant="16" id="vZl-N2-JWk"/>
-                <constraint firstItem="8ie-xW-0ye" firstAttribute="top" secondItem="dlE-1V-Kat" secondAttribute="bottom" constant="60" id="wdQ-wg-XqC"/>
+                <constraint firstItem="8ie-xW-0ye" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="1Rf-8L-c5N"/>
+                <constraint firstItem="kId-c2-rCX" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="86" id="75x-wf-vLf"/>
+                <constraint firstAttribute="bottom" secondItem="8ie-xW-0ye" secondAttribute="bottom" constant="20" id="7TL-RD-9w7"/>
+                <constraint firstItem="8ie-xW-0ye" firstAttribute="centerX" secondItem="Gx7-XR-hix" secondAttribute="centerX" id="BCz-RZ-9ZU"/>
+                <constraint firstItem="Gx7-XR-hix" firstAttribute="top" secondItem="kId-c2-rCX" secondAttribute="bottom" constant="2" id="N9v-vB-W6W"/>
+                <constraint firstItem="UmE-0n-c9D" firstAttribute="top" secondItem="Gx7-XR-hix" secondAttribute="bottom" constant="15" id="NCc-z8-32w"/>
+                <constraint firstItem="kId-c2-rCX" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="23" id="QPK-Bd-eTO"/>
+                <constraint firstAttribute="trailing" secondItem="kId-c2-rCX" secondAttribute="trailing" constant="16" id="YfV-db-aJA"/>
+                <constraint firstItem="8ie-xW-0ye" firstAttribute="top" secondItem="UmE-0n-c9D" secondAttribute="bottom" constant="27" id="Z3L-Kg-M7l"/>
+                <constraint firstItem="UmE-0n-c9D" firstAttribute="centerX" secondItem="kId-c2-rCX" secondAttribute="centerX" id="dE3-dx-lpa"/>
+                <constraint firstItem="8ie-xW-0ye" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="jEL-dv-E0H"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

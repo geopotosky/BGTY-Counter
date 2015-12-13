@@ -32,9 +32,7 @@ class BudgetTableViewController: UITableViewController, NSFetchedResultsControll
         
         let b1 = self.editButtonItem()
         let b2 = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "addBudgetList")
-        //let buttons = [b2, b1] as NSArray
         self.navigationItem.rightBarButtonItems = [b2, b1]
-        
         
         do {
             try fetchedResultsController.performFetch()
@@ -63,15 +61,12 @@ class BudgetTableViewController: UITableViewController, NSFetchedResultsControll
         let totals: String = "Budget:"
         let yourBudgetTotal = String.localizedStringWithFormat("%@ $%.2f", totals, finalValue)
         totalLabel.text = yourBudgetTotal
-        
     }
     
     
     //-Reset the Table Edit view when the view disappears
     override func viewWillDisappear(animated: Bool) {
-        
         resetEditing(false, animated: false)
-        
     }
     
     
@@ -123,14 +118,11 @@ class BudgetTableViewController: UITableViewController, NSFetchedResultsControll
     override func tableView(tableView: UITableView,
         cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
             let CellIdentifier = "tableCell"
-            
             let budget = fetchedResultsController.objectAtIndexPath(indexPath) as! Budget
-            
             let cell = tableView.dequeueReusableCellWithIdentifier(CellIdentifier)! as
             UITableViewCell
             
             configureCell(cell, withList: budget)
-            
             return cell
     }
 
@@ -233,13 +225,12 @@ class BudgetTableViewController: UITableViewController, NSFetchedResultsControll
     @IBAction func editToTableData(segue:UIStoryboardSegue) {
         
         let detailViewController = segue.sourceViewController as! BudgetEditTableViewController
-        
         let budget = fetchedResultsController.objectAtIndexPath(tableView.indexPathForSelectedRow!) as! Budget
         budget.itemBudgetText = detailViewController.dataString!
         budget.priceBudgetText = detailViewController.priceString!
         self.sharedContext.refreshObject(budget, mergeChanges: true)
-        CoreDataStackManager.sharedInstance().saveContext()
         
+        CoreDataStackManager.sharedInstance().saveContext()
         tableView.reloadData()
     }
     
@@ -247,14 +238,12 @@ class BudgetTableViewController: UITableViewController, NSFetchedResultsControll
     @IBAction func saveToTableData(segue:UIStoryboardSegue) {
         
         let detailViewController = segue.sourceViewController as! BudgetAddTableViewController
-        
         let editedData = detailViewController.dataString
         let changedPrice = detailViewController.priceString
-        
         let budget = Budget(itemBudgetText:  editedData, priceBudgetText: changedPrice, context: self.sharedContext)
         budget.events = self.events
-        CoreDataStackManager.sharedInstance().saveContext()
         
+        CoreDataStackManager.sharedInstance().saveContext()
         tableView.reloadData()
     }
     
@@ -287,9 +276,7 @@ class BudgetTableViewController: UITableViewController, NSFetchedResultsControll
     
     //-Cancel Budget List item function
     func cancelBudgetList(){
-
         let tmpController :UIViewController! = self.presentingViewController;
-        
         self.dismissViewControllerAnimated(false, completion: {()->Void in
             tmpController.dismissViewControllerAnimated(false, completion: nil);
         });

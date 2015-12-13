@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //-Add Splash screen delay
         NSThread.sleepForTimeInterval(2)
         
-        
+        //-Notification settings
         application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: .Alert, categories: nil))
         application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: .Badge, categories: nil))
         application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: .Sound, categories: nil))

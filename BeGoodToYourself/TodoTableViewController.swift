@@ -98,14 +98,11 @@ class TodoTableViewController: UITableViewController, NSFetchedResultsController
     override func tableView(tableView: UITableView,
         cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
             let CellIdentifier = "todoTableCell"
-            
             let todos = fetchedResultsController.objectAtIndexPath(indexPath) as! TodoList
-            
             let cell = tableView.dequeueReusableCellWithIdentifier(CellIdentifier)! as
             UITableViewCell
             
             configureCell(cell, withList: todos)
-            
             return cell
     }
     
@@ -190,8 +187,8 @@ class TodoTableViewController: UITableViewController, NSFetchedResultsController
         let todos = fetchedResultsController.objectAtIndexPath(tableView.indexPathForSelectedRow!) as! TodoList
         todos.todoListText = detailViewController.editedModel!
         self.sharedContext.refreshObject(todos, mergeChanges: true)
-        CoreDataStackManager.sharedInstance().saveContext()
         
+        CoreDataStackManager.sharedInstance().saveContext()
         tableView.reloadData()
         
     }
@@ -202,11 +199,10 @@ class TodoTableViewController: UITableViewController, NSFetchedResultsController
         
         let detailViewController = segue.sourceViewController as! TodoAddTableViewController
         let listText = detailViewController.editedModel
-        
         let todos = TodoList(todoListText:  listText, context: self.sharedContext)
         todos.events = self.events
-        CoreDataStackManager.sharedInstance().saveContext()
         
+        CoreDataStackManager.sharedInstance().saveContext()
         tableView.reloadData()
         
     }
@@ -236,10 +232,9 @@ class TodoTableViewController: UITableViewController, NSFetchedResultsController
     
     
     //-Cancel To Do List item function
+    
     func cancelTodoList(){
-
         let tmpController :UIViewController! = self.presentingViewController;
-        
         self.dismissViewControllerAnimated(false, completion: {()->Void in
             tmpController.dismissViewControllerAnimated(false, completion: nil);
         });

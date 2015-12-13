@@ -89,7 +89,6 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
     
     //-Only allow 64 events (push notification limitation)
     func refreshList() {
-        //todoItems = TodoList.sharedInstance.allItems()
         if (events.count >= 64) {
             self.navigationItem.rightBarButtonItem!.enabled = false // disable 'add' button
         }
@@ -193,8 +192,7 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
     
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        let sectionInfo = self.fetchedResultsController.sections![section] 
-        
+        let sectionInfo = self.fetchedResultsController.sections![section]
         return sectionInfo.numberOfObjects
     }
     
@@ -202,7 +200,6 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("BeGoodCollectionViewCell", forIndexPath: indexPath) as! BeGoodCollectionViewCell
-
         configureCell(cell, atIndexPath: indexPath)
         
         return cell
@@ -221,6 +218,15 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
                 selectedIndexes.removeAtIndex(index)
             }
             else {
+                
+                //-De-select the previously selected cell
+                let index : Int = 0
+                for _ in selectedIndexes{
+                    selectedIndexes.removeAtIndex(index)
+                }
+                //-Brute Force Reload the scene to view collection updates
+                self.collectionView.reloadData()
+                //-Add the New selected cell
                 selectedIndexes.append(indexPath)
             }
             
@@ -231,8 +237,6 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
             
             let controller =
             storyboard!.instantiateViewControllerWithIdentifier("BeGoodShowViewController") as! BeGoodShowViewController
-
-            //let event = fetchedResultsController.objectAtIndexPath(indexPath) as! Events
 
             controller.eventIndexPath = indexPath
             controller.eventIndex = indexPath.row
@@ -265,9 +269,10 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
         let eventImage2 = event.eventImage
         let finalImage = UIImage(data: eventImage2!)
         cell.eventImageView!.image = finalImage
+        cell.layer.cornerRadius = 7.0
         
         //-Change cell appearance based on selection for deletion
-        if let _ = self.selectedIndexes.indexOf(indexPath) {
+        if self.selectedIndexes.indexOf(indexPath) != nil {
             cell.eventImageView!.alpha = 0.5
             bottomButton.hidden = false
             SelectEventLabel.hidden = true
@@ -366,15 +371,28 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
     }
     
     
-    //-Delete Selected Picture function
+    //-Delete Selected Event
     func deleteSelectedEvents() {
         
         var eventsToDelete = [Events]()
+        
         for indexPath in selectedIndexes {
             eventsToDelete.append(fetchedResultsController.objectAtIndexPath(indexPath) as! Events)
         }
         
         for event in eventsToDelete {
+            
+            //-Delete the event notificaton
+            if String(event.eventDate!) > String(NSDate()) { //...if event date is greater than the current date, remove the upcoming notification. If not, skip this routine.
+                
+                for notification in UIApplication.sharedApplication().scheduledLocalNotifications! as [UILocalNotification] { // loop through notifications...
+                    if (notification.userInfo!["UUID"] as! String == String(event.eventDate!)) { // ...and cancel the notification that corresponds to this TodoItem instance (matched by UUID)
+                        UIApplication.sharedApplication().cancelLocalNotification(notification) // there should be a maximum of one match on title
+                        break
+                    }
+                }
+            }
+            
             sharedContext.deleteObject(event)
         }
         

@@ -34,7 +34,7 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
     var flickrImageURL: String!
     var flickrImage: UIImage!
     
-    //* - Alert variable
+    //-Alert variable
     var alertMessage: String!
     
     //-Disney image based on flag (0-no pic, 1-library, 2-camera, 3-Flickr)
@@ -77,7 +77,7 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
         let timeZone = NSTimeZone(name: "Local")
         
         dateFormatter.timeZone = timeZone
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        //dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
         dateFormatter.timeStyle = NSDateFormatterStyle.MediumStyle //Set time style
         dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle //Set date style
         dateFormatter.timeZone = NSTimeZone()
@@ -117,8 +117,7 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
             currentEventDate = event.eventDate
             
             let dateFormatter = NSDateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-            dateFormatter.timeStyle = NSDateFormatterStyle.MediumStyle //Set time style
+            dateFormatter.timeStyle = NSDateFormatterStyle.ShortStyle //Set time style
             dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle //Set date style
             dateFormatter.timeZone = NSTimeZone()
             let strDate = dateFormatter.stringFromDate(currentEventDate)
@@ -144,8 +143,7 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
         }
         
         let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        dateFormatter.timeStyle = NSDateFormatterStyle.MediumStyle //Set time style
+        dateFormatter.timeStyle = NSDateFormatterStyle.ShortStyle //Set time style
         dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle //Set date style
         dateFormatter.timeZone = NSTimeZone()
         if currentEventDate != nil {
@@ -222,7 +220,7 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
                 self.imageViewPicker.image = eventImage
                 imageFlag = 1
             }
-            //Enable the Right Navbar Button
+            //-Enable the Right Navbar Button
             self.navigationItem.rightBarButtonItem?.enabled = true
             
             self.dismissViewControllerAnimated(true, completion: nil)
@@ -300,11 +298,11 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
                 dateFormatter.dateFormat = "MMM dd 'at' h:mm a" // example: "Jan 01 at 12:00 PM"
 
                 let notification = UILocalNotification()
-                notification.alertBody = "Event \(textFieldEvent.text!) - Date \"\(dateFormatter.stringFromDate(self.currentEventDate))\" Is Overdue" // text that will be displayed in the notification
+                notification.alertBody = "Event \(textFieldEvent.text!) - on \"\(dateFormatter.stringFromDate(self.currentEventDate))\" is Overdue" // text that will be displayed in the notification
                 notification.alertAction = "open" // text that is displayed after "slide to..." on the lock screen - defaults to "slide to view"
                 notification.fireDate = self.currentEventDate // Event item due date (when notification will be fired)
                 notification.soundName = UILocalNotificationDefaultSoundName // play default sound
-                notification.userInfo = ["title": dateFormatter.stringFromDate(self.currentEventDate)]
+                notification.userInfo = ["UUID": String(self.currentEventDate)]
                 UIApplication.sharedApplication().scheduleLocalNotification(notification)
                 
             
@@ -335,11 +333,12 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
                 dateFormatter.dateFormat = "MMM dd 'at' h:mm a" // example: "Jan 01 at 12:00 PM"
                 
                 let notification = UILocalNotification()
-                notification.alertBody = "Event \(textFieldEvent.text!) - Date \"\(dateFormatter.stringFromDate(self.currentEventDate))\" Is Overdue" // text that will be displayed in the notification
+                notification.alertBody = "Event \(textFieldEvent.text!) - on \"\(dateFormatter.stringFromDate(self.currentEventDate))\" is Overdue" // text that will be displayed in the notification
                 notification.alertAction = "open" // text that is displayed after "slide to..." on the lock screen - defaults to "slide to view"
                 notification.fireDate = self.currentEventDate // todo item due date (when notification will be fired)
                 notification.soundName = UILocalNotificationDefaultSoundName // play default sound
-                notification.userInfo = ["title": dateFormatter.stringFromDate(self.currentEventDate)]
+                //notification.userInfo = ["title": dateFormatter.stringFromDate(self.currentEventDate)]
+                notification.userInfo = ["UUID": String(self.currentEventDate)]
                 UIApplication.sharedApplication().scheduleLocalNotification(notification)
                 
             

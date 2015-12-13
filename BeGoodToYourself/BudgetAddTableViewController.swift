@@ -54,7 +54,5 @@ class BudgetAddTableViewController: UITableViewController, UITextFieldDelegate {
         }
         print("Segue Error")
     }
-
-    
     
 }

@@ -16,6 +16,7 @@ class BeGoodFlickrViewController: UIViewController {
     @IBOutlet weak var searchButton: UIButton!
     @IBOutlet weak var pickImageButton: UIButton!
     @IBOutlet weak var flickrActivityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var flickrActivityFrame: UIView!
     
     //-Global objects, properties & variables
     var events: [Events]!
@@ -27,7 +28,7 @@ class BeGoodFlickrViewController: UIViewController {
     var currentImage: UIImage!
     var tapRecognizer: UITapGestureRecognizer? = nil
     
-    //-set the textfield delegates
+    //-Set the textfield delegates
     let flickrTextDelegate = FlickrTextDelegate()
     
     //-Get the app delegate (used for Flickr API)
@@ -52,6 +53,7 @@ class BeGoodFlickrViewController: UIViewController {
         //searchButtonLabel.text = "Search"
         pickImageButton.hidden = true
         flickrActivityIndicator.hidden = true
+        flickrActivityFrame.hidden = true
         
         //-Textfield delegate values
         self.phraseTextField.delegate = flickrTextDelegate
@@ -91,6 +93,7 @@ class BeGoodFlickrViewController: UIViewController {
         pickImageButton.hidden = true
         
         self.flickrActivityIndicator.hidden = false
+        self.flickrActivityFrame.hidden = false
         self.flickrActivityIndicator.startAnimating()
         
         //-Set the Flickr Text Phrase for API search
@@ -112,7 +115,6 @@ class BeGoodFlickrViewController: UIViewController {
                     
                     //-If an image exists at the url, set the image and title
                     if let imageData = NSData(contentsOfURL: imageURL!) {
-                        //let finalImage = UIImage(data: imageData)
                         self.eventImage2 = imageData
                         
                         dispatch_async(dispatch_get_main_queue(), {
@@ -120,8 +122,8 @@ class BeGoodFlickrViewController: UIViewController {
                             self.photoImageView.image = UIImage(data: imageData)
                             self.pickImageButton.hidden = false
                             self.flickrActivityIndicator.hidden = true
+                            self.flickrActivityFrame.hidden = true
                             self.flickrActivityIndicator.stopAnimating()
-                            
                         })
                         
                     } else {

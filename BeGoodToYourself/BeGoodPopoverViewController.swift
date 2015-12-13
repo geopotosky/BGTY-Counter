@@ -26,7 +26,6 @@ class BeGoodPopoverViewController: UITableViewController, UIPopoverPresentationC
     
     //-Global objects, properties & variables
     var events: Events!
-    //var eventIndex:Int!
     var eventIndexPath2: NSIndexPath!
     
     
@@ -87,13 +86,13 @@ class BeGoodPopoverViewController: UITableViewController, UIPopoverPresentationC
         
         }()
     
+    
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
-        //selected a school
+
         let eventMenu = tableView.cellForRowAtIndexPath(indexPath)!.textLabel!.text
         if eventMenu == "To Do List" {
             
             let controller = self.storyboard?.instantiateViewControllerWithIdentifier("TodoTableViewController") as! TodoTableViewController
-            
             let event = fetchedResultsController.objectAtIndexPath(eventIndexPath2) as! Events
             
             controller.eventIndexPath2 = eventIndexPath2
@@ -102,7 +101,6 @@ class BeGoodPopoverViewController: UITableViewController, UIPopoverPresentationC
             let navController = UINavigationController(rootViewController: controller)
             navController.modalPresentationStyle = UIModalPresentationStyle.FormSheet
             self.presentViewController(navController, animated: true, completion: nil)
-            
             
         } else if eventMenu == "Budget Sheet" {
             let controller = self.storyboard?.instantiateViewControllerWithIdentifier("BudgetTableViewController") as! BudgetTableViewController
@@ -115,14 +113,12 @@ class BeGoodPopoverViewController: UITableViewController, UIPopoverPresentationC
             let navController = UINavigationController(rootViewController: controller)
             navController.modalPresentationStyle = UIModalPresentationStyle.FormSheet
             self.presentViewController(navController, animated: true, completion: nil)
-            //self.navigationController!.pushViewController(navController, animated: true)
         }
         
     }
     
-    //-popover settings, adaptive for horizontal compact trait
-    //-#pragma mark - UIPopoverPresentationControllerDelegate
     
+    //-popover settings, adaptive for horizontal compact trait
     func adaptivePresentationStyleForPresentationController(PC: UIPresentationController) -> UIModalPresentationStyle{
         
         //-this method is only called by System when the screen has compact width
@@ -131,10 +127,10 @@ class BeGoodPopoverViewController: UITableViewController, UIPopoverPresentationC
         //-return .FullScreen means we'll get modal presetaion on iPhone
         
         switch(popoverOniPhone, popoverOniPhoneLandscape){
-        case (true, _): // always popover on iPhone
+        case (true, _): //-always popover on iPhone
             return .None
             
-        case (_, true): // popover only on landscape on iPhone
+        case (_, true): //-popover only on landscape on iPhone
             let size = PC.presentingViewController.view.frame.size
             if(size.width>320.0){ //landscape
                 return .None
@@ -142,12 +138,11 @@ class BeGoodPopoverViewController: UITableViewController, UIPopoverPresentationC
                 return .FullScreen
             }
             
-        default: // no popover on iPhone
+        default: //-no popover on iPhone
             return .FullScreen
         }
-        
-        
     }
+    
     
     func presentationController(_: UIPresentationController, viewControllerForAdaptivePresentationStyle _: UIModalPresentationStyle)
         -> UIViewController?{

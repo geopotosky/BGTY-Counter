@@ -147,12 +147,13 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
         
         cell.detailTextLabel!.text = dateFormatter.stringFromDate(event.eventDate!)
         cell.imageView!.image = finalImage
+        cell.imageView!.layer.masksToBounds = true
+        cell.imageView!.layer.cornerRadius = 5.0
         
-        //-Lock the table image size to 50x50
+        //-Lock the table image size to 45x45 with rounded corners
         let itemSize: CGSize = CGSizeMake(45, 45)
         UIGraphicsBeginImageContextWithOptions(itemSize, false, CGFloat())
         let imageRect: CGRect = CGRectMake(0.0, 0.0, itemSize.width, itemSize.height)
-        cell.imageView!.layer.cornerRadius = 7.0
         cell.imageView!.image!.drawInRect(imageRect)
         cell.imageView!.image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
@@ -203,8 +204,21 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
             switch (editingStyle) {
             case .Delete:
                 
-                //-Here we get the event, then delete it from core data
+                //-Get the event, then delete it from core data
                 let event = fetchedResultsController.objectAtIndexPath(indexPath) as! Events
+                
+                //-Delete the event notificaton
+                if String(event.eventDate!) > String(NSDate()) { //...if event date is greater than the current date, remove the upcoming notification. If not, skip this routine.
+                    
+                    for notification in UIApplication.sharedApplication().scheduledLocalNotifications! as [UILocalNotification] { // loop through notifications...
+                        if (notification.userInfo!["UUID"] as! String == String(event.eventDate!)) { // ...and cancel the notification that corresponds to this TodoItem instance (matched by UUID)
+                            UIApplication.sharedApplication().cancelLocalNotification(notification) // there should be a maximum of one match on title
+                            break
+                        }
+                    }
+                }
+            
+                //-Delete Event
                 sharedContext.deleteObject(event)
                 CoreDataStackManager.sharedInstance().saveContext()
 

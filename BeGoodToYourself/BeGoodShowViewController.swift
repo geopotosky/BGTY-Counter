@@ -347,8 +347,7 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
                 untilEventText2.text = ("Only \(tempText1) Seconds")
             }
         default:
-            print("Less than 1 day left")
-            
+            break
         }
         
         //-Until Counter Updater
@@ -631,17 +630,6 @@ extension BeGoodShowViewController {
                 //createEvent(eventStore, title: "DJ's Test Event", startDate: startDate, endDate: endDate)
             }
 
-            
-            
-            
-//            eventStore.requestAccessToEntityType(EKEntityType.Event, completion:
-//                {[weak self] (granted: Bool, error: NSError!) -> Void in
-//                    if granted {
-//                        self!.insertEvent(eventStore)
-//                    } else {
-//                        print("Access denied")
-//                    }
-//                })
         default:
             print("Case Default")
         }
@@ -657,7 +645,7 @@ extension BeGoodShowViewController {
             
         
         for calendar in calendars {
-            if calendar.title == "Calendar" {
+            //if calendar.title == "Calendar" {
                 
                 let event = fetchedResultsController.objectAtIndexPath(eventIndexPath) as! Events
                 
@@ -681,28 +669,36 @@ extension BeGoodShowViewController {
                 
                 
                 //-Save Event in Calendar
-                let result: Bool
+                //let result: Bool
                 do {
                     try store.saveEvent(calendarEvent, span: .ThisEvent)
-                    result = true
-                } catch _ {
-                    result = false
-                }
-                
-                //-Create Calendar Alert View
-                if result == true {
                     //-Call Alert message
                     self.alertTitle = "SUCCESS!"
                     self.alertMessage = "Event added to your Calendar"
                     self.calendarAlertMessage()
-                }
-                else {
+                    //result = true
+                } catch {
                     //-Call Alert message
-                    self.alertTitle = "ALERT"
-                    self.alertMessage = "One of your Calendars may be restricted. Please check to see if your Calendar is updated or allow access to add events."
+                    self.alertTitle = "NOTICE"
+                    self.alertMessage = "One of your Calendars may be restricted. Please check to see if the Calendar event is added or allow access to add events."
                     self.calendarAlertMessage()
+                    //result = false
                 }
-            }
+                
+//                //-Create Calendar Alert View
+//                if result == true {
+//                    //-Call Alert message
+//                    self.alertTitle = "SUCCESS!"
+//                    self.alertMessage = "Event added to your Calendar"
+//                    self.calendarAlertMessage()
+//                }
+//                else {
+//                    //-Call Alert message
+//                    self.alertTitle = "ALERT"
+//                    self.alertMessage = "One of your Calendars may be restricted. Please check to see if your Calendar is updated or allow access to add events."
+//                    self.calendarAlertMessage()
+//                }
+            //}
         }
     }
     

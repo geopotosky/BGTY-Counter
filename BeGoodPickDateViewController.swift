@@ -38,11 +38,11 @@ class BeGoodPickDateViewController: UIViewController {
             
             //-Set the selected event date
             myDatePicker.date = currentEventDate
+            myDatePicker.minimumDate = NSDate()
 
             let timeZone = NSTimeZone(name: "Local")
             dateFormatter.timeZone = timeZone
-            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-            dateFormatter.timeStyle = NSDateFormatterStyle.MediumStyle //Set time style
+            dateFormatter.timeStyle = NSDateFormatterStyle.ShortStyle //Set time style
             dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle //Set date style
             dateFormatter.timeZone = NSTimeZone()
             let strDate = dateFormatter.stringFromDate(myDatePicker.date)
@@ -54,8 +54,7 @@ class BeGoodPickDateViewController: UIViewController {
             let date = NSDate()
             let timeZone = NSTimeZone(name: "Local")
             dateFormatter.timeZone = timeZone
-            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-            dateFormatter.timeStyle = NSDateFormatterStyle.MediumStyle //Set time style
+            dateFormatter.timeStyle = NSDateFormatterStyle.ShortStyle //Set time style
             dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle //Set date style
             dateFormatter.timeZone = NSTimeZone()
             let localDate = dateFormatter.stringFromDate(date)
@@ -69,12 +68,13 @@ class BeGoodPickDateViewController: UIViewController {
     @IBAction func datePickerAction(sender: AnyObject) {
         
         let dateFormatter = NSDateFormatter()
+        myDatePicker.minimumDate = NSDate()
         
         let timeZone = NSTimeZone(name: "Local")
         dateFormatter.timeZone = timeZone
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        //dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         //-To prevent displaying either date or time, set the desired style to NoStyle.
-        dateFormatter.timeStyle = NSDateFormatterStyle.MediumStyle //Set time style
+        dateFormatter.timeStyle = NSDateFormatterStyle.ShortStyle //Set time style
         dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle //Set date style
         dateFormatter.timeZone = NSTimeZone()
         

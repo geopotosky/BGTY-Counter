@@ -43,7 +43,6 @@ class BGClient : NSObject {
         let methodArguments = [
             MethodArguments.method: Constants.METHOD_NAME,
             MethodArguments.api_key: Constants.API_KEY,
-            //MethodArguments.bbox: self.createBoundingBoxString(),
             MethodArguments.text: searchPhrase,
             MethodArguments.safe_search: Constants.SAFE_SEARCH,
             MethodArguments.extras: Constants.EXTRAS,
@@ -86,7 +85,6 @@ class BGClient : NSObject {
                 completionHandler(success: false, pageNumber: 0, errorString: "Could not complete the request \(error)")
             } else {
                 
-                //var parsingError: NSError? = nil
                 let parsedResult = (try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments)) as! NSDictionary
                 
                 //-Get the photos dictionary
@@ -112,6 +110,7 @@ class BGClient : NSObject {
         task.resume()
     }
     
+    
     func getImageFromFlickrBySearchWithPage(methodArguments: [String : AnyObject], pageNumber: Int, completionHandler: (success: Bool, pictureURL: String?, errorString: String?) -> Void) {
         
         //-Add the page to the method's arguments
@@ -120,18 +119,17 @@ class BGClient : NSObject {
         
         //-Get the Shared NSURLSession to facilitate Network Activity
         let session = NSURLSession.sharedSession()
+        
         //-Create the NSURLRequest using properly escaped URL
         let urlString = Constants.BASE_URL + escapedParameters(withPageDictionary)
         let url = NSURL(string: urlString)!
         let request = NSURLRequest(URL: url)
-        
         
         //-Create NSURLSessionDataTask and completion handler
         let task = session.dataTaskWithRequest(request) {data, response, downloadError in
             if let error = downloadError {
                 completionHandler(success: false, pictureURL: nil, errorString: "Could not complete the request \(error)")
             } else {
-                //var parsingError: NSError? = nil
                 let parsedResult = (try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments)) as! NSDictionary
                 
                 //-Get the photos dictionary
@@ -161,20 +159,16 @@ class BGClient : NSObject {
 
                                     completionHandler(success: true, pictureURL: imageUrlString, errorString: nil)
                                 }
-                                else if data!.length == 0 && error == nil {
-                                        completionHandler(success: false, pictureURL: nil, errorString: "Nothing was downloaded")
-                                }
-                                else
-                                {
+                                else {
                                     completionHandler(success: false, pictureURL: nil, errorString: "Nothing was downloaded")
                                 }
-                            })
+                            }) //-End NSURLConnection routine
 
                         } else {
                             completionHandler(success: false, pictureURL: nil, errorString: "Cant find key 'photo' in \(photosDictionary)")
                         }
                     } else {
-
+                        completionHandler(success: false, pictureURL: nil, errorString: "No photos found in \(photosDictionary)")
                     }
                 } else {
                     completionHandler(success: false, pictureURL: nil, errorString: "Cant find key 'photos' in \(parsedResult)")
@@ -184,6 +178,7 @@ class BGClient : NSObject {
         
         task.resume()
     }
+    
     
     //-Helper function: Given a dictionary of parameters, convert to a string for a url
     func escapedParameters(parameters: [String : AnyObject]) -> String {
