@@ -587,120 +587,144 @@ extension BeGoodShowViewController {
     
     
     
-    
-    
-    
-    //-Authorize Calendar Event
+    // Responds to button to add event. This checks that we have permission first, before adding the event
     @IBAction func addCalendarEvent(sender: UIButton) {
-        
         let eventStore = EKEventStore()
+    
+        let event = fetchedResultsController.objectAtIndexPath(eventIndexPath) as! Events
         
-//        if (EKEventStore.authorizationStatusForEntityType(.Event) != EKAuthorizationStatus.Authorized) {
-//            eventStore.requestAccessToEntityType(.Event, completion: {
-//                granted, error in
-//                self.insertEvent(eventStore)
-//                
-//                //self.createEvent(eventStore, title: "DJ's Test Event", startDate: startDate, endDate: endDate)
-//            })
-//        } else {
-//            self.insertEvent(eventStore)
-//            //createEvent(eventStore, title: "DJ's Test Event", startDate: startDate, endDate: endDate)
-//        }
-
+        //-Set the selected event start date & time
+        let startDate = event.eventDate
         
-        
-        
-        switch EKEventStore.authorizationStatusForEntityType(EKEntityType.Event) {
-        case .Authorized:
-            print("authorized")
-            insertEvent(eventStore)
-        case .Denied:
-            print("Access denied")
-        case .NotDetermined:
-            
-            if (EKEventStore.authorizationStatusForEntityType(.Event) != EKAuthorizationStatus.Authorized) {
-                eventStore.requestAccessToEntityType(.Event, completion: {
-                    granted, error in
-                    self.insertEvent(eventStore)
-                    
-                    //self.createEvent(eventStore, title: "DJ's Test Event", startDate: startDate, endDate: endDate)
-                })
-            } else {
-                self.insertEvent(eventStore)
-                //createEvent(eventStore, title: "DJ's Test Event", startDate: startDate, endDate: endDate)
-            }
-
-        default:
-            print("Case Default")
+        //-2 hours ahead for endtime
+        let endDate = startDate!.dateByAddingTimeInterval(2 * 60 * 60)
+    
+        if (EKEventStore.authorizationStatusForEntityType(.Event) != EKAuthorizationStatus.Authorized) {
+            eventStore.requestAccessToEntityType(.Event, completion: {
+                granted, error in
+                self.insertEvent(eventStore, startDate: startDate!, endDate: endDate)
+            })
+        } else {
+            self.insertEvent(eventStore, startDate: startDate!, endDate: endDate)
         }
-        
     }
+
     
-    
-    //-Insert a new Calendar Event
-    func insertEvent(store: EKEventStore) {
-        
-        
-        let calendars = store.calendarsForEntityType(EKEntityType.Event)
+    // Creates an event in the EKEventStore. The method assumes the eventStore is created and accessible
+        func insertEvent(eventStore: EKEventStore, startDate: NSDate, endDate: NSDate) {
+        //func createEvent() {
+            //let event = EKEvent(eventStore: eventStore)
             
-        
-        for calendar in calendars {
-            //if calendar.title == "Calendar" {
+            let event = fetchedResultsController.objectAtIndexPath(eventIndexPath) as! Events
+            
+            //-Create Calendar Event
+            let calendarEvent = EKEvent(eventStore: eventStore)
+            calendarEvent.calendar = eventStore.defaultCalendarForNewEvents
+            
+            calendarEvent.title = event.textEvent!
+            calendarEvent.startDate = startDate
+            calendarEvent.endDate = endDate
+            
+            
+            //-Set alert for 1 hour prior to Event
+            let alarm = EKAlarm(relativeOffset: -3600.0)
+            calendarEvent.addAlarm(alarm)
+            
+            do {
+                try eventStore.saveEvent(calendarEvent, span: .ThisEvent)
+                let savedEventID = calendarEvent.eventIdentifier
+                event.textEvent = calendarEvent.eventIdentifier
+                print("Hello", savedEventID)
                 
-                let event = fetchedResultsController.objectAtIndexPath(eventIndexPath) as! Events
-                
-                //-Set the selected event start date & time
-                let startDate = event.eventDate
-                
-                //-2 hours ahead for endtime
-                let endDate = startDate!.dateByAddingTimeInterval(2 * 60 * 60)
-                
-                //-Create Calendar Event
-                let calendarEvent = EKEvent(eventStore: store)
-                calendarEvent.calendar = calendar
-                
-                calendarEvent.title = event.textEvent!
-                calendarEvent.startDate = startDate!
-                calendarEvent.endDate = endDate
-                
-                //-Set alert for 1 hour prior to Event
-                let alarm = EKAlarm(relativeOffset: -3600.0)
-                calendarEvent.addAlarm(alarm)
-                
-                
-                //-Save Event in Calendar
-                //let result: Bool
-                do {
-                    try store.saveEvent(calendarEvent, span: .ThisEvent)
-                    //-Call Alert message
-                    self.alertTitle = "SUCCESS!"
-                    self.alertMessage = "Event added to your Calendar"
-                    self.calendarAlertMessage()
-                    //result = true
-                } catch {
-                    //-Call Alert message
-                    self.alertTitle = "NOTICE"
-                    self.alertMessage = "One of your Calendars may be restricted. Please check to see if the Calendar event is added or allow access to add events."
-                    self.calendarAlertMessage()
-                    //result = false
-                }
-                
-//                //-Create Calendar Alert View
-//                if result == true {
+                //-Call Alert message
+                self.alertTitle = "SUCCESS!"
+                self.alertMessage = "Event added to your Calendar"
+                self.calendarAlertMessage()
+            } catch {
+                print("Bad things happened")
+                //-Call Alert message
+                self.alertTitle = "NOTICE"
+                self.alertMessage = "One of your Calendars may be restricted. Please check to see if the Calendar event is added or allow access to add events."
+                self.calendarAlertMessage()
+            }
+        }
+    
+    
+//    //-Authorize Calendar Event
+//    @IBAction func addCalendarEvent(sender: UIButton) {
+//        
+//        let eventStore = EKEventStore()
+//
+//        switch EKEventStore.authorizationStatusForEntityType(EKEntityType.Event) {
+//        case .Authorized:
+//            print("authorized")
+//            insertEvent(eventStore)
+//        case .Denied:
+//            print("Access denied")
+//        case .NotDetermined:
+//            
+//            if (EKEventStore.authorizationStatusForEntityType(.Event) != EKAuthorizationStatus.Authorized) {
+//                eventStore.requestAccessToEntityType(.Event, completion: {
+//                    granted, error in
+//                    self.insertEvent(eventStore)
+//                })
+//            } else {
+//                self.insertEvent(eventStore)
+//            }
+//
+//        default:
+//            print("Case Default")
+//        }
+//        
+//    }
+    
+    
+//    //-Insert a new Calendar Event
+//    func insertEvent(store: EKEventStore) {
+//        
+//        let calendars = store.calendarsForEntityType(EKEntityType.Event)
+//        
+//        for calendar in calendars {
+//            if calendar.title == "Calendar" {
+//                
+//                let event = fetchedResultsController.objectAtIndexPath(eventIndexPath) as! Events
+//                
+//                //-Set the selected event start date & time
+//                let startDate = event.eventDate
+//                
+//                //-2 hours ahead for endtime
+//                let endDate = startDate!.dateByAddingTimeInterval(2 * 60 * 60)
+//                
+//                //-Create Calendar Event
+//                let calendarEvent = EKEvent(eventStore: store)
+//                calendarEvent.calendar = calendar
+//                
+//                calendarEvent.title = event.textEvent!
+//                calendarEvent.startDate = startDate!
+//                calendarEvent.endDate = endDate
+//                
+//                //-Set alert for 1 hour prior to Event
+//                let alarm = EKAlarm(relativeOffset: -3600.0)
+//                calendarEvent.addAlarm(alarm)
+//                
+//                
+//                //-Save Event in Calendar
+//                //let result: Bool
+//                do {
+//                    try store.saveEvent(calendarEvent, span: .ThisEvent)
 //                    //-Call Alert message
 //                    self.alertTitle = "SUCCESS!"
 //                    self.alertMessage = "Event added to your Calendar"
 //                    self.calendarAlertMessage()
-//                }
-//                else {
+//                } catch {
 //                    //-Call Alert message
-//                    self.alertTitle = "ALERT"
-//                    self.alertMessage = "One of your Calendars may be restricted. Please check to see if your Calendar is updated or allow access to add events."
+//                    self.alertTitle = "NOTICE"
+//                    self.alertMessage = "One of your Calendars may be restricted. Please check to see if the Calendar event is added or allow access to add events."
 //                    self.calendarAlertMessage()
 //                }
-            //}
-        }
-    }
+//            }
+//        }
+//    }
     
     
     //-Alert Message function

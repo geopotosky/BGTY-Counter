@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import EventKit
 
 
 class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetchedResultsControllerDelegate {
@@ -217,6 +218,28 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
                         }
                     }
                 }
+                
+                //-Call Delete Calendar Event
+                let eventStore = EKEventStore()
+                let eventID = event.textEvent!
+//                print(eventID)
+//                deleteEvent(eventStore, eventIdentifier:eventID)
+                
+                //-Delete Calendar Event
+//                func deleteEvent(eventStore: EKEventStore, eventIdentifier: String) {
+//                    let eventStore = EKEventStore()
+
+                    let eventToRemove = eventStore.eventWithIdentifier(eventID)
+                    print(eventToRemove)
+                
+                    if (eventToRemove != nil) {
+                        do {
+                            try eventStore.removeEvent(eventToRemove!, span: .ThisEvent)
+                        } catch {
+                            print("Bad things happened")
+                        }
+                    }
+//                }
             
                 //-Delete Event
                 sharedContext.deleteObject(event)
@@ -229,6 +252,22 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
                 break
             }
     }
+    
+    
+//    //-Delete Calendar Event
+//    func deleteEvent(eventStore: EKEventStore, eventIdentifier: String) {
+//        let eventStore = EKEventStore()
+//        let eventToRemove = eventStore.eventWithIdentifier(eventIdentifier)
+//        print(eventIdentifier)
+//        
+//        if (eventToRemove != nil) {
+//            do {
+//                try eventStore.removeEvent(eventToRemove!, span: .ThisEvent)
+//            } catch {
+//                print("Bad things happened")
+//            }
+//        }
+//    }
     
     
     func controllerWillChangeContent(controller: NSFetchedResultsController) {
