@@ -17,6 +17,7 @@ class Events : NSManagedObject {
     @NSManaged var eventDate: NSDate?
     @NSManaged var textEvent: String?
     @NSManaged var eventImage: NSData?
+    @NSManaged var textCalendarID: String?
     @NSManaged var todoList: [TodoList]
     @NSManaged var budget: [Budget]
     
@@ -24,7 +25,7 @@ class Events : NSManagedObject {
         super.init(entity: entity, insertIntoManagedObjectContext: context)
     }
     
-    init(eventDate: NSDate?, textEvent: String?, eventImage: NSData?, context: NSManagedObjectContext) {
+    init(eventDate: NSDate?, textEvent: String?, eventImage: NSData?, textCalendarID: String?, context: NSManagedObjectContext) {
         
         let entity =  NSEntityDescription.entityForName("Events", inManagedObjectContext: context)!
         super.init(entity: entity,insertIntoManagedObjectContext: context)
@@ -32,6 +33,7 @@ class Events : NSManagedObject {
         self.eventDate = eventDate
         self.textEvent = textEvent
         self.eventImage = eventImage
+        self.textCalendarID = textCalendarID
         
     }
     

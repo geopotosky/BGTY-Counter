@@ -255,7 +255,40 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         //-Create and add the Delete Event action
         let deleteAction: UIAlertAction = UIAlertAction(title: "Delete Event", style: .Default) { action -> Void in
             
+            //-Get the event, then delete it from core data, delete related notifications, and remove any existing
+            //-Calendar Event
+            
             let event = self.fetchedResultsController.objectAtIndexPath(self.eventIndexPath) as! Events
+            
+            //-Delete the event notificaton
+            if String(event.eventDate!) > String(NSDate()) { //...if event date is greater than the current date, remove the upcoming notification. If not, skip this routine.
+                
+                for notification in UIApplication.sharedApplication().scheduledLocalNotifications! as [UILocalNotification] { // loop through notifications...
+                    if (notification.userInfo!["UUID"] as! String == String(event.eventDate!)) { // ...and cancel the notification that corresponds to this TodoItem instance (matched by UUID)
+                        UIApplication.sharedApplication().cancelLocalNotification(notification) // there should be a maximum of one match on title
+                        break
+                    }
+                }
+            }
+            
+            //-Call Delete Calendar Event
+            if event.textCalendarID == nil {
+                print("No calendar event:", event.textCalendarID)
+            } else {
+                let eventStore = EKEventStore()
+                let eventID = event.textCalendarID!
+                let eventToRemove = eventStore.eventWithIdentifier(eventID)
+                
+                if (eventToRemove != nil) {
+                    do {
+                        try eventStore.removeEvent(eventToRemove!, span: .ThisEvent)
+                    } catch {
+                        print("Calender Event Removal Failed.")
+                    }
+                }
+            }
+
+            //-Delete Main Event
             self.sharedContext.deleteObject(event)
             CoreDataStackManager.sharedInstance().saveContext()
 
@@ -632,9 +665,11 @@ extension BeGoodShowViewController {
             
             do {
                 try eventStore.saveEvent(calendarEvent, span: .ThisEvent)
-                let savedEventID = calendarEvent.eventIdentifier
-                event.textEvent = calendarEvent.eventIdentifier
-                print("Hello", savedEventID)
+                //-ReSave the event with the calendar Identifier
+                event.textCalendarID = calendarEvent.eventIdentifier
+                self.sharedContext.refreshObject(event, mergeChanges: true)
+                CoreDataStackManager.sharedInstance().saveContext()
+                
                 
                 //-Call Alert message
                 self.alertTitle = "SUCCESS!"

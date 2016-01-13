@@ -205,7 +205,9 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
             switch (editingStyle) {
             case .Delete:
                 
-                //-Get the event, then delete it from core data
+                //-Get the event, then delete it from core data, delete related notifications, and remove any existing
+                //-Calendar Event
+                
                 let event = fetchedResultsController.objectAtIndexPath(indexPath) as! Events
                 
                 //-Delete the event notificaton
@@ -220,28 +222,23 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
                 }
                 
                 //-Call Delete Calendar Event
-                let eventStore = EKEventStore()
-                let eventID = event.textEvent!
-//                print(eventID)
-//                deleteEvent(eventStore, eventIdentifier:eventID)
-                
-                //-Delete Calendar Event
-//                func deleteEvent(eventStore: EKEventStore, eventIdentifier: String) {
-//                    let eventStore = EKEventStore()
-
+                if event.textCalendarID == nil {
+                    print("No calendar event:", event.textCalendarID)
+                } else {
+                    let eventStore = EKEventStore()
+                    let eventID = event.textCalendarID!
                     let eventToRemove = eventStore.eventWithIdentifier(eventID)
-                    print(eventToRemove)
                 
                     if (eventToRemove != nil) {
                         do {
                             try eventStore.removeEvent(eventToRemove!, span: .ThisEvent)
                         } catch {
-                            print("Bad things happened")
+                            print("Calender Event Removal Failed.")
                         }
                     }
-//                }
+                }
             
-                //-Delete Event
+                //-Delete Main Event
                 sharedContext.deleteObject(event)
                 CoreDataStackManager.sharedInstance().saveContext()
 

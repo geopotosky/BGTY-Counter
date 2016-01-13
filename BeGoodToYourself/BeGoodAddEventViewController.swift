@@ -33,6 +33,7 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
     var currentEventDate: NSDate!
     var flickrImageURL: String!
     var flickrImage: UIImage!
+    var tempCalendarID: String!
     
     //-Alert variable
     var alertMessage: String!
@@ -115,6 +116,7 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
             self.textFieldEvent.text = event.textEvent
             imageViewPicker.image = UIImage(data: event.eventImage!)
             currentEventDate = event.eventDate
+            tempCalendarID = event.textCalendarID
             
             let dateFormatter = NSDateFormatter()
             dateFormatter.timeStyle = NSDateFormatterStyle.ShortStyle //Set time style
@@ -290,6 +292,7 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
                 event.eventDate = self.currentEventDate
                 event.textEvent = textFieldEvent.text!
                 event.eventImage = eventImage
+                event.textCalendarID = tempCalendarID
                 self.sharedContext.refreshObject(event, mergeChanges: true)
                 CoreDataStackManager.sharedInstance().saveContext()
                 
@@ -323,7 +326,7 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
             } else {
                 
                 //-Save new event
-                let _ = Events(eventDate: self.currentEventDate, textEvent: textFieldEvent.text!, eventImage: eventImage, context: sharedContext)
+                let _ = Events(eventDate: self.currentEventDate, textEvent: textFieldEvent.text!, eventImage: eventImage, textCalendarID: nil, context: sharedContext)
             
                 //-Save the shared context, using the convenience method in the CoreDataStackManager
                 CoreDataStackManager.sharedInstance().saveContext()
