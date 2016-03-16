@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import EventKit
 
 
 class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, NSFetchedResultsControllerDelegate{
@@ -33,7 +34,7 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
     var currentEventDate: NSDate!
     var flickrImageURL: String!
     var flickrImage: UIImage!
-    var tempCalendarID: String!
+    var calendarID: String!
     
     //-Alert variable
     var alertMessage: String!
@@ -116,7 +117,7 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
             self.textFieldEvent.text = event.textEvent
             imageViewPicker.image = UIImage(data: event.eventImage!)
             currentEventDate = event.eventDate
-            tempCalendarID = event.textCalendarID
+            calendarID = event.textCalendarID
             
             let dateFormatter = NSDateFormatter()
             dateFormatter.timeStyle = NSDateFormatterStyle.ShortStyle //Set time style
@@ -287,12 +288,46 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
                 self.textAlertMessage()
             } else {
                 
+                //-Get the original event, then delete it from core data, delete related notifications, and remove any
+                //-existing Calendar Event
+                
+                let event = fetchedResultsController.objectAtIndexPath(eventIndexPath2) as! Events
+                
+                //-Delete the original event notificaton
+                if String(event.eventDate!) > String(NSDate()) { //...if event date is greater than the current date, remove the upcoming notification. If not, skip this routine.
+                    
+                    for notification in UIApplication.sharedApplication().scheduledLocalNotifications! as [UILocalNotification] { // loop through notifications...
+                        if (notification.userInfo!["UUID"] as! String == String(event.eventDate!)) { // ...and cancel the notification that corresponds to this TodoItem instance (matched by UUID)
+                            UIApplication.sharedApplication().cancelLocalNotification(notification) // there should be a maximum of one match on title
+                            break
+                        }
+                    }
+                }
+                
+                //-Call Delete original Calendar Event
+                if event.textCalendarID == nil {
+                    print("No calendar event:", event.textCalendarID)
+                } else {
+                    let eventStore = EKEventStore()
+                    let eventID = event.textCalendarID!
+                    let eventToRemove = eventStore.eventWithIdentifier(eventID)
+                    
+                    if (eventToRemove != nil) {
+                        do {
+                            try eventStore.removeEvent(eventToRemove!, span: .ThisEvent)
+                        } catch {
+                            print("Calender Event Removal Failed.")
+                        }
+                    }
+                }
+                
+                
                 //-Update selected event
-                let event = self.fetchedResultsController.objectAtIndexPath(self.eventIndexPath2) as! Events
+                //let event = self.fetchedResultsController.objectAtIndexPath(self.eventIndexPath2) as! Events
                 event.eventDate = self.currentEventDate
                 event.textEvent = textFieldEvent.text!
                 event.eventImage = eventImage
-                event.textCalendarID = tempCalendarID
+                event.textCalendarID = calendarID
                 self.sharedContext.refreshObject(event, mergeChanges: true)
                 CoreDataStackManager.sharedInstance().saveContext()
                 
