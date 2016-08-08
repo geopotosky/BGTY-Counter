@@ -31,7 +31,7 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
         
         //-Create Navbar Buttons
         self.navigationItem.leftBarButtonItem = self.editButtonItem()
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "addEvent")
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: #selector(BeGoodTableViewController.addEvent))
         
         //-Manage Top and Bottom bar colors
         //-Green Bars
@@ -40,7 +40,7 @@ class BeGoodTableViewController: UIViewController, UITableViewDataSource, NSFetc
         
         
         //-Add notification observer
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "refreshList", name: "TodoListShouldRefresh", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(BeGoodTableViewController.refreshList), name: "TodoListShouldRefresh", object: nil)
         
         do {
             try fetchedResultsController.performFetch()

@@ -43,8 +43,8 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
         super.viewDidLoad()
         
         //-Create Navbar Buttons
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Edit, target: self, action: "editButton")
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "addEvent")
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Edit, target: self, action: #selector(BeGoodCollectionViewController.editButton))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: #selector(BeGoodCollectionViewController.addEvent))
                 
         //-Manage Top and Bottom bar colors
         self.navigationController!.navigationBar.barTintColor = UIColor(red:0.66,green:0.97,blue:0.59,alpha:1.0)
@@ -62,7 +62,7 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
         self.events = NSKeyedUnarchiver.unarchiveObjectWithFile(eventsFilePath) as? [Events] ?? [Events]()
         
         //-Add notification observer
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "refreshList", name: "TodoListShouldRefresh", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(BeGoodCollectionViewController.refreshList), name: "TodoListShouldRefresh", object: nil)
     }
     
     
@@ -129,7 +129,7 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
     override func viewWillDisappear(animated: Bool) {
         
         self.navigationItem.hidesBackButton = true
-        let newBackButton = UIBarButtonItem(title: "Edit", style: UIBarButtonItemStyle.Plain, target: self, action: "editButton")
+        let newBackButton = UIBarButtonItem(title: "Edit", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(BeGoodCollectionViewController.editButton))
         self.navigationItem.leftBarButtonItem = newBackButton
         
         bottomButton.hidden = true
@@ -155,7 +155,7 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
             
             //-Recreate navigation Back button and change name to "Edit"
             self.navigationItem.hidesBackButton = true
-            let newBackButton = UIBarButtonItem(title: "Edit", style: UIBarButtonItemStyle.Plain, target: self, action: "editButton")
+            let newBackButton = UIBarButtonItem(title: "Edit", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(BeGoodCollectionViewController.editButton))
             self.navigationItem.leftBarButtonItem = newBackButton
             editButtonFlag = true
             //-Hide the bottom text and button
@@ -175,7 +175,7 @@ class BeGoodCollectionViewController: UIViewController, UICollectionViewDataSour
             
             //-Recreate navigation Back button and change name to "Done"
             self.navigationItem.hidesBackButton = true
-            let newBackButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: "editButton")
+            let newBackButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(BeGoodCollectionViewController.editButton))
             self.navigationItem.leftBarButtonItem = newBackButton
             editButtonFlag = false
             //-Make bottom text visible

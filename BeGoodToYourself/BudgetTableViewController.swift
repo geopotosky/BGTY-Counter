@@ -27,11 +27,11 @@ class BudgetTableViewController: UITableViewController, NSFetchedResultsControll
         
         //-Create Navbar Buttons
         self.navigationController!.navigationBar.barTintColor = UIColor(red:0.66,green:0.97,blue:0.59,alpha:1.0)
-        let newBackButton = UIBarButtonItem(title: "Event", style: UIBarButtonItemStyle.Plain, target: self, action: "cancelBudgetList")
+        let newBackButton = UIBarButtonItem(title: "Event", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(BudgetTableViewController.cancelBudgetList))
         self.navigationItem.leftBarButtonItem = newBackButton
         
         let b1 = self.editButtonItem()
-        let b2 = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "addBudgetList")
+        let b2 = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: #selector(BudgetTableViewController.addBudgetList))
         self.navigationItem.rightBarButtonItems = [b2, b1]
         
         do {
@@ -56,7 +56,7 @@ class BudgetTableViewController: UITableViewController, NSFetchedResultsControll
                 let counterInt = NSNumberFormatter().numberFromString(priceCount!)?.floatValue
                 finalValue = finalValue + counterInt!
             }
-            index++
+            index += 1
         }
         let totals: String = "Budget:"
         let yourBudgetTotal = String.localizedStringWithFormat("%@ $%.2f", totals, finalValue)
@@ -148,7 +148,7 @@ class BudgetTableViewController: UITableViewController, NSFetchedResultsControll
                         let counterInt = NSNumberFormatter().numberFromString(priceCount!)?.floatValue
                         finalValue = finalValue + counterInt!
                     }
-                    index++
+                    index += 1
                 }
                 let totals: String = "Budget:"
                 let yourBudgetTotal = String.localizedStringWithFormat("%@ $%.2f", totals, finalValue)

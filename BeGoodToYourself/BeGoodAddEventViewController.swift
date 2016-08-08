@@ -52,7 +52,7 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
         //-Set Navbar Title
         self.navigationItem.title = "Event Creator"
         //-Create Navbar Buttons
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Save, target: self, action: "saveEvent")
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Save, target: self, action: #selector(BeGoodAddEventViewController.saveEvent))
         self.toolbarObject?.backgroundColor = UIColor.greenColor()
         
         //-Disable SAVE button if creating new Event
@@ -67,7 +67,7 @@ class BeGoodAddEventViewController: UIViewController, UIImagePickerControllerDel
         self.tabBarController?.tabBar.hidden = true
         
         //-Initialize the tapRecognizer in viewDidLoad
-        tapRecognizer = UITapGestureRecognizer(target: self, action: "handleSingleTap:")
+        tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(BeGoodAddEventViewController.handleSingleTap(_:)))
         tapRecognizer?.numberOfTapsRequired = 1
         
         

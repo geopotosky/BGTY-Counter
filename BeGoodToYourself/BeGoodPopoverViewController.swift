@@ -33,8 +33,8 @@ class BeGoodPopoverViewController: UITableViewController, UIPopoverPresentationC
         super.init(coder: aDecoder)!
         
         //-Cancel button
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Cancel, target: self, action: "tapCancel:")
-        
+        //navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Cancel, target: self, action: "tapCancel:")
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Cancel, target: self, action: #selector(BeGoodPopoverViewController.tapCancel(_:)))
         //-Popover settings
         modalPresentationStyle = .Popover
         popoverPresentationController!.delegate = self

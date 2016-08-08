@@ -46,7 +46,7 @@ class BeGoodFlickrViewController: UIViewController {
         self.navigationItem.title = "Flicker Picker"
         
         //-Initialize the tapRecognizer in viewDidLoad
-        tapRecognizer = UITapGestureRecognizer(target: self, action: "handleSingleTap:")
+        tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(BeGoodFlickrViewController.handleSingleTap(_:)))
         tapRecognizer?.numberOfTapsRequired = 1
         
         searchFlag = false

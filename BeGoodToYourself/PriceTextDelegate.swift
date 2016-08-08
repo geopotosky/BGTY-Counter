@@ -22,12 +22,12 @@ class PriceTextDelegate: NSObject, UITextFieldDelegate {
         
         for character in array { //-counting loop
             if character == "." {
-                pointCount++
+                pointCount += 1
             } else {
                 if pointCount == 0 {
-                    unitsCount++
+                    unitsCount += 1
                 } else {
-                    decimalCount++
+                    decimalCount += 1
                 }
             }
         }
@@ -47,7 +47,7 @@ class PriceTextDelegate: NSObject, UITextFieldDelegate {
             if array.count == 0 {
                 return true
             }
-            unitsCount--
+            unitsCount -= 1
             return false
         }
     }

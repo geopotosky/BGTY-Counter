@@ -71,7 +71,7 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         NSFontAttributeName : UIFont(name: "HelveticaNeue-Bold", size: 26)!,
         NSStrokeWidthAttributeName : -4.0
     ]
-    
+
     
     //-Perform when view did load
     override func viewDidLoad() {
@@ -98,7 +98,7 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         
         
         //-Start Countdown Timer routine
-        var _ = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("update"), userInfo: nil, repeats: true)
+        var _ = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(BeGoodShowViewController.update), userInfo: nil, repeats: true)
         
         let event = fetchedResultsController.objectAtIndexPath(eventIndexPath) as! Events
         
@@ -152,10 +152,50 @@ class BeGoodShowViewController : UIViewController, NSFetchedResultsControllerDel
         
         let localDate = dateFormatter.stringFromDate(date!)
         self.eventDate.text = "Event Date: " + localDate
-    
+
+        
+        //-Text Color Selector
+        func contrastColor(color: UIColor) -> UIColor {
+            var d = CGFloat(0)
+            var r = CGFloat(0)
+            var g = CGFloat(0)
+            var b = CGFloat(0)
+            var a = CGFloat(0)
+            
+            color.getRed(&r, green: &g, blue: &b, alpha: &a)
+            
+            // Counting the perceptive luminance - human eye favors green color...
+            let luminance = 1 - ((0.299 * r) + (0.587 * g) + (0.114 * b)) / 255
+            print(r, g, b)
+            print(luminance)
+            
+            if luminance < 0.5 {
+                d = CGFloat(0) // bright colors - black font
+            } else {
+                d = CGFloat(255) // dark colors - white font
+            }
+            
+            self.eventDate.textColor = UIColor( red: d, green: d, blue: d, alpha: a)
+            //self.eventDate.textColor = UIColor.yellowColor()
+            
+            return UIColor( red: d, green: d, blue: d, alpha: a)
+            //self.eventDate.textColor = UIColor( red: d, green: d, blue: d, alpha: a)
+
+        }
+
+        //contrastColor(UIColor.redColor())
+        contrastColor(UIColor(red:0.6,green:1.0,blue:0.6,alpha:1.0))
+
+        
+        //let localDate = dateFormatter.stringFromDate(date!)
+        //self.eventDate.text = "Event Date: " + localDate
+        
         let finalImage = UIImage(data: event.eventImage!)
         self.imageView!.image = finalImage
+        
+        
         self.textFieldEvent.text = "until " + event.textEvent!
+        //self.eventDate.textColor = UIColor( red: self.d, green: d, blue: d, alpha: a)
 
         //-Call the main "until" setup routine
         untilCounterStart()
